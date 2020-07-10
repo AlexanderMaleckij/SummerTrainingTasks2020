@@ -2,7 +2,7 @@
 
 namespace Task2Figures
 {
-    class Circle : Figure
+    public class Circle : Figure
     {
         double radius;
 
@@ -44,7 +44,7 @@ namespace Task2Figures
         /// String representation of a class instance
         /// </summary>
         /// <returns>String representation of a class instance</returns>
-        public override string ToString() => $"Circle radius={radius}; Area={Area()}; Perimeter={Perimeter()}";
+        public override string ToString() => $"Circle {radius}";
 
         /// <summary>
         /// Serves as a default hash function

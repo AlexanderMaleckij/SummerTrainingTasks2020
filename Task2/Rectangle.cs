@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace Task2Figures
 {
-    class Rectangle : Figure
+    public class Rectangle : Figure
     {
         private double side1Length;
         private double side2Length;
@@ -121,7 +121,7 @@ namespace Task2Figures
         /// String representation of a class instance
         /// </summary>
         /// <returns>string representation of a class instance</returns>
-        public override string ToString() => $"Rectangle a={Side1Length}; b={Side2Length}; Area={Area()}; Perimeter={Perimeter()}";
+        public override string ToString() => $"Rectangle {Side1Length} {Side2Length}";
 
         /// <summary>
         /// Serves as a default hash function

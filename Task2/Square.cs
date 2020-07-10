@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace Task2Figures
 {
-    class Square : Figure
+    public class Square : Figure
     {
         double sideLength;
 
@@ -103,7 +103,7 @@ namespace Task2Figures
         /// String representation of a class instance
         /// </summary>
         /// <returns>string representation of a class instance</returns>
-        public override string ToString() => $"Square a={SideLength}; Area={Area()}; Perimeter={Perimeter()}";
+        public override string ToString() => $"Square {SideLength}";
 
         /// <summary>
         /// Serves as a default hash function

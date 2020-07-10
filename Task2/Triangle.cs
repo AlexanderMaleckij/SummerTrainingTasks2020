@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Task2Figures
 {
-    class Triangle : Figure
+    public class Triangle : Figure
     {
         double side1Length;
         double side2Length;
@@ -110,7 +110,7 @@ namespace Task2Figures
         /// String representation of a class instance
         /// </summary>
         /// <returns>string representation of a class instance</returns>
-        public override string ToString() => $"Triangle a={Side1Length}; b={Side2Length}; c={Side3Length}; Area={Area()}; Perimeter={Perimeter()}";
+        public override string ToString() => $"Triangle {Side1Length} {Side2Length} {Side3Length}";
 
         /// <summary>
         /// Serves as a default hash function
