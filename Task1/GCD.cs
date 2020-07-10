@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace Task1
 {
@@ -12,10 +11,13 @@ namespace Task1
         /// <param name="a">1st number</param>
         /// <param name="b">2nd number</param>
         /// <returns></returns>
-        public static int EuclidGCD(int a, int b)
+        public static int EuclidGCD(int a, int b, out long time)
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
             if(IsGCDBaseCase(a, b, out int c))
             {
+                stopwatch.Stop();
+                time = stopwatch.ElapsedMilliseconds;
                 return c;
             }
 
@@ -33,6 +35,9 @@ namespace Task1
                 }
             }
             while (divRemainder != 0);
+
+            stopwatch.Stop();
+            time = stopwatch.ElapsedMilliseconds;
             return b;
         }
 
@@ -43,7 +48,7 @@ namespace Task1
         /// <param name="b">2ns number</param>
         /// <param name="c">3rd number</param>
         /// <returns></returns>
-        public static int EuclidGCD(int a, int b, int c) => EuclidGCD(EuclidGCD(a, b), c);
+        public static int EuclidGCD(int a, int b, int c) => EuclidGCD(EuclidGCD(a, b, out _), c, out _);
 
         /// <summary>
         /// Calculates greatest common divisor (GCD) of four numbers
@@ -53,7 +58,7 @@ namespace Task1
         /// <param name="c">3rd number</param>
         /// <param name="d">4th number</param>
         /// <returns></returns>
-        public static int EuclidGCD(int a, int b, int c, int d) => EuclidGCD(EuclidGCD(a, b, c), d);
+        public static int EuclidGCD(int a, int b, int c, int d) => EuclidGCD(EuclidGCD(a, b, c), d, out _);
 
         /// <summary>
         /// Calculates greatest common divisor (GCD) of two numbers
