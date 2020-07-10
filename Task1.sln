@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2Loader", "Task2Loader\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2FuguresTests", "Task2FuguresTests\Task2FuguresTests.csproj", "{8B728737-B7D4-4FF4-B559-BCA811C25B6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2LoaderTests", "Task2LoaderTests\Task2LoaderTests.csproj", "{F10A2840-38AA-4845-BFF0-98F2363B7EBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{8B728737-B7D4-4FF4-B559-BCA811C25B6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B728737-B7D4-4FF4-B559-BCA811C25B6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B728737-B7D4-4FF4-B559-BCA811C25B6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F10A2840-38AA-4845-BFF0-98F2363B7EBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F10A2840-38AA-4845-BFF0-98F2363B7EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F10A2840-38AA-4845-BFF0-98F2363B7EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F10A2840-38AA-4845-BFF0-98F2363B7EBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

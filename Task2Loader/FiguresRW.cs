@@ -23,7 +23,7 @@ namespace Task2Loader
         {
             StringBuilder sb = new StringBuilder(figures.Length * 10);
             figures.ToList().ForEach(x => sb.Append(x.ToString() + "\n"));
-            sb.Remove(sb.Length - 2, 2);
+            sb.Remove(sb.Length - 1, 1);
             fileRW.Write(sb.ToString());
         }
     }

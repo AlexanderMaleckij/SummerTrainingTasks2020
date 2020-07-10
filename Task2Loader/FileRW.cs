@@ -16,7 +16,7 @@ namespace Task2Loader
         {
             string content;
 
-            using (FileStream fs = new FileStream(fileName, FileMode.Create))
+            using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
             {
                 using (StreamReader sr = new StreamReader(fs))
                 {
