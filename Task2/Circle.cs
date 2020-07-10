@@ -1,19 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Task2
 {
     class Circle : Figure
     {
-        public override double Area()
+        double radius;
+
+        public double Radius
         {
-            throw new NotImplementedException();
+            get => radius;
+            set
+            {
+                if(value > 0)
+                {
+                    radius = value;
+                }
+            }
         }
 
-        public override double Perimeter()
+        public Circle(double radius)
         {
-            throw new NotImplementedException();
+            Radius = radius;
         }
+
+        public override double Area() => Math.PI * Math.Pow(radius, 2);
+
+        public override double Perimeter() => 2 * Math.PI * Radius;
     }
 }
