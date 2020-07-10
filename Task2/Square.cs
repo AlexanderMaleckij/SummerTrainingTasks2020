@@ -68,5 +68,22 @@ namespace Task2Figures
         public override double Area() => Math.Pow(SideLength, 2);
 
         public override double Perimeter() => 4 * SideLength;
+
+        public override string ToString() => $"Square a={SideLength}; Area={Area()}; Perimeter={Perimeter()}";
+
+        public override int GetHashCode() => SideLength.GetHashCode();
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null || !GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Square square = (Square)obj;
+                return square.sideLength == sideLength;
+            }
+        }
     }
 }

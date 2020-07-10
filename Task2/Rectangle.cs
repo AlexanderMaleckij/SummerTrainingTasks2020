@@ -83,5 +83,22 @@ namespace Task2Figures
         public override double Area() => Side1Length * Side2Length;
 
         public override double Perimeter() => 2 * (Side1Length + Side2Length);
+
+        public override string ToString() => $"Rectangle a={Side1Length}; b={Side2Length}; Area={Area()}; Perimeter={Perimeter()}";
+
+        public override int GetHashCode() => (Side1Length.GetHashCode() << 2) ^ Side2Length.GetHashCode();
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null || !GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Rectangle rectangle = (Rectangle)obj;
+                return (rectangle.side1Length == side1Length) && (rectangle.side2Length == side2Length);
+            }
+        }
     }
 }

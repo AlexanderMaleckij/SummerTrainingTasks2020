@@ -77,5 +77,22 @@ namespace Task2Figures
         }
 
         public override double Perimeter() => Side1Length + Side2Length + Side3Length;
+
+        public override string ToString() => $"Triangle a={Side1Length}; b={Side2Length}; c={Side3Length}; Area={Area()}; Perimeter={Perimeter()}";
+
+        public override int GetHashCode() => (Side1Length.GetHashCode() << 3) ^ (Side2Length.GetHashCode() << 2) ^ Side3Length.GetHashCode();
+
+        public override bool Equals(object obj)
+        {
+            if(obj is null || !GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }    
+            else
+            {
+                Triangle triangle = (Triangle)obj;
+                return (triangle.side1Length == side1Length) && (triangle.side2Length == side2Length) && (triangle.side3Length == side3Length);
+            }
+        }
     }
 }
