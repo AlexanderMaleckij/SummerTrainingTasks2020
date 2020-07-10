@@ -48,7 +48,7 @@ namespace Task1
         /// <param name="a">1st number</param>
         /// <param name="b">2ns number</param>
         /// <param name="c">3rd number</param>
-        /// <returns></returns>
+        /// <returns>GCD</returns>
         public static int EuclidGCD(int a, int b, int c) => EuclidGCD(EuclidGCD(a, b, out _), c, out _);
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Task1
         /// <param name="b">2nd number</param>
         /// <param name="c">3rd number</param>
         /// <param name="d">4th number</param>
-        /// <returns></returns>
+        /// <returns>GCD</returns>
         public static int EuclidGCD(int a, int b, int c, int d) => EuclidGCD(EuclidGCD(a, b, c), d, out _);
 
         /// <summary>
