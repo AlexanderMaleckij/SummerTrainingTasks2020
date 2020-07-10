@@ -10,7 +10,8 @@ namespace Task1
         /// </summary>
         /// <param name="a">1st number</param>
         /// <param name="b">2nd number</param>
-        /// <returns></returns>
+        /// <param name="time">algorithm execution time</param>
+        /// <returns>GCD</returns>
         public static int EuclidGCD(int a, int b, out long time)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
@@ -117,6 +118,19 @@ namespace Task1
             time = stopwatch.ElapsedMilliseconds;
             /* restore common factors of 2 */
             return a << shift;
+        }
+
+        /// <summary>
+        /// prepares data for building a histogram
+        /// </summary>
+        /// <param name="a">1st number</param>
+        /// <param name="b">2nd number</param>
+        /// <returns>Euclid time (millis), Stein time (millis)</returns>
+        public static (long, long) PrepareHistogramData(int a, int b)
+        {
+            EuclidGCD(a, b, out long timeEucid);
+            SteinGCD(a, b, out long timeStein);
+            return (timeEucid, timeStein);
         }
 
         /// <summary>
