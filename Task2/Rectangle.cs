@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 
-namespace Task2
+namespace Task2Figures
 {
     class Rectangle : Figure
     {
@@ -33,7 +35,8 @@ namespace Task2
 
         public Rectangle(double a, double b)
         {
-
+            Side1Length = side1Length;
+            Side2Length = side2Length;
         }
 
         public Rectangle(PointF p1, PointF p2, PointF p3, PointF p4)
@@ -45,9 +48,36 @@ namespace Task2
             }
         }
 
-        private bool IsRectangle(PointF p1, PointF p2, PointF p3, PointF p4, out double a, out double b)
+        private static bool IsRectangle(PointF a, PointF b, PointF c, PointF d, out double side1Length, out double side2Length)
         {
-
+            double d0 = Distance(a, b);
+            double d1 = Distance(a, c);
+            double d2 = Distance(a, d);
+            double d3 = Distance(b, c);
+            double d4 = Distance(b, d);
+            double d5 = Distance(c, d);
+            //get all possible combinations of the sides lengthes
+            List<List<double>> permutations = Permutations.GetPermutations(new List<double> { d0, d1, d2, d3, d4, d5 });
+            foreach (List<double> permutation in permutations)
+            {
+                //if sides of square are equal
+                if ((permutation[0] == permutation[2]) == (permutation[1] == permutation[3]) == true)
+                {
+                    //if diagonals are equal
+                    if (permutation[4] == permutation[5])
+                    {
+                        //if diagonals are linked to the sides
+                        if (Math.Pow(permutation[4], 2) == Math.Pow(permutation[0], 2) + Math.Pow(permutation[1], 2))
+                        {
+                            side1Length = permutation[0];
+                            side2Length = permutation[1];
+                            return true;
+                        }
+                    }
+                }
+            }
+            side1Length = side2Length = default;
+            return false;
         }
 
         public override double Area() => Side1Length * Side2Length;

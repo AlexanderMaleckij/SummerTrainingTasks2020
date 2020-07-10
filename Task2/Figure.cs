@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Task2
+namespace Task2Figures
 {
     public abstract class Figure
     {

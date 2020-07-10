@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Task2
+namespace Task2Figures
 {
     class Circle : Figure
     {

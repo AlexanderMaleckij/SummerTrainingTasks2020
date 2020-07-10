@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace Task2
+namespace Task2Figures
 {
     class Triangle : Figure
     {
