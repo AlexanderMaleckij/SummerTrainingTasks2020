@@ -15,7 +15,13 @@ namespace Task2Figures
             set
             {
                 if (value > 0)
+                {
                     side1Length = value;
+                }
+                else
+                {
+                    throw new ArgumentException(negativeSideLengthMsg);
+                }
             }
         }
 
@@ -25,7 +31,13 @@ namespace Task2Figures
             set
             {
                 if (value > 0)
+                {
                     side2Length = value;
+                }
+                 else
+                {
+                    throw new ArgumentException(negativeSideLengthMsg);
+                }
             }
         }
 
@@ -35,9 +47,16 @@ namespace Task2Figures
             set
             {
                 if (value > 0)
+                {
                     side3Length = value;
+                }
+                else
+                {
+                    throw new ArgumentException(negativeSideLengthMsg);
+                } 
             }
         }
+
 
         /// <summary>
         /// Constructor that creates an instance of 
@@ -62,7 +81,11 @@ namespace Task2Figures
         /// <param name="p3">3rd top coords</param>
         public Triangle(PointF p1, PointF p2, PointF p3)
         {
-            if(IsTriangle(p1, p2, p3))
+            if(!IsTriangle(p1, p2, p3))
+            {
+                throw new Exception("Triangle points can't lie on one line!");
+            }
+            else
             {
                 Side1Length = Distance(p1, p2);
                 Side2Length = Distance(p2, p3);
