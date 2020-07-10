@@ -17,6 +17,10 @@ namespace Task2Figures
                 {
                     sideLength = value;
                 }
+                else
+                {
+                    throw new ArgumentException(negativeSideLengthMsg);
+                }
             }
         }
 
@@ -40,7 +44,11 @@ namespace Task2Figures
         /// <param name="p4">4th top coords</param>
         public Square(PointF p1, PointF p2, PointF p3, PointF p4)
         {
-            if(IsSquare(p1, p2, p3, p4, out double sideLength))
+            if(!IsSquare(p1, p2, p3, p4, out double sideLength))
+            {
+                throw new Exception("Points don't form a square!");
+            }
+            else
             {
                 SideLength = sideLength;
             }
