@@ -33,12 +33,26 @@ namespace Task2Figures
             }
         }
 
+        /// <summary>
+        /// Constructor that creates an instance of 
+        /// the Rectangle class on its specified sides
+        /// </summary>
+        /// <param name="a">1st side length</param>
+        /// <param name="b">2nd side length</param>
         public Rectangle(double a, double b)
         {
             Side1Length = side1Length;
             Side2Length = side2Length;
         }
 
+        /// <summary>
+        /// Constructor that creates an instance of 
+        /// the Rectangle class on its specified tops
+        /// </summary>
+        /// <param name="p1">1st top coords</param>
+        /// <param name="p2">2nd top coords</param>
+        /// <param name="p3">3rd top coords</param>
+        /// <param name="p4">4th top coords</param>
         public Rectangle(PointF p1, PointF p2, PointF p3, PointF p4)
         {
             if(IsRectangle(p1, p2, p3, p4, out double side1Length, out double side2Length))
@@ -48,6 +62,17 @@ namespace Task2Figures
             }
         }
 
+        /// <summary>
+        /// Determines if the shape with 
+        /// the indicated vertices is a rectangle
+        /// </summary>
+        /// <param name="a">1st top coords</param>
+        /// <param name="b">2nd top coords</param>
+        /// <param name="c">3rd top coords</param>
+        /// <param name="d">4th top coords</param>
+        /// <param name="side1Length">calculated 1st side length</param>
+        /// <param name="side2Length">calculated 2nd side length</param>
+        /// <returns></returns>
         private static bool IsRectangle(PointF a, PointF b, PointF c, PointF d, out double side1Length, out double side2Length)
         {
             double d0 = Distance(a, b);
@@ -80,14 +105,35 @@ namespace Task2Figures
             return false;
         }
 
+        /// <summary>
+        /// Calculates the area of a rectangle
+        /// </summary>
+        /// <returns>area</returns>
         public override double Area() => Side1Length * Side2Length;
 
+        /// <summary>
+        /// Calculates the perimeter of a rectangle
+        /// </summary>
+        /// <returns>perimeter</returns>
         public override double Perimeter() => 2 * (Side1Length + Side2Length);
 
+        /// <summary>
+        /// String representation of a class instance
+        /// </summary>
+        /// <returns>string representation of a class instance</returns>
         public override string ToString() => $"Rectangle a={Side1Length}; b={Side2Length}; Area={Area()}; Perimeter={Perimeter()}";
 
+        /// <summary>
+        /// Serves as a default hash function
+        /// </summary>
+        /// <returns>instance hash code</returns>
         public override int GetHashCode() => (Side1Length.GetHashCode() << 2) ^ Side2Length.GetHashCode();
 
+        /// <summary>
+        /// Determines whether two instances of an object are equal
+        /// </summary>
+        /// <param name="obj">2nd instance for comparsion<</param>
+        /// <returns>is equals</returns>
         public override bool Equals(object obj)
         {
             if (obj is null || !GetType().Equals(obj.GetType()))

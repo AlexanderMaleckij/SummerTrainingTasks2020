@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Task2Figures;
 
 namespace Task2Figures
 {
@@ -21,11 +20,24 @@ namespace Task2Figures
             }
         }
 
+        /// <summary>
+        /// Constructor that creates an instance of 
+        /// the Square class on its specified side
+        /// </summary>
+        /// <param name="sideLength">side length</param>
         public Square(double sideLength)
         {
             SideLength = sideLength;
         }
 
+        /// <summary>
+        /// Constructor that creates an instance of 
+        /// the Square class on its specified tops
+        /// </summary>
+        /// <param name="p1">1st top coords</param>
+        /// <param name="p2">2nd top coords</param>
+        /// <param name="p3">3rd top coords</param>
+        /// <param name="p4">4th top coords</param>
         public Square(PointF p1, PointF p2, PointF p3, PointF p4)
         {
             if(IsSquare(p1, p2, p3, p4, out double sideLength))
@@ -34,6 +46,16 @@ namespace Task2Figures
             }
         }
 
+        /// <summary>
+        /// Determines if the shape with 
+        /// the indicated vertices is a square
+        /// </summary>
+        /// <param name="a">1st top coords</param>
+        /// <param name="b">2nd top coords</param>
+        /// <param name="c">3rd top coords</param>
+        /// <param name="d">4th top coords</param>
+        /// <param name="sideLength"></param>
+        /// <returns></returns>
         public static bool IsSquare(PointF a, PointF b, PointF c, PointF d, out double sideLength)
         {
             double d0 = Distance(a, b);
@@ -65,14 +87,35 @@ namespace Task2Figures
             return false;
         }
 
+        /// <summary>
+        /// Calculates the area of a square
+        /// </summary>
+        /// <returns>area</returns>
         public override double Area() => Math.Pow(SideLength, 2);
 
+        /// <summary>
+        /// Calculates the perimeter of a square
+        /// </summary>
+        /// <returns>perimeter</returns>
         public override double Perimeter() => 4 * SideLength;
 
+        /// <summary>
+        /// String representation of a class instance
+        /// </summary>
+        /// <returns>string representation of a class instance</returns>
         public override string ToString() => $"Square a={SideLength}; Area={Area()}; Perimeter={Perimeter()}";
 
+        /// <summary>
+        /// Serves as a default hash function
+        /// </summary>
+        /// <returns>instance hash code</returns>
         public override int GetHashCode() => SideLength.GetHashCode();
 
+        /// <summary>
+        /// Determines whether two instances of an object are equal
+        /// </summary>
+        /// <param name="obj">2nd instance for comparsion</param>
+        /// <returns>is equals</returns>
         public override bool Equals(object obj)
         {
             if (obj is null || !GetType().Equals(obj.GetType()))
