@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace Task2Loader
 {
@@ -12,6 +11,10 @@ namespace Task2Loader
             this.fileName = fileName;
         }
 
+        /// <summary>
+        /// Read text from file
+        /// </summary>
+        /// <returns>read text</returns>
         public string Read()
         {
             string content;
@@ -27,6 +30,10 @@ namespace Task2Loader
             return content;
         }
 
+        /// <summary>
+        /// Write text to file
+        /// </summary>
+        /// <param name="content">text for writing</param>
         public void Write(string content)
         {
             using (FileStream fs = new FileStream(fileName, FileMode.Create))

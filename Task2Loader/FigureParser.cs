@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 using Task2Figures;
 
 namespace Task2Loader
@@ -23,6 +22,11 @@ namespace Task2Loader
             this.content = content;
         }
 
+        /// <summary>
+        /// Create Figure instances from a string passed 
+        /// when initializing an instance of this class
+        /// </summary>
+        /// <returns>array of converted Figures</returns>
         public Figure[] GetFigures()
         {
             List<Figure> parsedFigures = new List<Figure>();
@@ -35,6 +39,11 @@ namespace Task2Loader
             return parsedFigures.ToArray();
         }
 
+        /// <summary>
+        /// Get Figure instance from its string representation
+        /// </summary>
+        /// <param name="figureStr">string representation of Figure instance</param>
+        /// <returns>Figure instance of given string</returns>
         private static Figure ParseFigure(string figureStr)
         {
             string figureType = figureStr.Split(' ').First();
@@ -72,6 +81,11 @@ namespace Task2Loader
             throw new ArgumentException("Тumber of parameters does not match the number of constructor parameters");
         }
 
+        /// <summary>
+        /// Convert each string value from given list to double
+        /// </summary>
+        /// <param name="items">items for convertation</param>
+        /// <returns>list of double values</returns>
         private static List<double> Convert(List<string> items)
         {
             List<double> itemsDouble = new List<double>();

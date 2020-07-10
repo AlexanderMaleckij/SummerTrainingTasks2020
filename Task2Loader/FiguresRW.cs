@@ -13,12 +13,20 @@ namespace Task2Loader
             fileRW = new FileRW(fileName);
         }
 
+        /// <summary>
+        /// Read figures from file to array
+        /// </summary>
+        /// <returns>array of Figures</returns>
         public Figure[] Read()
         {
             FigureParser parser = new FigureParser(fileRW.Read());
             return parser.GetFigures();
         }
 
+        /// <summary>
+        /// Write figures from array to file
+        /// </summary>
+        /// <param name="figures">figures for writing</param>
         public void Write(Figure[] figures)
         {
             StringBuilder sb = new StringBuilder(figures.Length * 10);
