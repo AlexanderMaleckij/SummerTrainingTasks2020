@@ -15,6 +15,10 @@ namespace Task2Figures
                 {
                     radius = value;
                 }
+                else
+                {
+                    throw new ArgumentException(negativeSideLengthMsg);
+                }
             }
         }
 
