@@ -18,6 +18,10 @@ namespace Task2Figures
                 {
                     side1Length = value;
                 }
+                else
+                {
+                    throw new ArgumentException(negativeSideLengthMsg);
+                }
             }
         }
 
@@ -30,6 +34,10 @@ namespace Task2Figures
                 {
                     side2Length = value;
                 }
+                else
+                {
+                    throw new ArgumentException(negativeSideLengthMsg);
+                }
             }
         }
 
@@ -41,8 +49,8 @@ namespace Task2Figures
         /// <param name="b">2nd side length</param>
         public Rectangle(double a, double b)
         {
-            Side1Length = side1Length;
-            Side2Length = side2Length;
+            Side1Length = a;
+            Side2Length = b;
         }
 
         /// <summary>
@@ -55,7 +63,11 @@ namespace Task2Figures
         /// <param name="p4">4th top coords</param>
         public Rectangle(PointF p1, PointF p2, PointF p3, PointF p4)
         {
-            if(IsRectangle(p1, p2, p3, p4, out double side1Length, out double side2Length))
+            if(!IsRectangle(p1, p2, p3, p4, out double side1Length, out double side2Length))
+            {
+                throw new Exception("Points don't form a rectangle!");
+            }
+            else
             {
                 Side1Length = side1Length;
                 Side2Length = side2Length;
@@ -92,7 +104,7 @@ namespace Task2Figures
                     if (permutation[4] == permutation[5])
                     {
                         //if diagonals are linked to the sides
-                        if (Math.Pow(permutation[4], 2) == Math.Pow(permutation[0], 2) + Math.Pow(permutation[1], 2))
+                        if (permutation[4] == Math.Sqrt(Math.Pow(permutation[0], 2) + Math.Pow(permutation[1], 2)))
                         {
                             side1Length = permutation[0];
                             side2Length = permutation[1];
