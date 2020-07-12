@@ -12,10 +12,42 @@ namespace Task2
         {
             ValidatePolynom(polynom);
 
-
+            List<string> monomialsStr = GetMonomials(polynom);
 
            
 
+        }
+
+        private static List<string> GetMonomials(string polynom)
+        {
+            Regex regex = new Regex(@"[^(]([+\-])");
+            MatchCollection mc = regex.Matches(polynom);
+
+            List<int> monomialsBorder = new List<int>();
+
+            foreach(Match match in mc)
+            {
+                monomialsBorder.Add(match.Index + 1);
+            }
+
+            return Split(polynom, monomialsBorder);
+        }
+
+        private static List<string> Split(string str, List<int> indexes)
+        {
+            indexes.Add(0);
+            indexes.Add(str.Length);
+            indexes.Distinct();
+            indexes.Sort();
+            
+            List<string> splittedItems = new List<string>();
+
+            for (int i = 1; i < indexes.Count; i++)
+            {
+                splittedItems.Add(str.Substring(indexes[i - 1], indexes[i] - indexes[i - 1]));
+            }
+
+            return splittedItems;
         }
 
         private static void ValidatePolynom(string polynom)
@@ -60,7 +92,7 @@ namespace Task2
 
         private static void CheckForMultiplePolynomials(string polynom)
         {
-            foreach (Match match in new Regex(@"\((.+)\)").Matches(polynom))
+            foreach (Match match in new Regex(@"\((.+[\+\-].+)\)").Matches(polynom))
             {
                 if (match.Value.Contains('('))
                 {
