@@ -3,7 +3,7 @@ namespace Task2
 {
     struct Monomial
     {
-        int xPower;
-        double coeddicient;
+        public int xPower;
+        public double coefficient;
     }
 }
