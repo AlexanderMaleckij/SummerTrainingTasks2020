@@ -70,45 +70,64 @@ namespace Task1.Tests
         [TestMethod()]
         public void MultiplyVectorByNumberOperationTest()
         {
-            Assert.Fail();
+            Vector vector0 = new Vector(1, -3, 5);
+            Vector vector1 = vector0 * (-5);
+
+            Assert.AreEqual(vector1, new Vector(-5, 15, -25));
         }
 
         [TestMethod()]
         public void DivideVectorByNumberOperationTest()
         {
-            Assert.Fail();
+            Vector vector0 = new Vector(1, -3, 5);
+            Vector vector1 = vector0 / (-5);
+
+            Assert.AreEqual(vector1, new Vector(-0.2, 3.0/5, -1));
+            Assert.ThrowsException<DivideByZeroException>(() => vector0 / 0);
         }
 
         [TestMethod()]
         public void VectorsAdditingOperationTest()
         {
-            Assert.Fail();
+            Vector vector0 = new Vector(-1, 4, 9);
+            Vector vector1 = new Vector(5, 14, -18);
+
+            Assert.AreEqual(vector0 + vector1, new Vector(4, 18, -9));
         }
 
         [TestMethod()]
         public void VectorsSubtractionOperationTest()
         {
-            Assert.Fail();
+            Vector vector0 = new Vector(-1, 4, 9);
+            Vector vector1 = new Vector(5, 14, -18);
+
+            Assert.AreEqual(vector1 - vector0, new Vector(6, 10, -27));
         }
 
         [TestMethod()]
         public void VectorsEqualityOperationTest()
         {
-            Assert.Fail();
+            Vector vector0 = new Vector(1, -3, 5);
+            Vector vector1 = new Vector(3, -9, 15);
+
+            Assert.IsTrue(vector0 == vector1);
         }
 
         [TestMethod()]
         public void VectorInequalityOperationTest()
         {
-            Assert.Fail();
+            Vector vector0 = new Vector(1, -3, 5);
+            Vector vector1 = new Vector(3, 9, 15);
+
+            Assert.IsTrue(vector0 != vector1);
         }
 
         [TestMethod()]
         public void VectorChangeOfSignOperationTest()
         {
-            Assert.Fail();
+            Vector vector = new Vector(-1, 4, 9);
+            Assert.AreEqual(-vector, new Vector(1, -4, -9));
         }
-
         #endregion
     }
 }

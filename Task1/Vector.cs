@@ -17,7 +17,15 @@ namespace Task1
 
         public static Vector operator *(Vector v, double number) => new Vector(v.x * number, v.y * number, v.z * number);
 
-        public static Vector operator /(Vector v, double number) => new Vector(v.x / number, v.y / number, v.z / number);
+        public static Vector operator /(Vector v, double number)
+        { 
+            if(number == 0)
+            {
+                throw new DivideByZeroException("can't divide vector by zero");
+            }
+
+            return new Vector(v.x / number, v.y / number, v.z / number); 
+        }
 
         public static Vector operator +(Vector u, Vector v) => new Vector(u.x + v.x, u.y + v.y, u.z + v.z);
 
