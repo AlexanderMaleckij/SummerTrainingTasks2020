@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Task2
 {
+    /// <summary>
+    /// Class for working with polynomials
+    /// that defines basic operations
+    /// </summary>
     public class Polynom
     {
         List<Monomial> monomials;
@@ -18,6 +22,12 @@ namespace Task2
             monomials = new List<Monomial>();
         }
 
+        /// <summary>
+        /// Operation of adding two polynoms
+        /// </summary>
+        /// <param name="p1">1st polynom</param>
+        /// <param name="p2">2nd polynom</param>
+        /// <returns>sum of polynoms</returns>
         public static Polynom operator +(Polynom p1, Polynom p2)
         {
             List<Monomial> m1Copy = new List<Monomial>(p1.monomials);
@@ -51,6 +61,12 @@ namespace Task2
             return new Polynom(m1Copy);
         }
 
+        /// <summary>
+        /// Subtraction operation of 2 polynomials
+        /// </summary>
+        /// <param name="p1">1st polynom</param>
+        /// <param name="p2">2nd polynom</param>
+        /// <returns>polynoms difference</returns>
         public static Polynom operator -(Polynom p1, Polynom p2)
         {
             List<Monomial> m1Copy = new List<Monomial>(p1.monomials);
@@ -85,6 +101,12 @@ namespace Task2
             return new Polynom(m1Copy);
         }
 
+        /// <summary>
+        /// Operation of multiplying a polynomial by a polynomial
+        /// </summary>
+        /// <param name="p1">1st polynom</param>
+        /// <param name="p2">2nd polynom</param>
+        /// <returns>multiplication of polynoms</returns>
         public static Polynom operator *(Polynom p1, Polynom p2)
         {
             List<Monomial> newPolyMonomials = new List<Monomial>();
@@ -112,6 +134,12 @@ namespace Task2
             }
         }
 
+        /// <summary>
+        /// Operation of dividing a polynomial into a polynomial
+        /// </summary>
+        /// <param name="p1">1st polynom - dividend</param>
+        /// <param name="p2">2nd polynom - divisor</param>
+        /// <returns>quotient</returns>
         public static (Polynom, Polynom) operator /(Polynom p1, Polynom p2)
         {
             Polynom dividend = new Polynom(p1.monomials);
@@ -143,6 +171,12 @@ namespace Task2
             return (result, dividend);
         }
 
+        /// <summary>
+        /// Operation of multiplying a polynom by a number
+        /// </summary>
+        /// <param name="p1">polynom</param>
+        /// <param name="number">number</param>
+        /// <returns>multiplied polynom</returns>
         public static Polynom operator *(Polynom p1, double number)
         {
             List<Monomial> newPolyMonomials = new List<Monomial>();
@@ -161,6 +195,12 @@ namespace Task2
             return new Polynom(newPolyMonomials);
         }
 
+        /// <summary>
+        /// Operation of dividing a polynom by a number
+        /// </summary>
+        /// <param name="p1">polynom</param>
+        /// <param name="number">number</param>
+        /// <returns>divided polynom</returns>
         public static Polynom operator /(Polynom p1, double number)
         {
             List<Monomial> newPolyMonomials = new List<Monomial>();
@@ -183,6 +223,10 @@ namespace Task2
             return new Polynom(newPolyMonomials);
         }
 
+        /// <summary>
+        /// Get string representation of the Polynom class instance
+        /// </summary>
+        /// <returns>string representation of a class instance</returns>
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder(monomials.Count * 5);
@@ -202,6 +246,11 @@ namespace Task2
             }
         }
 
+        /// <summary>
+        /// Determines whether two instances of an object are equal
+        /// </summary>
+        /// <param name="obj">2nd instance for comparsion</param>
+        /// <returns>is equals</returns>
         public override bool Equals(object obj)
         {
             if (obj != null && obj is Polynom)
@@ -218,6 +267,10 @@ namespace Task2
             return false;
         }
 
+        /// <summary>
+        /// Serves as a default hash function
+        /// </summary>
+        /// <returns>instance hash code</returns>
         public override int GetHashCode()
         {
             return monomials.GetHashCode();
