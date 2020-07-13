@@ -1,6 +1,9 @@
 ﻿
 namespace Task2
 {
+    /// <summary>
+    /// An instance of this class may be part of a polynomial
+    /// </summary>
     public class Monomial
     {
         public double xPower;
@@ -12,6 +15,10 @@ namespace Task2
             this.coefficient = coefficient;
         }
 
+        /// <summary>
+        /// Get string representation of the Mononial class instance
+        /// </summary>
+        /// <returns>string representation of a class instance</returns>
         public override string ToString()
         {
             if(coefficient == 0)
@@ -38,6 +45,11 @@ namespace Task2
             }
         }
 
+        /// <summary>
+        /// Determines whether two instances of an object are equal
+        /// </summary>
+        /// <param name="obj">2nd instance for comparsion</param>
+        /// <returns>is equals</returns>
         public override bool Equals(object obj)
         {
             if (obj != null && obj is Monomial)
@@ -53,6 +65,11 @@ namespace Task2
             return false;
         }
 
+
+        /// <summary>
+        /// Serves as a default hash function
+        /// </summary>
+        /// <returns>instance hash code</returns>
         public override int GetHashCode()
         {
             return (xPower.GetHashCode() << 1) ^ coefficient.GetHashCode();
