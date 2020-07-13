@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Task2
 {
@@ -39,6 +40,9 @@ namespace Task2
                     }
                 }
             }
+
+            m1Copy.AddRange(m2Copy);
+
             return new Polynom(m1Copy);
         }
 
@@ -194,6 +198,46 @@ namespace Task2
             }
 
             return new Polynom(newPolyMonomials);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder(monomials.Count * 5);
+
+            foreach(Monomial monomial in monomials)
+            {
+                stringBuilder.Append(monomial.ToString() + "+");
+            }
+
+            if (stringBuilder.Length == 0)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return stringBuilder.ToString(0, stringBuilder.Length - 1).Replace("+-", "-");
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj != null && obj is Polynom)
+            {
+                Polynom polynom = (Polynom)obj;
+
+                if (new List<Monomial>(polynom.monomials).Except(monomials).Count() == 0 &&
+                   new List<Monomial>(monomials).Except(polynom.monomials).Count() == 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return monomials.GetHashCode();
         }
     }
 }
