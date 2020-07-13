@@ -64,5 +64,51 @@ namespace Task1.Tests
             Assert.AreEqual(vector0.GetHashCode(), vector1.GetHashCode());
             Assert.AreNotEqual(vector1.GetHashCode(), vector2.GetHashCode());
         }
+
+        #region overrided operations tests
+
+        [TestMethod()]
+        public void MultiplyVectorByNumberOperationTest()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void DivideVectorByNumberOperationTest()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void VectorsAdditingOperationTest()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void VectorsSubtractionOperationTest()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void VectorsEqualityOperationTest()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void VectorInequalityOperationTest()
+        {
+            Assert.Fail();
+        }
+
+        [TestMethod()]
+        public void VectorChangeOfSignOperationTest()
+        {
+            Assert.Fail();
+        }
+
+        #endregion
     }
 }
