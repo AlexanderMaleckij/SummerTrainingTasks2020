@@ -13,6 +13,10 @@ namespace Task2
         {
             this.monomials = monomials;
         }
+        public Polynom()
+        {
+            monomials = new List<Monomial>();
+        }
 
         public static Polynom operator +(Polynom p1, Polynom p2)
         {
@@ -21,9 +25,10 @@ namespace Task2
 
             for (int i = 0; i < m1Copy.Count; i++)
             {
-                for(int j = 0; j < m2Copy.Count; j++)
+                Monomial m1 = m1Copy[i];
+
+                for (int j = 0; j < m2Copy.Count; j++)
                 {
-                    Monomial m1 = m1Copy[i];
                     Monomial m2 = m2Copy[j];
 
                     if (m1.xPower == m2.xPower)
@@ -32,12 +37,12 @@ namespace Task2
                         m2Copy.Remove(m2);
                         j--;
                     }
+                }
 
-                    if(m1.coefficient == 0)
-                    {
-                        m1Copy.Remove(m1);
-                        i--;
-                    }
+                if (m1.coefficient == 0)
+                {
+                    m1Copy.Remove(m1);
+                    i--;
                 }
             }
 
@@ -53,9 +58,10 @@ namespace Task2
 
             for (int i = 0; i < m1Copy.Count; i++)
             {
+                Monomial m1 = m1Copy[i];
+
                 for (int j = 0; j < m2Copy.Count; j++)
                 {
-                    Monomial m1 = m1Copy[i];
                     Monomial m2 = m2Copy[j];
 
                     if (m1.xPower == m2.xPower)
@@ -64,14 +70,18 @@ namespace Task2
                         m2Copy.Remove(m2);
                         j--;
                     }
+                }
 
-                    if (m1.coefficient == 0)
-                    {
-                        m1Copy.Remove(m1);
-                        i--;
-                    }
+                if (m1.coefficient == 0)
+                {
+                    m1Copy.Remove(m1);
+                    i--;
                 }
             }
+
+            m2Copy.ForEach(x => x.coefficient = -x.coefficient);
+            m1Copy.AddRange(m2Copy);
+
             return new Polynom(m1Copy);
         }
 
@@ -85,7 +95,7 @@ namespace Task2
                 {
                     Monomial m1 = p1.monomials[i];
                     Monomial m2 = p2.monomials[j];
-                    newPolyMonomials.Add(new Monomial(m1.xPower * m2.xPower, m1.coefficient * m2.coefficient));
+                    newPolyMonomials.Add(new Monomial(m1.xPower + m2.xPower, m1.coefficient * m2.coefficient));
                 }
             }
 
@@ -104,60 +114,33 @@ namespace Task2
 
         public static (Polynom, Polynom) operator /(Polynom p1, Polynom p2)
         {
-            double[] GetCoeffs(Polynom p)
+            Polynom dividend = new Polynom(p1.monomials);
+            Polynom divisor = new Polynom(p2.monomials);
+            Polynom result = new Polynom();
+
+            double maxPowerDividentX = dividend.monomials.Select(x => x.xPower).Max();
+            double maxPowerDivisorX = divisor.monomials.Select(x => x.xPower).Max();
+            Monomial divisorMonomialWithGreaterPowerX = divisor.monomials.Where(x => x.xPower == maxPowerDivisorX).First();
+
+            if(maxPowerDivisorX > maxPowerDividentX)
             {
-                int maxPowerOfX = p.monomials.Select(x => x.xPower).Max();
-                double[] coeffs = new double[maxPowerOfX];
-
-                foreach (Monomial monomial in p.monomials)
-                {
-                    coeffs[monomial.xPower] += monomial.coefficient;
-                }
-                coeffs.Reverse();
-
-                return coeffs;
+                throw new Exception("The degree of the divisor cannot be greater than the degree of dividend");
             }
 
-            Polynom GetPolynom(double[] coeffs)
+            do
             {
-                List<Monomial> monomials = new List<Monomial>();
+                maxPowerDividentX = dividend.monomials.Select(x => x.xPower).Max();
+                Monomial dividendMonomialWithGreaterPowerX = dividend.monomials.Where(x => x.xPower == maxPowerDividentX).First();
 
-                for(int i = 0; i < coeffs.Length; i++)
-                {
-                    if(coeffs[i] != 0)
-                    {
-                        monomials.Add(new Monomial(coeffs.Length - i, coeffs[i]));
-                    }
-                }
-
-                return new Polynom(monomials);
+                double monomialPowerOfX = maxPowerDividentX - maxPowerDivisorX;
+                double monomialCoeff = dividendMonomialWithGreaterPowerX.coefficient / divisorMonomialWithGreaterPowerX.coefficient;
+                Polynom monomialPoly = new Polynom(new List<Monomial> { new Monomial(monomialPowerOfX, monomialCoeff) });
+                result += monomialPoly;
+                dividend -= monomialPoly * divisor;
             }
+            while (maxPowerDividentX > maxPowerDivisorX);
 
-            double[] dividend = GetCoeffs(p1);
-            double[] divisor = GetCoeffs(p2);
-            double[] remainder = (double[])dividend.Clone();
-            double[] result = new double[remainder.Length - divisor.Length + 1];
-
-            if (dividend.Last() == 0)
-            {
-                throw new ArithmeticException("Старший член многочлена делимого не может быть 0");
-            }
-            if (divisor.Last() == 0)
-            {
-                throw new ArithmeticException("Старший член многочлена делителя не может быть 0");
-            }
-
-            for (int i = 0; i < result.Length; i++)
-            {
-                double coeff = remainder[remainder.Length - i - 1] / divisor.Last();
-                result[result.Length - i - 1] = coeff;
-                for (int j = 0; j < divisor.Length; j++)
-                {
-                    remainder[remainder.Length - i - j - 1] -= coeff * divisor[divisor.Length - j - 1];
-                }
-            }
-
-            return (GetPolynom(result), GetPolynom(remainder));
+            return (result, dividend);
         }
 
         public static Polynom operator *(Polynom p1, double number)

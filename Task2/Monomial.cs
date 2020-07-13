@@ -3,10 +3,10 @@ namespace Task2
 {
     public class Monomial
     {
-        public int xPower;
+        public double xPower;
         public double coefficient;
 
-        public Monomial(int xPower, double coefficient)
+        public Monomial(double xPower, double coefficient)
         {
             this.xPower = xPower;
             this.coefficient = coefficient;
@@ -37,6 +37,7 @@ namespace Task2
                 }
             }
         }
+
         public override bool Equals(object obj)
         {
             if (obj != null && obj is Monomial)
