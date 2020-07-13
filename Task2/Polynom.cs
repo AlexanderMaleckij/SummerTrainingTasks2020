@@ -8,12 +8,7 @@ namespace Task2
     {
         List<Monomial> monomials;
 
-        public Polynom(string polynom)
-        {
-            monomials = MonomialsParser.Parse(polynom);
-        }
-
-        private Polynom(List<Monomial> monomials)
+        public Polynom(List<Monomial> monomials)
         {
             this.monomials = monomials;
         }
@@ -101,6 +96,64 @@ namespace Task2
             {
                 return new Polynom(newPolyMonomials);
             }
+        }
+
+        public static (Polynom, Polynom) operator /(Polynom p1, Polynom p2)
+        {
+            double[] GetCoeffs(Polynom p)
+            {
+                int maxPowerOfX = p.monomials.Select(x => x.xPower).Max();
+                double[] coeffs = new double[maxPowerOfX];
+
+                foreach (Monomial monomial in p.monomials)
+                {
+                    coeffs[monomial.xPower] += monomial.coefficient;
+                }
+                coeffs.Reverse();
+
+                return coeffs;
+            }
+
+            Polynom GetPolynom(double[] coeffs)
+            {
+                List<Monomial> monomials = new List<Monomial>();
+
+                for(int i = 0; i < coeffs.Length; i++)
+                {
+                    if(coeffs[i] != 0)
+                    {
+                        monomials.Add(new Monomial(coeffs.Length - i, coeffs[i]));
+                    }
+                }
+
+                return new Polynom(monomials);
+            }
+
+            double[] dividend = GetCoeffs(p1);
+            double[] divisor = GetCoeffs(p2);
+            double[] remainder = (double[])dividend.Clone();
+            double[] result = new double[remainder.Length - divisor.Length + 1];
+
+            if (dividend.Last() == 0)
+            {
+                throw new ArithmeticException("Старший член многочлена делимого не может быть 0");
+            }
+            if (divisor.Last() == 0)
+            {
+                throw new ArithmeticException("Старший член многочлена делителя не может быть 0");
+            }
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                double coeff = remainder[remainder.Length - i - 1] / divisor.Last();
+                result[result.Length - i - 1] = coeff;
+                for (int j = 0; j < divisor.Length; j++)
+                {
+                    remainder[remainder.Length - i - j - 1] -= coeff * divisor[divisor.Length - j - 1];
+                }
+            }
+
+            return (GetPolynom(result), GetPolynom(remainder));
         }
 
         public static Polynom operator *(Polynom p1, double number)

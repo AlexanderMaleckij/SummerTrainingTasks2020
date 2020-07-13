@@ -1,7 +1,7 @@
 ﻿
 namespace Task2
 {
-    struct Monomial
+    public struct Monomial
     {
         public int xPower;
         public double coefficient;

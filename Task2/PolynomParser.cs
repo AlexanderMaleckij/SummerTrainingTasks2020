@@ -11,11 +11,54 @@ namespace Task2
         public static List<Monomial> Parse(string polynom)
         {
             ValidatePolynom(polynom);
+            List<Monomial> monomials = new List<Monomial>();
 
-            List<string> monomialsStr = GetMonomials(polynom);
+            foreach(string monomialStr in GetMonomials(polynom))
+            {
+                monomials.Add(ParseMonomial(monomialStr));
+            }
 
-           
+            return monomials;
+        }
 
+        private static Monomial ParseMonomial(string monomialStr)
+        {
+            Monomial monomial = new Monomial(0, 1);
+            StringBuilder sb = new StringBuilder();
+
+            bool isPowerOfX = false;
+
+            for(int i = 0; i < monomialStr.Length; i++)
+            {
+                if (monomialStr[i] == '-' || Char.IsDigit(monomialStr[i]) || monomialStr[i] == '.')
+                {
+                    sb.Append(monomialStr[i]);
+                }
+                    
+                if(monomialStr[i] == '*')
+                {
+                    if(!isPowerOfX)
+                    {
+                        monomial.coefficient *= Double.Parse(sb.ToString());
+                        sb.Clear();
+                    }
+                }
+
+                if(monomialStr[i] == 'x')
+                {
+                    if (i == monomialStr.Length - 1)
+                    {
+                        monomial.xPower += 1;
+                    }
+                    else
+                    {
+                        if(monomialStr[i+1] == '^')
+                        {
+
+                        }
+                    }
+                }
+            }
         }
 
         private static List<string> GetMonomials(string polynom)
