@@ -7,7 +7,7 @@ namespace Task3
         private double price;
         private string name;
 
-        double Price
+        public double Price
         {
             get => price;
             set
@@ -22,7 +22,7 @@ namespace Task3
                 }
             }
         }
-        string Name
+        public string Name
         {
             get => name;
             set
@@ -36,6 +36,12 @@ namespace Task3
                     throw new ArgumentException("Name of product must contain at least 1 symbol");
                 }
             }
+        }
+
+        public Product(string name, double price)
+        {
+            Name = name;
+            Price = price;
         }
 
         public static implicit operator double(Product product)
