@@ -44,12 +44,12 @@ namespace Task3
             Price = price;
         }
 
-        public static implicit operator double(Product product)
+        public static explicit operator double(Product product)
         {
             return product.price;
         }
 
-        public static implicit operator int(Product product)
+        public static explicit operator int(Product product)
         {
             return (int)(product.price * 100);
         }

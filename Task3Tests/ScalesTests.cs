@@ -29,7 +29,7 @@ namespace Task3.Tests
         public void CastToMonitorTest()
         {
             Scales scales = new Scales("Fetal a2", 75);
-            Monitor monitor = scales;
+            Monitor monitor = (Monitor)scales;
 
             Assert.IsTrue(monitor.Name == "Fetal a2");
             Assert.IsTrue(monitor.Price == 75);
@@ -39,7 +39,7 @@ namespace Task3.Tests
         public void CastToBreadMachineTest()
         {
             Scales scales = new Scales("Fetal a2", 75); ;
-            BreadMachine breadMachine = scales;
+            BreadMachine breadMachine = (BreadMachine)scales;
 
             Assert.IsTrue(breadMachine.Name == "Fetal a2");
             Assert.IsTrue(breadMachine.Price == 75);
@@ -49,7 +49,7 @@ namespace Task3.Tests
         public void CastToLaptopTest()
         {
             Scales scales = new Scales("Fetal a2", 75);
-            Laptop laptop = scales;
+            Laptop laptop = (Laptop)scales;
 
             Assert.IsTrue(laptop.Name == "Fetal a2");
             Assert.IsTrue(laptop.Price == 75);

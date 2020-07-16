@@ -29,7 +29,7 @@ namespace Task3.Tests
         public void CastToScalesTest()
         {
             Laptop laptop = new Laptop("Novolen lf-4", 1350);
-            Scales scales = laptop;
+            Scales scales = (Scales)laptop;
 
             Assert.IsTrue(scales.Name == "Novolen lf-4");
             Assert.IsTrue(scales.Price == 1350);
@@ -39,7 +39,7 @@ namespace Task3.Tests
         public void CastToBreadMachineTest()
         {
             Laptop laptop = new Laptop("Novolen lf-4", 1350);
-            BreadMachine breadMachine = laptop;
+            BreadMachine breadMachine = (BreadMachine)laptop;
 
             Assert.IsTrue(breadMachine.Name == "Novolen lf-4");
             Assert.IsTrue(breadMachine.Price == 1350);
@@ -49,7 +49,7 @@ namespace Task3.Tests
         public void CastToMonitorTest()
         {
             Laptop laptop = new Laptop("Novolen lf-4", 1350);
-            Monitor monitor = laptop;
+            Monitor monitor = (Monitor)laptop;
 
             Assert.IsTrue(monitor.Name == "Novolen lf-4");
             Assert.IsTrue(monitor.Price == 1350);

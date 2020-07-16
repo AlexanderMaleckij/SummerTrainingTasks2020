@@ -69,19 +69,19 @@ namespace Task3
             return new Monitor($"{m1.Name} - {m2.Name}", (m1.Price + m2.Price) / 2);
         }
 
-        public static implicit operator Scales(Monitor monitor)
+        public static explicit operator Scales(Monitor monitor)
         {
             return new Scales(monitor.Name, monitor.Price);
         }
 
-        public static implicit operator BreadMachine(Monitor monitor)
+        public static explicit operator BreadMachine(Monitor monitor)
         {
-            return new Laptop(monitor.Name, monitor.Price);
+            return new BreadMachine(monitor.Name, monitor.Price);
         }
 
-        public static implicit operator Laptop(Monitor monitor)
+        public static explicit operator Laptop(Monitor monitor)
         {
-            return new Monitor(monitor.Name, monitor.Price);
+            return new Laptop(monitor.Name, monitor.Price);
         }
     }
 }

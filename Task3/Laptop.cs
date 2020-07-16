@@ -86,17 +86,17 @@ namespace Task3
             return new Laptop($"{l1.Name} - {l2.Name}", (l1.Price + l2.Price) / 2);
         }
 
-        public static implicit operator Scales(Laptop laptop)
+        public static explicit operator Scales(Laptop laptop)
         {
             return new Scales(laptop.Name, laptop.Price);
         }
 
-        public static implicit operator BreadMachine(Laptop laptop)
+        public static explicit operator BreadMachine(Laptop laptop)
         {
-            return new Laptop(laptop.Name, laptop.Price);
+            return new BreadMachine(laptop.Name, laptop.Price);
         }
 
-        public static implicit operator Monitor(Laptop laptop)
+        public static explicit operator Monitor(Laptop laptop)
         {
             return new Monitor(laptop.Name, laptop.Price);
         }

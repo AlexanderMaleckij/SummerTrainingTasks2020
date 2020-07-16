@@ -17,13 +17,13 @@ namespace Task3.Tests
         [TestMethod()]
         public void ProductToDoubleTest()
         {
-            Assert.AreEqual(new BreadMachine("vesta 100", 105.27), 105.27);
+            Assert.AreEqual((double)new BreadMachine("vesta 100", 105.27), 105.27);
         }
 
         [TestMethod()]
         public void ProductToIntTest()
         {
-            Assert.AreEqual(new BreadMachine("vesta 100", 105.27), 10527);
+            Assert.AreEqual((int)new BreadMachine("vesta 100", 105.27), 10527);
         }
     }
 }
