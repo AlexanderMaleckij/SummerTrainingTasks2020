@@ -45,7 +45,7 @@ namespace Task3.Tests
         }
 
         [TestMethod()]
-        public void CastToMonitoeTest()
+        public void CastToMonitorTest()
         {
             BreadMachine breadMachine = new BreadMachine("breadMaker 2000", 150);
             Monitor monitor = breadMachine;
