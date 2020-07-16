@@ -52,5 +52,20 @@ namespace Task3
         {
             return new Scales($"{s1.Name} - {s2.Name}", (s1.Price + s2.Price) / 2);
         }
+
+        public static implicit operator BreadMachine(Scales scales)
+        {
+            return new BreadMachine(scales.Name, scales.Price);
+        }
+
+        public static implicit operator Laptop(Scales scales)
+        {
+            return new Laptop(scales.Name, scales.Price);
+        }
+
+        public static implicit operator Monitor(Scales scales)
+        {
+            return new Monitor(scales.Name, scales.Price);
+        }
     }
 }

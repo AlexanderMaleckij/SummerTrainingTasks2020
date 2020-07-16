@@ -2,7 +2,7 @@
 
 namespace Task3
 {
-    class Monitor : ComputerTechnics
+    public class Monitor : ComputerTechnics
     {
         private double diagonalInches;
         private string matrixType;
@@ -67,6 +67,21 @@ namespace Task3
         public static Monitor operator +(Monitor m1, Monitor m2)
         {
             return new Monitor($"{m1.Name} - {m2.Name}", (m1.Price + m2.Price) / 2);
+        }
+
+        public static implicit operator Scales(Monitor monitor)
+        {
+            return new Scales(monitor.Name, monitor.Price);
+        }
+
+        public static implicit operator BreadMachine(Monitor monitor)
+        {
+            return new Laptop(monitor.Name, monitor.Price);
+        }
+
+        public static implicit operator Laptop(Monitor monitor)
+        {
+            return new Monitor(monitor.Name, monitor.Price);
         }
     }
 }

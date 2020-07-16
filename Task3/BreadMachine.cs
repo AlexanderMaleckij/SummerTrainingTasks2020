@@ -2,7 +2,7 @@
 
 namespace Task3
 {
-    class BreadMachine : HouseholdAppliances
+    public class BreadMachine : HouseholdAppliances
     {
         public bool IsHasNonStickCoating { get; set; }
         private int powerConsumption;
@@ -50,6 +50,21 @@ namespace Task3
         public static BreadMachine operator +(BreadMachine bm1, BreadMachine bm2)
         {
             return new BreadMachine($"{bm1.Name} - {bm2.Name}", (bm1.Price + bm2.Price) / 2);
+        }
+
+        public static implicit operator Scales(BreadMachine breadMachine)
+        {
+            return new Scales(breadMachine.Name, breadMachine.Price);
+        }
+
+        public static implicit operator Laptop(BreadMachine breadMachine)
+        {
+            return new Laptop(breadMachine.Name, breadMachine.Price);
+        }
+
+        public static implicit operator Monitor(BreadMachine breadMachine)
+        {
+            return new Monitor(breadMachine.Name, breadMachine.Price);
         }
     }
 }
