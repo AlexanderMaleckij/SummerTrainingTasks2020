@@ -13,7 +13,7 @@ namespace Task3
             get => type;
             set
             {
-                if (!string.IsNullOrEmpty(type))
+                if (!string.IsNullOrEmpty(value))
                 {
                     type = value;
                 }

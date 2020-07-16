@@ -14,7 +14,7 @@ namespace Task3
             {
                 if(value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Price can't be negative");
+                    throw new ArgumentException("Price can't be negative");
                 }
                 else
                 {
@@ -27,7 +27,7 @@ namespace Task3
             get => name;
             set
             {
-                if(!string.IsNullOrEmpty(name))
+                if(!string.IsNullOrEmpty(value))
                 {
                     name = value;
                 }
