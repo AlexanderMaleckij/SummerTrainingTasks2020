@@ -2,6 +2,9 @@
 
 namespace Task3
 {
+    /// <summary>
+    /// Class, that represent all bread machine products
+    /// </summary>
     public class BreadMachine : HouseholdAppliances
     {
         public bool IsHasNonStickCoating { get; set; }
@@ -38,6 +41,7 @@ namespace Task3
                 }
             }
         }
+
         public BreadMachine(string modelName, double price) : base(modelName, price) { }
 
         public BreadMachine(string modelName, double price, bool isHasNonStickCoating, int powerConsumption, int maxBuckingWeightGrams) : base(modelName, price)
@@ -52,19 +56,33 @@ namespace Task3
             return new BreadMachine($"{bm1.Name} - {bm2.Name}", (bm1.Price + bm2.Price) / 2);
         }
 
+        #region explicit castings to other types of products
+        /// <summary>
+        /// Explicit casting of product with type BreadMachine to type Scales
+        /// </summary>
+        /// <param name="breadMachine"></param>
         public static implicit operator Scales(BreadMachine breadMachine)
         {
             return new Scales(breadMachine.Name, breadMachine.Price);
         }
 
+        /// <summary>
+        /// Explicit casting of product with type BreadMachine to type Laptop
+        /// </summary>
+        /// <param name="breadMachine"></param>
         public static implicit operator Laptop(BreadMachine breadMachine)
         {
             return new Laptop(breadMachine.Name, breadMachine.Price);
         }
 
+        /// <summary>
+        /// Explicit casting of product with type BreadMachine to type Monitor
+        /// </summary>
+        /// <param name="breadMachine"></param>
         public static implicit operator Monitor(BreadMachine breadMachine)
         {
             return new Monitor(breadMachine.Name, breadMachine.Price);
         }
+        #endregion
     }
 }

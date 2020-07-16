@@ -2,6 +2,9 @@
 
 namespace Task3
 {
+    /// <summary>
+    /// Class, that represent all scales products
+    /// </summary>
     public class Scales : HouseholdAppliances
     {
         private int maxWeightGrams;
@@ -53,19 +56,33 @@ namespace Task3
             return new Scales($"{s1.Name} - {s2.Name}", (s1.Price + s2.Price) / 2);
         }
 
+        #region explicit castings to other types of products
+        /// <summary>
+        /// Explicit casting of product with type Scales to type BreadMachine
+        /// </summary>
+        /// <param name="scales">Instance of the Scales class for casting</param>
         public static explicit operator BreadMachine(Scales scales)
         {
             return new BreadMachine(scales.Name, scales.Price);
         }
 
+        /// <summary>
+        /// Explicit casting of product with type Scales to type Laptop
+        /// </summary>
+        /// <param name="scales">Instance of the Scales class for casting</param>
         public static explicit operator Laptop(Scales scales)
         {
             return new Laptop(scales.Name, scales.Price);
         }
 
+        /// <summary>
+        /// Explicit casting of product with type Scales to type Monitor
+        /// </summary>
+        /// <param name="scales">Instance of the Scales class for casting</param>
         public static explicit operator Monitor(Scales scales)
         {
             return new Monitor(scales.Name, scales.Price);
         }
+        #endregion
     }
 }

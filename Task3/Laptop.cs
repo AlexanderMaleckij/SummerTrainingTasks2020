@@ -2,6 +2,9 @@
 
 namespace Task3
 {
+    /// <summary>
+    /// Class, that represent all laptop products
+    /// </summary>
     public class Laptop : ComputerTechnics
     {
         private double diagonalInches;
@@ -86,19 +89,33 @@ namespace Task3
             return new Laptop($"{l1.Name} - {l2.Name}", (l1.Price + l2.Price) / 2);
         }
 
+        #region explicit castings to other types of products
+        /// <summary>
+        /// Explicit casting of product with type Laptop to type Scales
+        /// </summary>
+        /// <param name="laptop">Instance of the Laptop class for casting</param>
         public static explicit operator Scales(Laptop laptop)
         {
             return new Scales(laptop.Name, laptop.Price);
         }
 
+        /// <summary>
+        /// Explicit casting of product with type Laptop to type BreadMachine
+        /// </summary>
+        /// <param name="laptop">Instance of the Laptop class for casting</param>
         public static explicit operator BreadMachine(Laptop laptop)
         {
             return new BreadMachine(laptop.Name, laptop.Price);
         }
 
+        /// <summary>
+        /// Explicit casting of product with type Laptop to type Monitor
+        /// </summary>
+        /// <param name="laptop">Instance of the Laptop class for casting</param>
         public static explicit operator Monitor(Laptop laptop)
         {
             return new Monitor(laptop.Name, laptop.Price);
         }
+        #endregion
     }
 }

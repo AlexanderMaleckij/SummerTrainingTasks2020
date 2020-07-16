@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Task3
 {
+    /// <summary>
+    /// Base class for all product types
+    /// </summary>
     public abstract class ProductType : Product
     {
         private string type;

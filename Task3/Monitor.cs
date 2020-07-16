@@ -2,6 +2,9 @@
 
 namespace Task3
 {
+    /// <summary>
+    /// Class, that represent all monitors products
+    /// </summary>
     public class Monitor : ComputerTechnics
     {
         private double diagonalInches;
@@ -69,19 +72,33 @@ namespace Task3
             return new Monitor($"{m1.Name} - {m2.Name}", (m1.Price + m2.Price) / 2);
         }
 
+        #region explicit castings to other types of products
+        /// <summary>
+        /// Explicit casting of product with type Monitor to type Scales
+        /// </summary>
+        /// <param name="monitor">Instance of the Montior class for casting</param>
         public static explicit operator Scales(Monitor monitor)
         {
             return new Scales(monitor.Name, monitor.Price);
         }
 
+        /// <summary>
+        /// Explicit casting of product with type Monitor to type BreadMachine
+        /// </summary>
+        /// <param name="monitor">Instance of the Montior class for casting</param>
         public static explicit operator BreadMachine(Monitor monitor)
         {
             return new BreadMachine(monitor.Name, monitor.Price);
         }
 
+        /// <summary>
+        /// Explicit casting of product with type Monitor to type Laptop
+        /// </summary>
+        /// <param name="monitor">Instance of the Montior class for casting</param>
         public static explicit operator Laptop(Monitor monitor)
         {
             return new Laptop(monitor.Name, monitor.Price);
         }
+        #endregion
     }
 }
