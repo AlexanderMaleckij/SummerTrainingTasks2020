@@ -7,6 +7,11 @@ namespace ColorMaterial
     /// </summary>
     public sealed class Film : ColoratedMaterial
     {
+        public Film()
+        {
+            Color = Color.Transparent;
+        }
+
         public override void Colorize(Color color)
         {
             throw new ColorationException("Can't colorize a film");
@@ -49,7 +54,7 @@ namespace ColorMaterial
         /// <returns>String representation of a class instance</returns>
         public override string ToString()
         {
-            return "Film";
+            return $"{Color} Film";
         }
     }
 }

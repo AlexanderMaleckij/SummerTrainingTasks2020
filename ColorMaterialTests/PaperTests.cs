@@ -16,6 +16,7 @@ namespace ColorMaterial.Tests
         public void ColorizeTest()
         {
             ColoratedMaterial coloratedMaterial = new Paper();
+            Assert.ThrowsException<ColorationException>(() => coloratedMaterial.Colorize(Color.Transparent));
             coloratedMaterial.Colorize(Color.Blue);
             Assert.ThrowsException<ColorationException>(() => coloratedMaterial.Colorize(Color.Green));
         }
@@ -31,7 +32,7 @@ namespace ColorMaterial.Tests
         public void ToStringTest()
         {
             Paper paper = new Paper();
-            Assert.AreEqual(paper.ToString(), "Paper");
+            Assert.AreEqual(paper.ToString(), "White Paper");
         }
 
         [TestMethod()]

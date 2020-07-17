@@ -6,11 +6,13 @@ namespace ColorMaterial
     /// </summary>
     public enum Color
     {
-        Red = 0,
+        Transparent = 0,
+        Red,
         Green,
         Blue,
         Orange,
         Yellow,
-        Purple
+        Purple,
+        White
     }
 }

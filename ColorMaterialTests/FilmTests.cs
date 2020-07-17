@@ -23,7 +23,7 @@ namespace ColorMaterial.Tests
         public void ToStringTest()
         {
             Film film = new Film();
-            Assert.AreEqual(film.ToString(), "Film");
+            Assert.AreEqual(film.ToString(), "Transparent Film");
         }
 
         [TestMethod()]

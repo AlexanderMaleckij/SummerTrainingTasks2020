@@ -7,19 +7,28 @@ namespace ColorMaterial
     /// </summary>
     public sealed class Paper : ColoratedMaterial
     {
+        public const Color defaultPaperColor = Color.White;
         public bool IsCanPaint { get; set; }
 
         public Paper()
         {
             IsCanPaint = true;
+            Color = defaultPaperColor;
         }
 
         public override void Colorize(Color color)
         {
             if(IsCanPaint)
             {
-                Color = color;
-                IsCanPaint = false;
+                if(color == Color.Transparent)
+                {
+                    throw new ColorationException("Can't set paper color to transparent");
+                }
+                else
+                {
+                    Color = color;
+                    IsCanPaint = false;
+                }
             }
             else
             {
@@ -38,7 +47,7 @@ namespace ColorMaterial
         /// <returns>String representation of a class instance</returns>
         public override string ToString()
         {
-            return "Paper";
+            return $"{Color} Paper";
         }
 
         /// <summary>
