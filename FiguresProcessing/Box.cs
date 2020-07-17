@@ -42,8 +42,15 @@ namespace FiguresProcessing
         {
             if(AmountOfFigures < 20)
             {
-                this[AmountOfFigures] = figure;
-                AmountOfFigures++;
+                if(Find(figure) != null)
+                {
+                    throw new ArgumentException("A figure with similar properties is already contained in the box");
+                }
+                else
+                {
+                    this[AmountOfFigures] = figure;
+                    AmountOfFigures++;
+                }
             }
             else
             {
