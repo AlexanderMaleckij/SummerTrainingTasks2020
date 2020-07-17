@@ -1,11 +1,13 @@
 ﻿
+using System;
+
 namespace ColorMaterial
 {
     /// <summary>
     /// Describes the paper material and 
     /// the possibility of it's colorizing
     /// </summary>
-    public class Paper : ColoratedMaterial
+    public sealed class Paper : ColoratedMaterial
     {
         public bool IsCanPaint { get; set; }
 
@@ -25,6 +27,11 @@ namespace ColorMaterial
             {
                 throw new ColorationException("The paper has already been painted");
             }
+        }
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

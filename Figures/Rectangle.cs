@@ -202,5 +202,10 @@ namespace Figures
                 return (rectangle.side1Length == side1Length) && (rectangle.side2Length == side2Length);
             }
         }
+
+        public override object Clone()
+        {
+            return new Rectangle(Side1Length, Side2Length);
+        }
     }
 }

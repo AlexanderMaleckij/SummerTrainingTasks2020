@@ -179,5 +179,10 @@ namespace Figures
                 return square.sideLength == sideLength;
             }
         }
+
+        public override object Clone()
+        {
+            return new Square(SideLength);
+        }
     }
 }

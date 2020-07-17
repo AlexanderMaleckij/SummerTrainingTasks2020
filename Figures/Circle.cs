@@ -99,5 +99,10 @@ namespace Figures
                 return circle.radius == radius;
             }
         }
+
+        public override object Clone()
+        {
+            return new Circle(radius);
+        }
     }
 }

@@ -1,10 +1,12 @@
 ﻿
+using System;
+
 namespace ColorMaterial
 {
     /// <summary>
     /// Parent class for material classes that can be colored
     /// </summary>
-    public abstract class ColoratedMaterial
+    public abstract class ColoratedMaterial : ICloneable
     {
         /// <summary>
         /// Auto property for getting and setting 
@@ -17,5 +19,7 @@ namespace ColorMaterial
         /// </summary>
         /// <param name="color">material color</param>
         public abstract void Colorize(Color color);
+
+        public abstract object Clone();
     }
 }

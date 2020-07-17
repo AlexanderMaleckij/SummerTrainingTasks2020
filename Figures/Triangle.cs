@@ -198,5 +198,10 @@ namespace Figures
                 return (triangle.side1Length == side1Length) && (triangle.side2Length == side2Length) && (triangle.side3Length == side3Length);
             }
         }
+
+        public override object Clone()
+        {
+            return new Triangle(Side1Length, Side2Length, Side3Length);
+        }
     }
 }

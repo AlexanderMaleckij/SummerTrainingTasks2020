@@ -53,7 +53,7 @@ namespace FiguresProcessing
         
         public ColorizedMaterialFigure GetCopy(int number)
         {
-            return this[number].Clone();
+            return (ColorizedMaterialFigure)this[number].Clone();
         }
 
         public ColorizedMaterialFigure ExtractFigure(int number)

@@ -4,11 +4,12 @@ using System.Drawing;
 
 namespace Figures
 {
-    public abstract class Figure
+    public abstract class Figure : ICloneable
     {
         protected const string negativeSideLengthMsg = "length of the side can't be negative";
         public abstract double Area();
         public abstract double Perimeter();
+        public abstract object Clone();
 
         /// <summary>
         /// looks in the array for all shapes equal to a given
