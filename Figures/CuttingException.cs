@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Figures
 {
     [Serializable]
-    class CuttingException : Exception
+    public class CuttingException : Exception
     {
         public CuttingException() { }
 

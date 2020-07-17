@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Figures\Figures.csproj" />
+    <ProjectReference Include="..\Task2\Task2Figures.csproj" />
+  </ItemGroup>
+
+</Project>

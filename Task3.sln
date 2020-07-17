@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiguresProcessing", "Figure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorMaterialTests", "ColorMaterialTests\ColorMaterialTests.csproj", "{423889C8-C823-4802-8594-2CF257EC3552}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiguresTests", "FiguresTests\FiguresTests.csproj", "{34FC5597-084B-4F2D-A0B1-7F46AFCCFA20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{423889C8-C823-4802-8594-2CF257EC3552}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{423889C8-C823-4802-8594-2CF257EC3552}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{423889C8-C823-4802-8594-2CF257EC3552}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34FC5597-084B-4F2D-A0B1-7F46AFCCFA20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34FC5597-084B-4F2D-A0B1-7F46AFCCFA20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34FC5597-084B-4F2D-A0B1-7F46AFCCFA20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34FC5597-084B-4F2D-A0B1-7F46AFCCFA20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
