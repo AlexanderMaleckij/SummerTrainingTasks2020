@@ -6,7 +6,7 @@ namespace FiguresProcessing
 {
     public enum SaveMethod
     {
-        StteamWriter = 0,
+        StreamWriter = 0,
         XmlWriter
     }
 }

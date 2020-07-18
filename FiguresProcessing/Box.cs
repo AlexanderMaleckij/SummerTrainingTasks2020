@@ -165,7 +165,7 @@ namespace FiguresProcessing
 
             switch (saveMethod)
             {
-                case SaveMethod.StteamWriter:
+                case SaveMethod.StreamWriter:
                     dataRw = new StreamDataRWXml(fileName);
                     break;
                 case SaveMethod.XmlWriter:
@@ -176,6 +176,30 @@ namespace FiguresProcessing
             }
 
             dataRw.Write(SelectAppropriateFigures(saveMode));
+        }
+
+        public void LoadFigures(LoadMethod loadMethod, string fileName)
+        {
+            IDataRW dataRw;
+
+            switch (loadMethod)
+            {
+                case LoadMethod.StreamReader:
+                    dataRw = new StreamDataRWXml(fileName);
+                    break;
+                case LoadMethod.XmlReader:
+                    dataRw = new XmlDataRWXml(fileName);
+                    break;
+                default:
+                    throw new Exception($"Save method {loadMethod} not supported");
+            }
+
+            ColorizedMaterialFigure[] figuresForLoad = dataRw.Read();
+
+            foreach(ColorizedMaterialFigure figure in figuresForLoad)
+            {
+                AddFigure(figure);
+            }
         }
 
         private ColorizedMaterialFigure[] SelectAppropriateFigures(SaveMode saveMode)
