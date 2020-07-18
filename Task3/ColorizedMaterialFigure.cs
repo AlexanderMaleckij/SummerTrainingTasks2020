@@ -1,8 +1,7 @@
-﻿using ColorMaterial;
-using Figures;
+﻿using Figures;
 using System;
 
-namespace FiguresProcessing
+namespace ColorMaterial
 {
     public class ColorizedMaterialFigure : ICloneable
     {

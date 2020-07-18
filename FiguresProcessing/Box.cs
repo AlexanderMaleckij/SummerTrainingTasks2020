@@ -1,4 +1,5 @@
 ﻿using ColorMaterial;
+using DataRW;
 using Figures;
 using System;
 using System.Collections.Generic;
@@ -156,6 +157,64 @@ namespace FiguresProcessing
             }
 
             return filmFigures;
+        }
+
+        public void SaveFigures(SaveMode saveMode, SaveMethod saveMethod, string fileName)
+        {
+            IDataRW dataRw;
+
+            switch (saveMethod)
+            {
+                case SaveMethod.StteamWriter:
+                    dataRw = new StreamDataRWXml(fileName);
+                    break;
+                case SaveMethod.XmlWriter:
+                    dataRw = new XmlDataRWXml(fileName);
+                    break;
+                default:
+                    throw new Exception($"Save method {saveMode} not supported");
+            }
+
+            dataRw.Write(SelectAppropriateFigures(saveMode));
+        }
+
+        private ColorizedMaterialFigure[] SelectAppropriateFigures(SaveMode saveMode)
+        {
+            if(saveMode == SaveMode.SaveAllFigures)
+            {
+                return colorizedMaterialFigures;
+            }
+            else
+            {
+                List<ColorizedMaterialFigure> selectedFigures = new List<ColorizedMaterialFigure>();
+
+                foreach (ColorizedMaterialFigure figure in colorizedMaterialFigures)
+                {
+                    switch (saveMode)
+                    {
+                        case SaveMode.SaveOnlyFilmFigures:
+                        {
+                            if (figure.ColoratedMaterial is Film)
+                            {
+                                selectedFigures.Add(figure);
+                            }
+                            break;
+                        }
+                        case SaveMode.SaveOnlyPaperFigures:
+                        {
+                            if(figure.ColoratedMaterial is Paper)
+                            {
+                                selectedFigures.Add(figure);
+                            }
+                            break;
+                        }
+                        default:
+                            throw new Exception($"Save mode {saveMode} not supported");
+                    }
+                }
+
+                return selectedFigures.ToArray();
+            }
         }
     }
 }

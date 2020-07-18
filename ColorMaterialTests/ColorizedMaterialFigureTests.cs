@@ -1,12 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FiguresProcessing;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Figures;
-using ColorMaterial;
 
-namespace FiguresProcessing.Tests
+namespace ColorMaterial.Tests
 {
     [TestClass()]
     public class ColorizedMaterialFigureTests

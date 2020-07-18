@@ -1,6 +1,5 @@
 ﻿using ColorMaterial;
 using Figures;
-using FiguresProcessing;
 using System;
 using System.Collections.Generic;
 using System.IO;
