@@ -143,7 +143,7 @@ namespace DataRW
             convertedFigure.Add(new XElement("Type", figureFiels[0]));
             for (int i = 1; i < figureFiels.Length; i++)
             {
-                convertedFigure.Add(new XElement($"{i}SideLength", figureFiels[i]));
+                convertedFigure.Add(new XElement("SideLength", figureFiels[i]));
             }
             return convertedFigure;
         }
