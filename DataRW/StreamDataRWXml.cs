@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace DataRW
 {
-    class StreamDataRWXml : IDataRW
+    public class StreamDataRWXml : IDataRW
     {
         private string fileName;
         public StreamDataRWXml(string fileName)
@@ -44,6 +44,8 @@ namespace DataRW
         {
             List<ColorizedMaterialFigure> colorizedMaterialFigures = new List<ColorizedMaterialFigure>();
             XmlElement root = xmlDocument.DocumentElement;
+            Assembly colorMaterialAssembly = Assembly.Load("ColorMaterial");
+            Assembly figuresAssembly = Assembly.Load("Figures");
 
             foreach (XmlNode xnode in root)
             {
@@ -59,15 +61,16 @@ namespace DataRW
 
                         if(childnode.ChildNodes[0].Name == "Color")
                         {
-                            color = childnode.ChildNodes[0].Value;
+                            color = childnode.ChildNodes[0].InnerText;
                         }
 
                         if (childnode.ChildNodes[1].Name == "Material")
                         {
-                            material = childnode.ChildNodes[1].Value;
+                            material = childnode.ChildNodes[1].InnerText;
                         }
-
-                        ConstructorInfo materialTypeConstructor = Type.GetType(material, true, true).GetConstructor(new Type[] { });
+                        
+                        Type materialType = colorMaterialAssembly.GetType("ColorMaterial." + material, true, true);
+                        ConstructorInfo materialTypeConstructor = materialType.GetConstructor(new Type[] { });
                         coloratedMaterial = (ColoratedMaterial)materialTypeConstructor.Invoke(new object[] { });
 
                         if(coloratedMaterial is Paper && color != Paper.defaultPaperColor.ToString())
@@ -79,24 +82,24 @@ namespace DataRW
                     if (childnode.Name == "Figure")
                     {
                         int constructorParamsAmount = childnode.ChildNodes.Count - 1;
-                        Type figureType = Type.GetType(childnode.ChildNodes[0].Value, true, true);
+                        Type figureType = figuresAssembly.GetType("Figures." + childnode.ChildNodes[0].InnerText, true, true);
 
                         switch (constructorParamsAmount)
                         {
                             case 1:
                                 ConstructorInfo constructorInfo = figureType.GetConstructor(new Type[] { typeof(double) });
-                                figure = (Figure)constructorInfo.Invoke(new object[] { double.Parse(childnode.ChildNodes[1].Value) } );
+                                figure = (Figure)constructorInfo.Invoke(new object[] { double.Parse(childnode.ChildNodes[1].InnerText) } );
                                 break;
                             case 2:
                                 constructorInfo = figureType.GetConstructor(new Type[] { typeof(double), typeof(double) });
-                                figure = (Figure)constructorInfo.Invoke(new object[] { double.Parse(childnode.ChildNodes[1].Value), 
-                                                                                       double.Parse(childnode.ChildNodes[2].Value) });
+                                figure = (Figure)constructorInfo.Invoke(new object[] { double.Parse(childnode.ChildNodes[1].InnerText), 
+                                                                                       double.Parse(childnode.ChildNodes[2].InnerText) });
                                 break;
                             case 3:
                                 constructorInfo = figureType.GetConstructor(new Type[] { typeof(double), typeof(double), typeof(double) });
-                                figure = (Figure)constructorInfo.Invoke(new object[] { double.Parse(childnode.ChildNodes[1].Value),
-                                                                                       double.Parse(childnode.ChildNodes[2].Value),
-                                                                                       double.Parse(childnode.ChildNodes[3].Value)});
+                                figure = (Figure)constructorInfo.Invoke(new object[] { double.Parse(childnode.ChildNodes[1].InnerText),
+                                                                                       double.Parse(childnode.ChildNodes[2].InnerText),
+                                                                                       double.Parse(childnode.ChildNodes[3].InnerText)});
                                 break;
                         }
                     }

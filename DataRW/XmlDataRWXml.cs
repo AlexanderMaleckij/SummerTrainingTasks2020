@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace DataRW
 {
-    class XmlDataRWXml : IDataRW
+    public class XmlDataRWXml : IDataRW
     {
         private string fileName;
 
@@ -31,6 +31,7 @@ namespace DataRW
         public void Write(ColorizedMaterialFigure[] figures)
         {
             XmlWriter xmlWriter = XmlWriter.Create(fileName);
+            xmlWriter.WriteStartDocument();
             xmlWriter.WriteStartElement("ColorizedMaterialFigures");
             foreach (ColorizedMaterialFigure arrayFigure in figures)
             {
@@ -39,7 +40,11 @@ namespace DataRW
                 WriteFigure(arrayFigure.Figure, xmlWriter);
                 xmlWriter.WriteEndElement();
             }
-            xmlWriter.WriteEndAttribute();
+            xmlWriter.WriteEndElement();
+            xmlWriter.WriteEndDocument();
+            xmlWriter.Flush();
+            xmlWriter.Close();
+            xmlWriter.Dispose();
         }
 
         private static void WriteColoratedMaterial(ColoratedMaterial coloratedMaterial, XmlWriter xmlWriter)
@@ -58,7 +63,7 @@ namespace DataRW
             WriteElement("Type", figureFields[0], xmlWriter);
             for (int i = 1; i < figureFields.Length; i++)
             {
-                WriteElement($"{i}SideLength", figureFields[i], xmlWriter);
+                WriteElement("SideLength", figureFields[i], xmlWriter);
             }
             xmlWriter.WriteEndElement();
         }

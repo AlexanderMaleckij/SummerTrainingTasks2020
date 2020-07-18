@@ -3,7 +3,7 @@ using System;
 
 namespace DataRW
 {
-    interface IDataRW
+    public interface IDataRW
     {
         ColorizedMaterialFigure[] Read();
         void Write(ColorizedMaterialFigure[] figures);
