@@ -40,6 +40,10 @@ namespace FiguresProcessing
             }
         }
 
+        /// <summary>
+        /// method for adding new figures to the box
+        /// </summary>
+        /// <param name="figure">figure to add</param>
         public void AddFigure(ColorizedMaterialFigure figure)
         {
             if(AmountOfFigures < 20)
@@ -59,7 +63,12 @@ namespace FiguresProcessing
                 throw new OverflowException("The box is already full");
             }
         }
-        
+
+        /// <summary>
+        /// method for getting a copy of a figure from a box by its number
+        /// </summary>
+        /// <param name="number">figure number</param>
+        /// <returns>copy of figure</returns>
         public ColorizedMaterialFigure GetCopy(int number)
         {
             if(this[number] == null)
@@ -72,6 +81,12 @@ namespace FiguresProcessing
             }
         }
 
+        /// <summary>
+        /// method for getting a figure by number 
+        /// and removing it from the box
+        /// </summary>
+        /// <param name="number">figure number</param>
+        /// <returns>extracted figure</returns>
         public ColorizedMaterialFigure ExtractFigure(int number)
         {
             if(AmountOfFigures == 0)
@@ -93,11 +108,21 @@ namespace FiguresProcessing
             }
         }
 
+        /// <summary>
+        /// method for replacing one figure in a box with another by its number
+        /// </summary>
+        /// <param name="number">replacement figure number</param>
+        /// <param name="replacementFigure">figure to replace</param>
         public void Replace(int number, ColorizedMaterialFigure replacementFigure)
         {
             this[number] = (ColorizedMaterialFigure)replacementFigure.Clone();
         }
 
+        /// <summary>
+        /// method for finding a shape in a box similar to a given one
+        /// </summary>
+        /// <param name="desiredFigure">required figure</param>
+        /// <returns>copy of the found figure</returns>
         public ColorizedMaterialFigure Find(ColorizedMaterialFigure desiredFigure)
         {
             for(int i = 0; i < AmountOfFigures; i++)
@@ -110,6 +135,10 @@ namespace FiguresProcessing
             return null;
         }
 
+        /// <summary>
+        /// method for calculating the sum of the areas of all shapes in a box
+        /// </summary>
+        /// <returns>sum of the areas of all shapes in a box</returns>
         public double CalcTotalArea()
         {
             double area = 0;
@@ -122,6 +151,10 @@ namespace FiguresProcessing
             return area;
         }
 
+        /// <summary>
+        /// method for calculating the sum of the perimeters of all shapes in a box
+        /// </summary>
+        /// <returns>sum of the perimeters of all shapes in a box</returns>
         public double CalcTotalPerimeter()
         {
             double perimeter = 0;
@@ -134,6 +167,10 @@ namespace FiguresProcessing
             return perimeter;
         }
 
+        /// <summary>
+        /// method for getting all copies of circles in a box
+        /// </summary>
+        /// <returns>copies of circles in a box</returns>
         public ColorizedMaterialFigure[] GetAllCircles()
         {
             List<ColorizedMaterialFigure> circles = new List<ColorizedMaterialFigure>();
@@ -142,13 +179,17 @@ namespace FiguresProcessing
             {
                 if (this[i].Figure is Circle)
                 {
-                    circles.Add(this[i]);
+                    circles.Add((ColorizedMaterialFigure)this[i].Clone());
                 }
             }
 
             return circles.ToArray();
         }
 
+        /// <summary>
+        /// method for getting all copies of film figures in a box
+        /// </summary>
+        /// <returns>copies of film figures in a box</returns>
         public ColorizedMaterialFigure[] GetAllFilmFigures()
         {
             List<ColorizedMaterialFigure> filmFigures = new List<ColorizedMaterialFigure>();
@@ -157,13 +198,19 @@ namespace FiguresProcessing
             {
                 if (this[i].ColoratedMaterial is Film)
                 {
-                    filmFigures.Add(this[i]);
+                    filmFigures.Add((ColorizedMaterialFigure)this[i].Clone());
                 }
             }
 
             return filmFigures.ToArray();
         }
 
+        /// <summary>
+        /// method for saving figures from the box to a Xml file
+        /// </summary>
+        /// <param name="saveMode">save mode (all, only from paper, only from film)</param>
+        /// <param name="saveMethod">save method (streamWriter, xmlWriter)</param>
+        /// <param name="fileName">filename to save</param>
         public void SaveFigures(SaveMode saveMode, SaveMethod saveMethod, string fileName)
         {
             IDataRW dataRw;
@@ -183,6 +230,11 @@ namespace FiguresProcessing
             dataRw.Write(SelectAppropriateFigures(saveMode));
         }
 
+        /// <summary>
+        /// method for loading figures to the box from a Xml file
+        /// </summary>
+        /// <param name="loadMethod">method of loading (streamReader, xmlReader)</param>
+        /// <param name="fileName">filename to load</param>
         public void LoadFigures(LoadMethod loadMethod, string fileName)
         {
             IDataRW dataRw;
@@ -207,6 +259,11 @@ namespace FiguresProcessing
             }
         }
 
+        /// <summary>
+        /// method for selecting all box figures that satisfy a given parameter
+        /// </summary>
+        /// <param name="saveMode">save mode (all, only from paper, only from film)</param>
+        /// <returns>suitable figures</returns>
         private ColorizedMaterialFigure[] SelectAppropriateFigures(SaveMode saveMode)
         {
             if(saveMode == SaveMode.SaveAllFigures)
