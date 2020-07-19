@@ -114,11 +114,14 @@ namespace DataRW
 
             foreach (ColorizedMaterialFigure arrayFigure in figures)
             {
-                rootElement.Add(
-                    new XElement("ColorizedMaterialFigure", 
-                    ConvertToXElement(arrayFigure.ColoratedMaterial), 
+                if(arrayFigure != null)
+                {
+                    rootElement.Add(
+                    new XElement("ColorizedMaterialFigure",
+                    ConvertToXElement(arrayFigure.ColoratedMaterial),
                     ConvertToXElement(arrayFigure.Figure))
                     );
+                }
             }
 
             XDocument xdocument = new XDocument();

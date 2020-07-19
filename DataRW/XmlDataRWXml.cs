@@ -34,10 +34,13 @@ namespace DataRW
             xmlWriter.WriteStartElement("ColorizedMaterialFigures");
             foreach (ColorizedMaterialFigure arrayFigure in figures)
             {
-                xmlWriter.WriteStartElement("ColorizedMaterialFigure");
-                WriteColoratedMaterial(arrayFigure.ColoratedMaterial, xmlWriter);
-                WriteFigure(arrayFigure.Figure, xmlWriter);
-                xmlWriter.WriteEndElement();
+                if(arrayFigure != null)
+                {
+                    xmlWriter.WriteStartElement("ColorizedMaterialFigure");
+                    WriteColoratedMaterial(arrayFigure.ColoratedMaterial, xmlWriter);
+                    WriteFigure(arrayFigure.Figure, xmlWriter);
+                    xmlWriter.WriteEndElement();
+                }
             }
             xmlWriter.WriteEndElement();
             xmlWriter.WriteEndDocument();

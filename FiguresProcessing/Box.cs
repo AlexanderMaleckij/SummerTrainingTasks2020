@@ -3,12 +3,13 @@ using DataRW;
 using Figures;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FiguresProcessing
 {
-    public partial class Box
+    public class Box
     {
-        const int boxCapacity = 20;
+        public const int boxCapacity = 20;
         public int AmountOfFigures { get; private set; }
 
         ColorizedMaterialFigure[] colorizedMaterialFigures = new ColorizedMaterialFigure[boxCapacity];
@@ -61,7 +62,14 @@ namespace FiguresProcessing
         
         public ColorizedMaterialFigure GetCopy(int number)
         {
-            return (ColorizedMaterialFigure)this[number].Clone();
+            if(this[number] == null)
+            {
+                return null;
+            }
+            else
+            {
+                return (ColorizedMaterialFigure)this[number].Clone();
+            }
         }
 
         public ColorizedMaterialFigure ExtractFigure(int number)
@@ -87,31 +95,28 @@ namespace FiguresProcessing
 
         public void Replace(int number, ColorizedMaterialFigure replacementFigure)
         {
-            this[number] = replacementFigure;
+            this[number] = (ColorizedMaterialFigure)replacementFigure.Clone();
         }
 
         public ColorizedMaterialFigure Find(ColorizedMaterialFigure desiredFigure)
         {
-            ColorizedMaterialFigure foundFigure = null;
-
-            foreach(ColorizedMaterialFigure figure in colorizedMaterialFigures)
+            for(int i = 0; i < AmountOfFigures; i++)
             {
-                if (figure.Equals(desiredFigure))
+                if (this[i].Equals(desiredFigure))
                 {
-                    foundFigure = figure;
+                    return GetCopy(i);
                 }
             }
-
-            return foundFigure;
+            return null;
         }
 
         public double CalcTotalArea()
         {
             double area = 0;
 
-            foreach(ColorizedMaterialFigure figure in colorizedMaterialFigures)
+            for(int i = 0; i < AmountOfFigures; i++)
             {
-                area += figure.Figure.Area();
+                area += this[i].Figure.Area();
             }
 
             return area;
@@ -121,42 +126,42 @@ namespace FiguresProcessing
         {
             double perimeter = 0;
 
-            foreach (ColorizedMaterialFigure figure in colorizedMaterialFigures)
+            foreach(int i in Enumerable.Range(0, AmountOfFigures))
             {
-                perimeter += figure.Figure.Perimeter();
+                perimeter += this[i].Figure.Perimeter();
             }
 
             return perimeter;
         }
 
-        public List<ColorizedMaterialFigure> GetAllCircles()
+        public ColorizedMaterialFigure[] GetAllCircles()
         {
             List<ColorizedMaterialFigure> circles = new List<ColorizedMaterialFigure>();
 
-            foreach(ColorizedMaterialFigure figure in colorizedMaterialFigures)
+            for (int i = 0; i < AmountOfFigures; i++)
             {
-                if(figure.Figure is Circle)
+                if (this[i].Figure is Circle)
                 {
-                    circles.Add(figure);
+                    circles.Add(this[i]);
                 }
             }
 
-            return circles;
+            return circles.ToArray();
         }
 
-        public List<ColorizedMaterialFigure> GetAllFilmFigures()
+        public ColorizedMaterialFigure[] GetAllFilmFigures()
         {
             List<ColorizedMaterialFigure> filmFigures = new List<ColorizedMaterialFigure>();
 
-            foreach (ColorizedMaterialFigure figure in colorizedMaterialFigures)
+            for(int i = 0; i < AmountOfFigures; i++)
             {
-                if (figure.ColoratedMaterial is Film)
+                if (this[i].ColoratedMaterial is Film)
                 {
-                    filmFigures.Add(figure);
+                    filmFigures.Add(this[i]);
                 }
             }
 
-            return filmFigures;
+            return filmFigures.ToArray();
         }
 
         public void SaveFigures(SaveMode saveMode, SaveMethod saveMethod, string fileName)
@@ -212,26 +217,26 @@ namespace FiguresProcessing
             {
                 List<ColorizedMaterialFigure> selectedFigures = new List<ColorizedMaterialFigure>();
 
-                foreach (ColorizedMaterialFigure figure in colorizedMaterialFigures)
+                for(int i = 0; i < AmountOfFigures; i++)
                 {
                     switch (saveMode)
                     {
                         case SaveMode.SaveOnlyFilmFigures:
-                        {
-                            if (figure.ColoratedMaterial is Film)
                             {
-                                selectedFigures.Add(figure);
+                                if (this[i].ColoratedMaterial is Film)
+                                {
+                                    selectedFigures.Add(this[i]);
+                                }
+                                break;
                             }
-                            break;
-                        }
                         case SaveMode.SaveOnlyPaperFigures:
-                        {
-                            if(figure.ColoratedMaterial is Paper)
                             {
-                                selectedFigures.Add(figure);
+                                if (this[i].ColoratedMaterial is Paper)
+                                {
+                                    selectedFigures.Add(this[i]);
+                                }
+                                break;
                             }
-                            break;
-                        }
                         default:
                             throw new Exception($"Save mode {saveMode} not supported");
                     }

@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataRW", "DataRW\DataRW.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataRWTests", "DataRWTests\DataRWTests.csproj", "{6CAE40AD-549E-446C-A3D9-364C1A54C051}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiguresProcessingTests", "FiguresProcessingTests\FiguresProcessingTests.csproj", "{2DE033A1-3ADD-4922-83E3-9662242B32B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{6CAE40AD-549E-446C-A3D9-364C1A54C051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CAE40AD-549E-446C-A3D9-364C1A54C051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CAE40AD-549E-446C-A3D9-364C1A54C051}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE033A1-3ADD-4922-83E3-9662242B32B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE033A1-3ADD-4922-83E3-9662242B32B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE033A1-3ADD-4922-83E3-9662242B32B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE033A1-3ADD-4922-83E3-9662242B32B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
