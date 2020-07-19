@@ -13,6 +13,10 @@ namespace DataRW
             this.fileName = fileName;
         }
 
+        /// <summary>
+        /// Method for reading figures from Xml file using XmlReader
+        /// </summary>
+        /// <returns>readed figures</returns>
         public ColorizedMaterialFigure[] Read()
         {
             XmlReaderSettings settings = new XmlReaderSettings();
@@ -27,6 +31,10 @@ namespace DataRW
             return StreamDataRWXml.GetFiguresFromXMLDocument(xmlDocument);
         }
 
+        /// <summary>
+        /// Method for writing figures to Xml file using XmlWriter
+        /// </summary>
+        /// <param name="figures">figures for writing</param>
         public void Write(ColorizedMaterialFigure[] figures)
         {
             XmlWriter xmlWriter = XmlWriter.Create(fileName);
@@ -49,6 +57,11 @@ namespace DataRW
             xmlWriter.Dispose();
         }
 
+        /// <summary>
+        /// Method for writing given ColoratedMaterial class instance using given xmlWriter
+        /// </summary>
+        /// <param name="coloratedMaterial">instance for writing</param>
+        /// <param name="xmlWriter">xml writer</param>
         private static void WriteColoratedMaterial(ColoratedMaterial coloratedMaterial, XmlWriter xmlWriter)
         {
             xmlWriter.WriteStartElement("ColoratedMaterial");
@@ -58,6 +71,11 @@ namespace DataRW
             xmlWriter.WriteEndElement();
         }
 
+        /// <summary>
+        /// Method for writing given Figure class instance using given xmlWriter
+        /// </summary>
+        /// <param name="figure">figure for writing</param>
+        /// <param name="xmlWriter">xml writer</param>
         private static void WriteFigure(Figure figure, XmlWriter xmlWriter)
         {
             xmlWriter.WriteStartElement("Figure");
@@ -70,6 +88,12 @@ namespace DataRW
             xmlWriter.WriteEndElement();
         }
 
+        /// <summary>
+        /// Method for writing xml element to file
+        /// </summary>
+        /// <param name="name">xml element name</param>
+        /// <param name="value">xml element content</param>
+        /// <param name="xmlWriter">xml writer</param>
         private static void WriteElement(string name, string value, XmlWriter xmlWriter)
         {
             xmlWriter.WriteStartElement(name);
