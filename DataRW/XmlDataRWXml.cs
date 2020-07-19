@@ -4,6 +4,10 @@ using System.Xml;
 
 namespace DataRW
 {
+    /// <summary>
+    /// Class for read and write ColorizedMaterialFigure class instances
+    /// to xml file using XmlReader and XmlWriter
+    /// </summary>
     public class XmlDataRWXml : IDataRW
     {
         private string fileName;

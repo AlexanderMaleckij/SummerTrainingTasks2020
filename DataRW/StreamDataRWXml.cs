@@ -10,6 +10,10 @@ using System.Xml.Linq;
 
 namespace DataRW
 {
+    /// <summary>
+    /// Class for read and write ColorizedMaterialFigure class instances
+    /// to xml file using StreamReader and StreamWriter
+    /// </summary>
     public class StreamDataRWXml : IDataRW
     {
         private string fileName;
@@ -18,6 +22,10 @@ namespace DataRW
             this.fileName = fileName;
         }
 
+        /// <summary>
+        /// Method for reading figures from Xml file using StreamReader
+        /// </summary>
+        /// <returns></returns>
         public ColorizedMaterialFigure[] Read()
         {
             XmlDocument xmlDocument = new XmlDocument();
@@ -29,6 +37,10 @@ namespace DataRW
             return GetFiguresFromXMLDocument(xmlDocument);
         }
 
+        /// <summary>
+        /// Method for writing figures to Xml file using StreamWriter
+        /// </summary>
+        /// <param name="figures"></param>
         public void Write(ColorizedMaterialFigure[] figures)
         {
             XmlDocument xmlDocument = GetXMLDocument(figures);
@@ -39,6 +51,11 @@ namespace DataRW
             }
         }
 
+        /// <summary>
+        /// Method for converting given xmlDocument to array of figures
+        /// </summary>
+        /// <param name="xmlDocument">xml document</param>
+        /// <returns>array of figures</returns>
         public static ColorizedMaterialFigure[] GetFiguresFromXMLDocument(XmlDocument xmlDocument)
         {
             List<ColorizedMaterialFigure> colorizedMaterialFigures = new List<ColorizedMaterialFigure>();
@@ -108,6 +125,11 @@ namespace DataRW
             return colorizedMaterialFigures.ToArray();
         }
 
+        /// <summary>
+        /// Method for getting a xmlDocument from given array of figures
+        /// </summary>
+        /// <param name="figures">figures</param>
+        /// <returns>xml document</returns>
         private static XmlDocument GetXMLDocument(ColorizedMaterialFigure[] figures)
         {
             XElement rootElement = new XElement("ColorizedMaterialFigures");
@@ -130,6 +152,11 @@ namespace DataRW
             return ConvertToXmlDocument(xdocument);
         }
 
+        /// <summary>
+        /// Method for getting a XElement from given ColoratedMaterial class instance
+        /// </summary>
+        /// <param name="coloratedMaterial">ColoratedMaterial class instance</param>
+        /// <returns>XElement of ColoratedMaterial class instance</returns>
         private static XElement ConvertToXElement(ColoratedMaterial coloratedMaterial)
         {
             string[] coloratedMaterialFields = coloratedMaterial.ToString().Split(' ');
@@ -138,6 +165,11 @@ namespace DataRW
                    new XElement("Material", coloratedMaterialFields[1]));
         }
 
+        /// <summary>
+        /// Method for converting given Figure class instance to XElement
+        /// </summary>
+        /// <param name="figure">figure</param>
+        /// <returns>XElement of figure</returns>
         private static XElement ConvertToXElement(Figure figure)
         {
             string[] figureFiels = figure.ToString().Split(' ');
@@ -150,6 +182,11 @@ namespace DataRW
             return convertedFigure;
         }
 
+        /// <summary>
+        /// Method for converting a instance of type XDocument to XmlDocument
+        /// </summary>
+        /// <param name="xDocument">xDocument instance</param>
+        /// <returns>XmlDocument instance of xDocument instance</returns>
         private static XmlDocument ConvertToXmlDocument(XDocument xDocument)
         {
             XmlDocument xmlDocument = new XmlDocument();
