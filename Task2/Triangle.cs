@@ -87,9 +87,9 @@ namespace Task2Figures
             }
             else
             {
-                Side1Length = Distance(p1, p2);
-                Side2Length = Distance(p2, p3);
-                Side3Length = Distance(p3, p1);
+                Side1Length = Utils.Distance(p1, p2);
+                Side2Length = Utils.Distance(p2, p3);
+                Side3Length = Utils.Distance(p3, p1);
             }
         }
 

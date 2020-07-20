@@ -66,12 +66,12 @@ namespace Task2Figures
         /// <returns></returns>
         public static bool IsSquare(PointF a, PointF b, PointF c, PointF d, out double sideLength)
         {
-            double d0 = Distance(a, b);
-            double d1 = Distance(a, c);
-            double d2 = Distance(a, d);
-            double d3 = Distance(b, c);
-            double d4 = Distance(b, d);
-            double d5 = Distance(c, d);
+            double d0 = Utils.Distance(a, b);
+            double d1 = Utils.Distance(a, c);
+            double d2 = Utils.Distance(a, d);
+            double d3 = Utils.Distance(b, c);
+            double d4 = Utils.Distance(b, d);
+            double d5 = Utils.Distance(c, d);
             //get all possible combinations of the sides lengthes
             List<List<double>> permutations = Permutations.GetPermutations(new List<double> { d0, d1, d2, d3, d4, d5});
             foreach(List<double> permutation in permutations)
