@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using Task1;
 
 namespace Task1Tests
@@ -54,8 +55,12 @@ namespace Task1Tests
         [TestMethod]
         public void PrepareHistogramDataTestTest()
         {
-            (long euclidTimeMillis, long steinTimeMillis) = GCD.PrepareHistogramData(543888888, 964887888);
-            Assert.IsTrue(euclidTimeMillis >= steinTimeMillis);
+            Dictionary <string, long> measurements = GCD.PrepareHistogramData(543888888, 964887888);
+
+            Assert.IsTrue(measurements.ContainsKey("Euclid GCD time"));
+            Assert.IsTrue(measurements.ContainsKey("Stein GCD time"));
+
+            Assert.IsTrue(measurements["Euclid GCD time"] >= measurements["Stein GCD time"]);
         }
     }
 }

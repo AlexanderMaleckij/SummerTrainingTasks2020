@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Task1
 {
@@ -125,12 +126,17 @@ namespace Task1
         /// </summary>
         /// <param name="a">1st number</param>
         /// <param name="b">2nd number</param>
-        /// <returns>Euclid time (millis), Stein time (millis)</returns>
-        public static (long, long) PrepareHistogramData(int a, int b)
+        /// <returns>Dictionary, that contains key-value pairs nameOfGCDMethod - calcTimeInMillis</returns>
+        public static Dictionary<string, long> PrepareHistogramData(int a, int b)
         {
             EuclidGCD(a, b, out long timeEucid);
-            SteinGCD(a, b, out long timeStein);
-            return (timeEucid, timeStein);
+            SteinGCD(a, b,  out long timeStein);
+
+            Dictionary<string, long> measurements = new Dictionary<string, long>();
+            measurements.Add("Euclid GCD time", timeEucid);
+            measurements.Add("Stein GCD time", timeStein);
+
+            return measurements;
         }
 
         /// <summary>
