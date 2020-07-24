@@ -3,12 +3,18 @@ using System.Linq;
 
 namespace ServerSide
 {
+    /// <summary>
+    /// Class for collecting messages from clients
+    /// </summary>
     public class ClientsLogger
     {
         public ClientMessageHandler Handler { get; private set; }
 
         List<SenderMessages> activeSendersMessages = new List<SenderMessages>();
 
+        /// <summary>
+        /// Class, that represent one sender and it's messages
+        /// </summary>
         class SenderMessages
         {
             public List<Message> Messages { get; private set; } = new List<Message>();
@@ -35,6 +41,11 @@ namespace ServerSide
             };
         }
 
+        /// <summary>
+        /// Get all messages of all clients with specified login
+        /// </summary>
+        /// <param name="login">login to search for messages</param>
+        /// <returns>messages related to a client(s) with specified login</returns>
         public List<Message> GetSenderMessages(string login)
         {
             List<SenderMessages> senderMessages = activeSendersMessages.Where(x => x.Sender.Login == login).ToList();
