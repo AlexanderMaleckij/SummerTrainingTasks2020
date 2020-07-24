@@ -133,7 +133,7 @@ namespace ClientSide
                         while (socket.Available > 0);
 
                         ReceivedMsg?.Invoke(sb.ToString()); //notify all event subscribers (if they are)
-                        Debug.Print($"Client: receive messge: {sb}");
+                        Debug.Print($"Client: receive message: {sb}");
                         sb.Clear();         //clear StringBuilder instance from received message
                         Thread.Sleep(1);    //so as not to load the CPU by 100%
                     }

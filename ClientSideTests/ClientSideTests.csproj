@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ServerSide\ServerSide.csproj" />
     <ProjectReference Include="..\Task4\ClientSide.csproj" />
   </ItemGroup>
 

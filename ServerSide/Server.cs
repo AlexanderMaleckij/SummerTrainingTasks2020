@@ -79,8 +79,7 @@ namespace ServerSide
             if(isServerRunning)
             {
                 isServerRunning = false;
-                socket.Shutdown(SocketShutdown.Both);
-                socket.Close();
+                socket.Close(500);
             }
         }
 
@@ -158,6 +157,7 @@ namespace ServerSide
                             {
                                 string data = ReadClientData(senders[i].Socket);
                                 ReceivedMsg?.Invoke(senders[i], data);
+                                Debug.Print($"Server: receive data from {senders[i].Login}: {data}");
                             }
                         }
                         catch (SocketException e)
