@@ -34,6 +34,11 @@ namespace ClientSide
              {'y', "у"  }, {'z', "з"  }
         };
 
+        /// <summary>
+        /// Revert russian characters to english, english to russian
+        /// </summary>
+        /// <param name="transcodingStr">string for transcoding</param>
+        /// <returns>transcoded string</returns>
         public static string Transcode(string transcodingStr)
         {
             StringBuilder sb = new StringBuilder(transcodingStr.Length);
@@ -46,6 +51,11 @@ namespace ClientSide
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Get transcoded character (or sequence of characters)
+        /// </summary>
+        /// <param name="character">character for transcoding</param>
+        /// <returns>transcoded character (or sequence of characters)</returns>
         private static string GetSequence(char character)
         {
             string result = string.Empty;
@@ -71,8 +81,18 @@ namespace ClientSide
             return result;
         }
 
+        /// <summary>
+        /// Detect is given letter refers to a russian language alphabet
+        /// </summary>
+        /// <param name="letter">letter for detection</param>
+        /// <returns>is refers to a russian language</returns>
         private static bool IsRussianLetter(char letter) => ruToEnDictionary.Keys.Any(x => x == char.ToLower(letter));
 
+        /// <summary>
+        /// Detect is given letter refers to a english language alphabet
+        /// </summary>
+        /// <param name="letter">letter for detection</param>
+        /// <returns>is refers to a english language</returns>
         private static bool IsEnglishLetter(char letter) => enToRuDictionary.Keys.Any(x => x == char.ToLower(letter));
     }
 }
