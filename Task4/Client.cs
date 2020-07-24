@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -16,8 +17,8 @@ namespace ClientSide
         Socket socket;
         private int port;
         private string login;
-        private bool isListen = false;
-
+        private bool isActive = false;
+        Queue<string> messagesForSend = new Queue<string>();
         public Encoding ClientEncoding { get; private set; } = Encoding.Unicode;
 
         public IPAddress IPAddress { get; private set; }
@@ -87,6 +88,7 @@ namespace ClientSide
                 Send(Login);
                 Thread.Sleep(10);   //wait while server accept connection
                 ListenServerAsync();
+                SendMessagesAsync();
             }
             catch(SocketException e)
             {
@@ -99,7 +101,7 @@ namespace ClientSide
         {
             if(socket.Connected)
             {
-                isListen = false;
+                isActive = false;
                 socket.Shutdown(SocketShutdown.Both);        //waiting for the end of data transfer
                 socket.Close();     //closing connection and disposing resources used by the socket
             }
@@ -107,19 +109,18 @@ namespace ClientSide
 
         public void Send(string message)
         {
-            socket.Send(ClientEncoding.GetBytes(message));
-            Thread.Sleep(2);    //so that 2 messages sent in a row don't merge
+            messagesForSend.Enqueue(message);
         }
 
         private async void ListenServerAsync()
         {
-            isListen = true;
+            isActive = true;
 
             await Task.Run(() => {
 
                 StringBuilder sb = new StringBuilder();
 
-                while (isListen)
+                while (isActive)
                 {
                     try
                     {
@@ -138,7 +139,37 @@ namespace ClientSide
                     }
                     catch
                     {
-                        if (isListen)
+                        if (isActive)
+                        {
+                            throw;
+                        }
+                    }
+                }
+            });
+        }
+
+        private async void SendMessagesAsync()
+        {
+            await Task.Run(() => {
+
+                string message = string.Empty;
+
+                while (isActive)
+                {
+                    try
+                    {
+                        if(messagesForSend.Count != 0)
+                        {
+                            message = messagesForSend.Peek();               //get first message from Queue
+                            socket.Send(ClientEncoding.GetBytes(message));  //send message via socket
+                            messagesForSend.Dequeue();                      //remove message from Queue
+                        }
+
+                        Thread.Sleep(2);                //so that 2 messages sent in a row don't merge
+                    }
+                    catch
+                    {
+                        if (isActive)
                         {
                             throw;
                         }
