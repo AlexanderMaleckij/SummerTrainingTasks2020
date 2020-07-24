@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -94,6 +93,9 @@ namespace ClientSide
             }
         }
 
+        /// <summary>
+        /// For disconneting from server
+        /// </summary>
         public void Disconnect()
         {
             if(socket.Connected)
@@ -104,6 +106,10 @@ namespace ClientSide
             }
         }
 
+        /// <summary>
+        /// For sending data to server
+        /// </summary>
+        /// <param name="message"></param>
         public void Send(string message)
         {
             byte[] buffer = Encoding.Unicode.GetBytes(message);
@@ -111,6 +117,9 @@ namespace ClientSide
             Thread.Sleep(2);    //so that 2 messages sent in a row do not merge
         }
 
+        /// <summary>
+        /// receive messages, invoke event subscribers
+        /// </summary>
         private async void ListenServerAsync()
         {
             isActive = true;
@@ -134,7 +143,6 @@ namespace ClientSide
                         ReceivedMsg?.Invoke(sb.ToString()); //notify all event subscribers (if they are)
                         Debug.Print($"Client: receive message: {sb}");
                         sb.Clear();         //clear StringBuilder instance from received message
-                        //Thread.Sleep(1);
                     }
                     catch(Exception e)
                     {
@@ -147,8 +155,16 @@ namespace ClientSide
             });
         }
 
+        /// <summary>
+        /// Subscribes a handler to process new messages from the server
+        /// </summary>
+        /// <param name="handler">incoming messages handler</param>
         public void SubscribeHandler(ServerMessagesHandler handler) => ReceivedMsg += handler;
 
+        /// <summary>
+        /// Debscribes a handler from processing new messages from the server
+        /// </summary>
+        /// <param name="handler">incoming messages handler</param>
         public void DescribeHandler(ServerMessagesHandler handler) =>  ReceivedMsg -= handler;
     }
 }
