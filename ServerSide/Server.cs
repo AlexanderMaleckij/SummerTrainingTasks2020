@@ -56,6 +56,10 @@ namespace ServerSide
             Port = port;
         }
 
+        /// <summary>
+        /// Method for start the server
+        /// starts listening on a socket and allows connections
+        /// </summary>
         public void RunServer()
         {
             try
@@ -72,15 +76,23 @@ namespace ServerSide
             AcceptConnectionsAsync();
         }
 
+        /// <summary>
+        /// Server stop method (close socket)
+        /// </summary>
         public void StopServer()
         {
             if(isServerRunning)
             {
                 isServerRunning = false;
-                socket.Close();
+                socket.Close(1000);
             }
         }
 
+        /// <summary>
+        /// Method for sending a message to the client with the specified login
+        /// </summary>
+        /// <param name="recieverLogin">recipient login</param>
+        /// <param name="message">text of sending message</param>
         public async void SendAsync(string recieverLogin, string message)
         {
             await Task.Run(() =>
@@ -108,12 +120,19 @@ namespace ServerSide
             });
         }
 
+        /// <summary>
+        /// Method for sending a message with a same text to all attached clients 
+        /// </summary>
+        /// <param name="message">text of sending message</param>
         public void SendBroadcastAsync(string message)
         {
             Thread.Sleep(5);
             senders.Select(x => x.Login).Distinct().ToList().ForEach(login => SendAsync(login, message));
         }
 
+        /// <summary>
+        /// Method for accepting clients connections
+        /// </summary>
         private async void AcceptConnectionsAsync()
         {
             isServerRunning = true;
@@ -137,6 +156,10 @@ namespace ServerSide
             });
         }
 
+        /// <summary>
+        /// Method for listen data from 1 client asynchronously
+        /// </summary>
+        /// <param name="sender"></param>
         private async void ListenClientAsync(Sender sender)
         {
             await Task.Run(() =>
@@ -159,6 +182,11 @@ namespace ServerSide
             });
         }
 
+        /// <summary>
+        /// Method for reading message from specified client
+        /// </summary>
+        /// <param name="socket">sender socket</param>
+        /// <returns>read message</returns>
         private string ReadClientData(Socket socket)
         {
             try
@@ -183,8 +211,16 @@ namespace ServerSide
             }
         }
 
+        /// <summary>
+        /// Subscribes a handler to process new messages from the clients
+        /// </summary>
+        /// <param name="handler">incoming messages handler</param>
         public void Subscribe(ClientMessageHandler handler) => ReceivedMsg += handler;
 
+        /// <summary>
+        /// Debscribes a handler from processing new messages from the clients
+        /// </summary>
+        /// <param name="handler">incoming messages handler</param>
         public void Describe(ClientMessageHandler handler) => ReceivedMsg -= handler;
     }
 }
