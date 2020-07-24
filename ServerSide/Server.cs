@@ -15,7 +15,7 @@ namespace ServerSide
     {
         public event ClientMessageHandler ReceivedMsg;
         public List<Sender> senders = new List<Sender>();
-        Socket socket;
+        Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         int port;
         bool isServerRunning = false;
 
@@ -60,7 +60,6 @@ namespace ServerSide
         {
             try
             {
-                socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 socket.Bind(new IPEndPoint(IPAddress, port));
             }
             catch(SocketException e)
@@ -71,7 +70,6 @@ namespace ServerSide
 
             socket.Listen(0);
             AcceptConnectionsAsync();
-            ListenClientsAsync();
         }
 
         public void StopServer()
@@ -79,7 +77,7 @@ namespace ServerSide
             if(isServerRunning)
             {
                 isServerRunning = false;
-                socket.Close(500);
+                socket.Close();
             }
         }
 
@@ -94,10 +92,6 @@ namespace ServerSide
                     int exceptionCounter = 0;
                     try
                     {
-                        while (senders[i].Socket.Available > 0)   //wait while client send data to server
-                        {
-                            Thread.Sleep(1);
-                        }
                         senders[i].Socket.Send(ServerEncoding.GetBytes(message));
                     }
                     catch (SocketException)
@@ -116,8 +110,7 @@ namespace ServerSide
 
         public void SendBroadcastAsync(string message)
         {
-            Thread.Sleep(1);
-
+            Thread.Sleep(5);
             senders.Select(x => x.Login).Distinct().ToList().ForEach(login => SendAsync(login, message));
         }
 
@@ -132,8 +125,9 @@ namespace ServerSide
                     {
                         Socket clientSocket = socket.Accept();
                         string login = ReadClientData(clientSocket);
-
-                        senders.Add(new Sender(login, clientSocket));
+                        Sender sender = new Sender(login, clientSocket);
+                        senders.Add(sender);
+                        ListenClientAsync(sender);
                     }
                     catch (Exception e)
                     {
@@ -143,27 +137,23 @@ namespace ServerSide
             });
         }
 
-        private async void ListenClientsAsync()
+        private async void ListenClientAsync(Sender sender)
         {
             await Task.Run(() =>
             {
                 while (isServerRunning)
                 {
-                    for (int i = 0; i < senders.Count; i++)
+                    try
                     {
-                        try
+                        if (sender != null && sender.Socket.Available > 0)
                         {
-                            if (senders[i] != null && senders[i].Socket.Available > 0)
-                            {
-                                string data = ReadClientData(senders[i].Socket);
-                                ReceivedMsg?.Invoke(senders[i], data);
-                                Debug.Print($"Server: receive data from {senders[i].Login}: {data}");
-                            }
+                            string data = ReadClientData(sender.Socket);
+                            ReceivedMsg?.Invoke(sender, data);
                         }
-                        catch (SocketException e)
-                        {
-                            Debug.Print($"Data handler error: {e.Message}");
-                        }
+                    }
+                    catch (SocketException e)
+                    {
+                        Debug.Print($"Data handler error: {e.Message}");
                     }
                 }
             });

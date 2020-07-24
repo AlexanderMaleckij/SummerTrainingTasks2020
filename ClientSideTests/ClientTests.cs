@@ -54,10 +54,10 @@ namespace ClientSide.Tests
                 receivedTransodedMsg = Transcoder.Transcode(message);
             });
             server.SendBroadcastAsync("Hello, world!");
-            Thread.Sleep(5);
+            Thread.Sleep(10);
             Assert.AreEqual(Transcoder.Transcode("Hello, world!"), receivedTransodedMsg);
             server.SendAsync("Alexander", "Сообщение 1-му подключившемуся.");
-            Thread.Sleep(5);
+            Thread.Sleep(10);
             Assert.AreEqual(Transcoder.Transcode("Сообщение 1-му подключившемуся."), receivedTransodedMsg);
 
 
@@ -70,7 +70,7 @@ namespace ClientSide.Tests
             server.Subscribe(serverHandler);    //subscribe anonymous method handler
 
             client.Send(receivedTransodedMsg);
-            Thread.Sleep(5);
+            Thread.Sleep(10);
             Assert.AreEqual(receivedTransodedMsg, msgReceivedFromClient);
 
             //disconnect test part
