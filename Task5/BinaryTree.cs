@@ -7,7 +7,9 @@ namespace Tree
     public class BinaryTree<T> where T : IComparable<T>
     {
         private Node<T> root = null;
-        
+
+        #region methods of interacting with the tree (public methods)
+
         /// <summary>
         /// Allows to get amount of elements in the
         /// current BinaryTree class instance
@@ -46,13 +48,49 @@ namespace Tree
 
         public T Min()
         {
-            throw new NotImplementedException();
+            if(root == null)
+            {
+                throw new BinaryTreeException("tree contains no elements");
+            }
+
+            return RecursiveMin(root).Item;
         }
 
         public T Max()
         {
-            throw new NotImplementedException();
+            if (root == null)
+            {
+                throw new BinaryTreeException("tree contains no elements");
+            }
+
+            return RecursiveMax(root).Item;
         }
+
+        #endregion
+
+        #region recursive methods
+
+        private static Node<T> RecursiveMin(Node<T> node)
+        {
+            if(node.Left != null)
+            {
+                return RecursiveMin(node.Left);
+            }
+
+            return node;
+        }
+
+        private static Node<T> RecursiveMax(Node<T> node)
+        {
+            if (node.Right != null)
+            {
+                return RecursiveMin(node.Right);
+            }
+
+            return node;
+        }
+
+        #endregion
 
         public override bool Equals(object obj)
         {
