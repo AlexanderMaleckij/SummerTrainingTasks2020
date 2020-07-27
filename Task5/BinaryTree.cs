@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Tree
 {
-    public class BinaryTree<T> where T : IComparable<T>
+    public class BinaryTree<T> : ICollection<T> where T : IComparable<T>
     {
         private Node<T> root = null;
 
@@ -29,10 +31,8 @@ namespace Tree
             }
         }
 
-        /// <summary>
-        /// Adds a node to the tree
-        /// </summary>
-        /// <param name="item">value of new tree node</param>
+        public bool IsReadOnly => false;
+
         public void Add(T item)
         {
             if(root == null)
@@ -45,23 +45,31 @@ namespace Tree
             }
         }
 
-        /// <summary>
-        /// Remove a node from the tree
-        /// </summary>
-        /// <param name="item">value of the node to be removed</param>
-        public void Remove(T item)
+        public void AddRange(IEnumerable<T> collection)
         {
-            if(item != null)
+            foreach(T item in collection)
             {
-                root = RecursiveRemove(item, root);
+                Add(item);
             }
         }
 
-        /// <summary>
-        /// Searches for a node with the specified value in the tree
-        /// </summary>
-        /// <param name="item">desired value</param>
-        /// <returns>is find specified item in the tree</returns>
+        public bool Remove(T item)
+        {
+            bool isRemoved = false;
+
+            if (item != null)
+            {
+                root = RecursiveRemove(item, root, ref isRemoved);
+            }
+
+            return isRemoved;
+        }
+
+        public void Clear()
+        {
+            root = null;
+        }
+
         public bool Contains(T item)
         {
             if(item == null)
@@ -98,6 +106,34 @@ namespace Tree
             }
 
             return RecursiveMax(root).Item;
+        }
+       
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            int currentIndex = arrayIndex;
+
+            foreach(T item in this)
+            {
+                array[currentIndex] = item;
+                currentIndex++;
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator() => InOrderTravers(root);
+
+        IEnumerator<T> InOrderTravers(Node<T> node)
+        {
+            if (node != null)
+            {
+                InOrderTravers(node.Left);
+                yield return node.Item;
+                InOrderTravers(node.Right);
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         #endregion
@@ -221,7 +257,7 @@ namespace Tree
         /// <param name="item">value to remove</param>
         /// <param name="node">the root of the tree in which to remove</param>
         /// <returns>new tree root</returns>
-        private static Node<T> RecursiveRemove(T item, Node<T> node)
+        private static Node<T> RecursiveRemove(T item, Node<T> node, ref bool isRemoved)
         {
             if (node == null)
             {
@@ -247,18 +283,18 @@ namespace Tree
                         Node<T> min = RecursiveMin(rightSubTree);
                         min.Right = RemoveMin(rightSubTree);
                         min.Left = leftSubTree;
-
+                        isRemoved = true;
                         return BalanceNode(min);
 
                     }
                 case 1: //item > current node
                     {
-                        node.Right = RecursiveRemove(item, node.Right);
+                        node.Right = RecursiveRemove(item, node.Right, ref isRemoved);
                         break;
                     }
                 case -1: //item < current node
                     {
-                        node.Left = RecursiveRemove(item, node.Left);
+                        node.Left = RecursiveRemove(item, node.Left, ref isRemoved);
                         break;
                     }
             }
