@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Tree
 {
@@ -8,7 +6,7 @@ namespace Tree
     {
         private Node<T> root = null;
 
-        #region methods of interacting with the tree (public methods)
+        #region methods of interacting with the AVL tree (public methods)
 
         /// <summary>
         /// Allows to get amount of elements in the
@@ -138,7 +136,7 @@ namespace Tree
                 return node.Right;
             }
             node.Left = RemoveMin(node.Left);
-            return node;
+            return BalanceNode(node);
         }
 
         private static Node<T> RecursiveInsert(T item, Node<T> node)
@@ -166,7 +164,7 @@ namespace Tree
                     }
             }
 
-            return node;
+            return BalanceNode(node);
         }
 
         private static Node<T> RecursiveRemove(T item, Node<T> node)
@@ -196,7 +194,7 @@ namespace Tree
                         min.Right = RemoveMin(rightSubTree);
                         min.Left = leftSubTree;
 
-                        return min;
+                        return BalanceNode(min);
 
                     }
                 case 1: //item > current node
@@ -210,7 +208,78 @@ namespace Tree
                         break;
                     }
             }
+            return BalanceNode(node);
+        }
+
+        #endregion
+
+        #region tree balance methods
+
+        private static int NodeHeight(Node<T> node)
+        {
+            if(node == null)
+            {
+                return -1;
+            }
+            else
+            {
+                return node.Height;
+            }
+        }
+
+        private static int Delta(Node<T> node) => NodeHeight(node.Right) - NodeHeight(node.Left);
+
+        private static Node<T> BalanceNode(Node<T> node)
+        {
+            int leftHeight = NodeHeight(node.Left);
+            int rightHeight = NodeHeight(node.Right);
+
+            if(leftHeight > rightHeight)
+            {
+                node.Height = leftHeight + 1;
+            }
+            else
+            {
+                node.Height = rightHeight + 1;
+            }
+
+            if(Delta(node) == 2)
+            {
+                if(Delta(node.Right) < 0)
+                {
+                    node.Right = SmallRightRotate(node.Right);
+                }
+
+                return SmallLeftRotate(node);
+            }
+            if(Delta(node) == -2)
+            {
+                if(Delta(node.Left) > 0)
+                {
+                    node.Left = SmallLeftRotate(node.Left);
+                }
+
+                return SmallRightRotate(node);
+            }
             return node;
+        }
+
+        private static Node<T> SmallLeftRotate(Node<T> node)
+        {
+            Node<T> tmp = node.Right;
+            node.Right = tmp.Left;
+            tmp.Left = node;
+            node.Height -= 2;
+            return tmp;
+        }
+
+        private static Node<T> SmallRightRotate(Node<T> node)
+        {
+            Node<T> tmp = node.Left;
+            node.Left = tmp.Right;
+            tmp.Right = node;
+            node.Height -= 2;
+            return tmp;
         }
 
         #endregion
