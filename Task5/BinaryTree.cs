@@ -29,6 +29,10 @@ namespace Tree
             }
         }
 
+        /// <summary>
+        /// Adds a node to the tree
+        /// </summary>
+        /// <param name="item">value of new tree node</param>
         public void Add(T item)
         {
             if(root == null)
@@ -41,6 +45,10 @@ namespace Tree
             }
         }
 
+        /// <summary>
+        /// Remove a node from the tree
+        /// </summary>
+        /// <param name="item">value of the node to be removed</param>
         public void Remove(T item)
         {
             if(item != null)
@@ -49,6 +57,11 @@ namespace Tree
             }
         }
 
+        /// <summary>
+        /// Searches for a node with the specified value in the tree
+        /// </summary>
+        /// <param name="item">desired value</param>
+        /// <returns>is find specified item in the tree</returns>
         public bool Contains(T item)
         {
             if(item == null)
@@ -59,6 +72,10 @@ namespace Tree
             return RecursiveContains(item, root);
         }
 
+        /// <summary>
+        /// Searches the tree nodes and returns the minimum value of the tree node
+        /// </summary>
+        /// <returns>minimum value of a tree node</returns>
         public T Min()
         {
             if(root == null)
@@ -69,6 +86,10 @@ namespace Tree
             return RecursiveMin(root).Item;
         }
 
+        /// <summary>
+        /// searches the tree nodes and returns the maximum value of the tree node
+        /// </summary>
+        /// <returns>maximum value of a tree node</returns>
         public T Max()
         {
             if (root == null)
@@ -83,6 +104,12 @@ namespace Tree
 
         #region recursive methods
 
+        /// <summary>
+        /// Searches for a node with the specified value in the tree
+        /// </summary>
+        /// <param name="item">desired value</param>
+        /// <param name="node">root node for searching</param>
+        /// <returns>is find specified item in the subtree</returns>
         private static bool RecursiveContains(T item, Node<T> node)
         {
             if(node == null)
@@ -109,6 +136,11 @@ namespace Tree
             return false;
         }
 
+        /// <summary>
+        /// Searches the tree nodes and returns the minimum value of the tree node
+        /// </summary>
+        /// <param name="node">root node for searching</param>
+        /// <returns>minimum value of a tree node</returns>
         private static Node<T> RecursiveMin(Node<T> node)
         {
             if(node.Left != null)
@@ -119,6 +151,11 @@ namespace Tree
             return node;
         }
 
+        /// <summary>
+        /// Searches the tree nodes and returns the maximum value of the tree node
+        /// </summary>
+        /// <param name="node">root node for searching</param>
+        /// <returns>maximum value of a tree node</returns>
         private static Node<T> RecursiveMax(Node<T> node)
         {
             if (node.Right != null)
@@ -129,6 +166,11 @@ namespace Tree
             return node;
         }
 
+        /// <summary>
+        /// Remove node with mininal value in the tree in which the root is node variable
+        /// </summary>
+        /// <param name="node">root node for searching min and removing</param>
+        /// <returns>new tree root</returns>
         private static Node<T> RemoveMin(Node<T> node)
         {
             if (node.Left == null)
@@ -139,6 +181,12 @@ namespace Tree
             return BalanceNode(node);
         }
 
+        /// <summary>
+        /// Adds a node to the tree
+        /// </summary>
+        /// <param name="item">value to add</param>
+        /// <param name="node">the root of the tree in which to insert</param>
+        /// <returns>new tree root</returns>
         private static Node<T> RecursiveInsert(T item, Node<T> node)
         {
             if(node == null)
@@ -167,6 +215,12 @@ namespace Tree
             return BalanceNode(node);
         }
 
+        /// <summary>
+        /// Remove a node from the tree
+        /// </summary>
+        /// <param name="item">value to remove</param>
+        /// <param name="node">the root of the tree in which to remove</param>
+        /// <returns>new tree root</returns>
         private static Node<T> RecursiveRemove(T item, Node<T> node)
         {
             if (node == null)
@@ -215,6 +269,11 @@ namespace Tree
 
         #region tree balance methods
 
+        /// <summary>
+        /// Returns the height of a tree node
+        /// </summary>
+        /// <param name="node">tree node</param>
+        /// <returns>height of a tree node</returns>
         private static int NodeHeight(Node<T> node)
         {
             if(node == null)
@@ -227,8 +286,18 @@ namespace Tree
             }
         }
 
+        /// <summary>
+        /// Calculates the difference in heights of the left and right subtrees
+        /// </summary>
+        /// <param name="node">tree node</param>
+        /// <returns>difference in heights of the left and right subtrees</returns>
         private static int Delta(Node<T> node) => NodeHeight(node.Right) - NodeHeight(node.Left);
 
+        /// <summary>
+        /// Balances one level (root) of the tree
+        /// </summary>
+        /// <param name="node">tree root</param>
+        /// <returns>new tree root</returns>
         private static Node<T> BalanceNode(Node<T> node)
         {
             int leftHeight = NodeHeight(node.Left);
@@ -264,6 +333,11 @@ namespace Tree
             return node;
         }
 
+        /// <summary>
+        /// Performs a small left rotation of the tree around the specified node
+        /// </summary>
+        /// <param name="node">tree node</param>
+        /// <returns>new tree root</returns>
         private static Node<T> SmallLeftRotate(Node<T> node)
         {
             Node<T> tmp = node.Right;
@@ -273,6 +347,11 @@ namespace Tree
             return tmp;
         }
 
+        /// <summary>
+        /// Performs a small right rotation of the tree around the specified node
+        /// </summary>
+        /// <param name="node">tree node</param>
+        /// <returns>new tree root</returns>
         private static Node<T> SmallRightRotate(Node<T> node)
         {
             Node<T> tmp = node.Left;
@@ -284,6 +363,11 @@ namespace Tree
 
         #endregion
 
+        /// <summary>
+        /// Check equality of two BinaryTree class instances
+        /// </summary>
+        /// <param name="obj">second tree for comparison</param>
+        /// <returns>is two BinaryTree class instances equals</returns>
         public override bool Equals(object obj)
         {
             if(obj != null && obj is BinaryTree<T>)
@@ -294,6 +378,10 @@ namespace Tree
             return false;
         }
 
+        /// <summary>
+        /// Get string representation of BinaryTree class instance
+        /// </summary>
+        /// <returns>string of the tree rotated to the left 90 degrees</returns>
         public override string ToString()
         {
             if(root == null)
@@ -304,6 +392,10 @@ namespace Tree
             return root.ToString();
         }
 
+        /// <summary>
+        /// Serves as a default hash function
+        /// </summary>
+        /// <returns>instance hash code</returns>
         public override int GetHashCode()
         {
             if(root == null)
