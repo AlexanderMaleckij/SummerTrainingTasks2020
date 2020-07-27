@@ -43,7 +43,12 @@ namespace Tree
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            if(item == null)
+            {
+                return false;
+            }
+
+            return RecursiveContains(item, root);
         }
 
         public T Min()
@@ -69,6 +74,32 @@ namespace Tree
         #endregion
 
         #region recursive methods
+
+        private static bool RecursiveContains(T item, Node<T> node)
+        {
+            if(node == null)
+            {
+                return false;
+            }
+
+            switch(item.CompareTo(node.Item))
+            {
+                case 0:     //item = current node
+                    {
+                        return true;
+                    }
+                case 1:     //item > current node
+                    {
+                        return RecursiveContains(item, node.Right);
+                    }
+                case -1:    //item < current node
+                    {
+                        return RecursiveContains(item, node.Left);
+                    }
+            }
+
+            return false;
+        }
 
         private static Node<T> RecursiveMin(Node<T> node)
         {
