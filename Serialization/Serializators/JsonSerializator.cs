@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text.Json;
 
-namespace Serialization
+namespace Serialization.Serializators
 {
     class JsonSerializator<T> : ISerialize<T>
     {

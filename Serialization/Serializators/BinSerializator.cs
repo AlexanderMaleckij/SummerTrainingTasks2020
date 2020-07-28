@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Serialization
+namespace Serialization.Serializators
 {
     class BinSerializator<T> : ISerialize<T>
     {
