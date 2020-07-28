@@ -30,6 +30,20 @@ namespace Tree.Tests
         }
 
         [TestMethod()]
+        public void SerializationTest()
+        {
+            BinaryTree<Student.Student> studentsTree = new BinaryTree<Student.Student>();
+
+            List<Student.Student> testStudents = GetStudents;
+            studentsTree.AddRange(testStudents);
+            studentsTree.Serialize("tree.xml");
+
+            BinaryTree<Student.Student> deserializedStudentsTree = new BinaryTree<Student.Student>("tree.xml");
+
+            Assert.AreEqual(studentsTree, deserializedStudentsTree);
+        }
+
+        [TestMethod()]
         public void AddTest()
         {
             List<Student.Student> studentsCollection = GetStudents;

@@ -10,7 +10,7 @@ namespace Tree
     /// </summary>
     /// <typeparam name="T">type of the variable stored in the node</typeparam>
     [Serializable]
-    class Node<T>
+    public class Node<T>
     {
         public T Item { get; set; }
 
@@ -24,6 +24,8 @@ namespace Tree
         {
             Item = item;
         }
+
+        public Node() { }   //parameterless constructor for xml serialization
 
         /// <summary>
         /// Recursive method for getting string representation of current node 

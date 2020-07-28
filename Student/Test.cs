@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace Student
 {
@@ -6,7 +7,8 @@ namespace Student
     public class Test
     {
         string name;
-        string Name 
+
+        public string Name 
         { 
             get => name;
             set
@@ -19,7 +21,7 @@ namespace Student
                 name = value;
             }
         }
-        DateTime Date { get; set; }
+        public DateTime Date { get; set; }
 
         public Test(string name, DateTime dateTime)
         {

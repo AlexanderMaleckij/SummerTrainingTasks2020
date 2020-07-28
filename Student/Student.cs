@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace Student
 {
     [Serializable]
     public class Student : IComparable<Student>
     {
-        public readonly string fullName;
+        public string fullName;
+
+        [XmlArray("StudentTests"), XmlArrayItem(typeof(TestMark), ElementName = "TestMark")]
         public List<TestMark> StudentTests { get; set; } = new List<TestMark>();
 
         public Student(string fullName)

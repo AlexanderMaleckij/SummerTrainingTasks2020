@@ -46,7 +46,7 @@ namespace Student
 
         public override string ToString()
         {
-            return $"{test} Mark: {Mark}";
+            return $"{Test} Mark: {Mark}";
         }
 
         public override bool Equals(object obj)
@@ -66,7 +66,7 @@ namespace Student
 
         public override int GetHashCode()
         {
-            return test.GetHashCode() ^ mark.GetHashCode();
+            return Test.GetHashCode() ^ Mark.GetHashCode();
         }
     }
 }

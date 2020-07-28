@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Serialization;
+using Serialization.Serializers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -7,14 +9,22 @@ namespace Tree
     [Serializable]
     public class BinaryTree<T> : ICollection<T> where T : IComparable<T>
     {
-        private Node<T> root = null;
+        public Node<T> root = null;
 
-        #region methods of interacting with the AVL tree (public methods)
+        public BinaryTree() { } //parameterless constructor for XML serialization
 
-        /// <summary>
-        /// Allows to get amount of elements in the
-        /// current BinaryTree class instance
-        /// </summary>
+        public BinaryTree(string fileName)  //deserialization constructor
+        {
+            Serializer<Node<T>> serializer = new XmlSerializer<Node<T>>(fileName);
+            root = serializer.DeserializeItem();
+        }
+
+        public void Serialize(string fileName)
+        {
+            Serializer<Node<T>> serializer = new XmlSerializer<Node<T>>(fileName);
+            serializer.SerializeItem(root);
+        }
+
         public int Count
         {
             get
@@ -127,7 +137,6 @@ namespace Tree
             return GetEnumerator();
         }
 
-        #endregion
 
         #region recursive methods
 
