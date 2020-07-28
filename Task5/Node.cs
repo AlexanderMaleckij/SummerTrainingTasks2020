@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -8,6 +9,7 @@ namespace Tree
     /// Represents tree node
     /// </summary>
     /// <typeparam name="T">type of the variable stored in the node</typeparam>
+    [Serializable]
     class Node<T>
     {
         public T Item { get; set; }

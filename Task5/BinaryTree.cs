@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Tree
 {
+    [Serializable]
     public class BinaryTree<T> : ICollection<T> where T : IComparable<T>
     {
         private Node<T> root = null;

@@ -2,6 +2,7 @@
 
 namespace Student
 {
+    [Serializable]
     public class TestMark
     {
         Test test;
@@ -44,6 +45,26 @@ namespace Student
         public override string ToString()
         {
             return $"{test} Mark: {Mark}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(obj != null && obj is TestMark)
+            {
+                TestMark testMark = obj as TestMark;
+
+                if(test.Equals(testMark.Test) && mark == testMark.mark)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return test.GetHashCode() ^ mark.GetHashCode();
         }
     }
 }

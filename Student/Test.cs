@@ -2,6 +2,7 @@
 
 namespace Student
 {
+    [Serializable]
     public class Test
     {
         string name;
@@ -29,6 +30,26 @@ namespace Student
         public override string ToString()
         {
             return $"Test: \"{Name}\" held on {Date}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(obj != null && obj is Test)
+            {
+                Test test = obj as Test;
+
+                if(name == test.name && Date == test.Date)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return name.GetHashCode() ^ Date.GetHashCode();
         }
     }
 }
