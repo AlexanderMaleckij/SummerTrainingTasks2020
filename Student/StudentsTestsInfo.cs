@@ -5,7 +5,7 @@ namespace Student
 {
     public class StudentsTestsInfo
     {
-        BinaryTree<Student> Students { get; set; } = new BinaryTree<Student>();
+        public BinaryTree<Student> Students { get; set; } = new BinaryTree<Student>();
 
         public override string ToString()
         {

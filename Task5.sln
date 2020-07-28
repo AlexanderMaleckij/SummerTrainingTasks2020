@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tree", "Task5\Tree.csproj", "{DE84EF15-5D50-4CCF-9299-A7DD13599A24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tree", "Task5\Tree.csproj", "{DE84EF15-5D50-4CCF-9299-A7DD13599A24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Student", "Student\Student.csproj", "{5A96D8FF-7658-4E3A-9837-665A3AAD1740}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Student", "Student\Student.csproj", "{5A96D8FF-7658-4E3A-9837-665A3AAD1740}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeTests", "TreeTests\TreeTests.csproj", "{87A7B13E-AEE4-4B5F-83D8-3D825C82C22A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5A96D8FF-7658-4E3A-9837-665A3AAD1740}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A96D8FF-7658-4E3A-9837-665A3AAD1740}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A96D8FF-7658-4E3A-9837-665A3AAD1740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87A7B13E-AEE4-4B5F-83D8-3D825C82C22A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87A7B13E-AEE4-4B5F-83D8-3D825C82C22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87A7B13E-AEE4-4B5F-83D8-3D825C82C22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87A7B13E-AEE4-4B5F-83D8-3D825C82C22A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

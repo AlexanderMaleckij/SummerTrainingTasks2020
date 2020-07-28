@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Tree
@@ -117,6 +118,31 @@ namespace Tree
             }
 
             return hashCode;
+        }
+
+        /// <summary>
+        /// Supports a simple iteration over a tree nodes.
+        /// </summary>
+        /// <returns>IEnumerator</returns>
+        public IEnumerator<T> GetEnumerator()
+        {
+            if (Left != null)
+            {
+                foreach (var v in Left)
+                {
+                    yield return v;
+                }
+            }
+
+            yield return Item;
+
+            if (Right != null)
+            {
+                foreach (var v in Right)
+                {
+                    yield return v;
+                }
+            }
         }
     }
 }

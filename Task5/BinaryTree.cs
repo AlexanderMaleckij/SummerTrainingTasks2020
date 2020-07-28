@@ -119,17 +119,7 @@ namespace Tree
             }
         }
 
-        public IEnumerator<T> GetEnumerator() => InOrderTravers(root);
-
-        IEnumerator<T> InOrderTravers(Node<T> node)
-        {
-            if (node != null)
-            {
-                InOrderTravers(node.Left);
-                yield return node.Item;
-                InOrderTravers(node.Right);
-            }
-        }
+        public IEnumerator<T> GetEnumerator() => root.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator()
         {
