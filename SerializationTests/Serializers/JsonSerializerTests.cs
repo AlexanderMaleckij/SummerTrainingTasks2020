@@ -5,14 +5,14 @@ using System.Linq;
 namespace Serialization.Serializers.Tests
 {
     [TestClass()]
-    public class BinSerializerTests
+    public class JsonSerializerTests
     {
         [TestMethod()]
-        public void BinSerializerTest()
+        public void JsonSerializerTest()
         {
-            List<string> stringsCollection = new List<string>() { "test", "strings", "for", "binary", "serialization" };
+            List<string> stringsCollection = new List<string>() { "test", "strings", "for", "json", "serialization" };
 
-            Serializer<string> serializer = new BinSerializer<string>("serializationTest.bin");
+            Serializer<string> serializer = new JsonSerializer<string>("serializationTest.json");
 
             serializer.SerializeCollection(stringsCollection);
             Assert.IsTrue(Enumerable.SequenceEqual(stringsCollection, serializer.DeserializeCollection()));

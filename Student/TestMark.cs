@@ -42,6 +42,8 @@ namespace Student
             Mark = mark;
         }
 
+        public TestMark() { }    //parameterless constructor for deserialization
+
         public override string ToString()
         {
             return $"{test} Mark: {Mark}";

@@ -2,7 +2,7 @@
 
 namespace Serialization.Serializers
 {
-    class XmlSerializer<T> : Serializer<T>
+    public class XmlSerializer<T> : Serializer<T>
     {
         public XmlSerializer(string fileName)
         {

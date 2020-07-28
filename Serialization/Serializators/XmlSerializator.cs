@@ -16,10 +16,10 @@ namespace Serialization.Serializators
         public ICollection<T> DeserializeCollection()
         {
             ICollection<T> deserializedCollection = default;
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ICollection<T>));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
             using (FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate))
             {
-                deserializedCollection = (ICollection<T>)xmlSerializer.Deserialize(fs);
+                deserializedCollection = (List<T>)xmlSerializer.Deserialize(fs);
             }
 
             return deserializedCollection;
@@ -39,10 +39,10 @@ namespace Serialization.Serializators
 
         public void SerializeCollection(ICollection<T> collection)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ICollection<T>));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
             using (StreamWriter sw = new StreamWriter(FileName))
             {
-                xmlSerializer.Serialize(sw, collection);
+                xmlSerializer.Serialize(sw, (List<T>)collection);
                 sw.Flush();
             }
         }

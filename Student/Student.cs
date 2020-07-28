@@ -15,6 +15,8 @@ namespace Student
             this.fullName = fullName;
         }
 
+        public Student() { }    //parameterless constructor for deserialization
+
         public int CompareTo(Student other) => fullName.CompareTo(other.fullName);
 
         public override bool Equals(object obj)

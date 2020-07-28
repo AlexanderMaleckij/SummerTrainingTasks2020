@@ -2,7 +2,7 @@
 
 namespace Serialization.Serializers
 {
-    class JsonSerializer<T> : Serializer<T>
+    public class JsonSerializer<T> : Serializer<T>
     {
         public JsonSerializer(string fileName)
         {

@@ -26,6 +26,8 @@ namespace Student
             Name = name;
             Date = dateTime;
         }
+        
+        public Test() { }    //parameterless constructor for deserialization
 
         public override string ToString()
         {
