@@ -18,7 +18,14 @@ namespace Serialization.Serializators
             ICollection<T> deserializedCollection = default;
             using (StreamReader sr = new StreamReader(FileName))
             {
-                deserializedCollection = JsonSerializer.Deserialize<ICollection<T>>(sr.ReadToEnd());
+                var wrappedCollection = JsonSerializer.Deserialize<VersionWrapper<ICollection<T>>>(sr.ReadToEnd());
+
+                if(wrappedCollection.IsClassChanged)
+                {
+                    throw new SerializationVersionException("the class has changed since the serialization of this file");
+                }
+
+                deserializedCollection = wrappedCollection.Content;
             }
 
             return deserializedCollection;
@@ -29,7 +36,14 @@ namespace Serialization.Serializators
             T deserializedItem = default;
             using (StreamReader sr = new StreamReader(FileName))
             {
-                deserializedItem = JsonSerializer.Deserialize<T>(sr.ReadToEnd());
+                var wrappedItem = JsonSerializer.Deserialize<VersionWrapper<T>>(sr.ReadToEnd());
+
+                if (wrappedItem.IsClassChanged)
+                {
+                    throw new SerializationVersionException("the class has changed since the serialization of this file");
+                }
+
+                deserializedItem = wrappedItem.Content;
             }
 
             return deserializedItem;
@@ -39,7 +53,7 @@ namespace Serialization.Serializators
         {
             using (StreamWriter sw = new StreamWriter(FileName))
             {
-                sw.Write(JsonSerializer.Serialize(collection));
+                sw.Write(JsonSerializer.Serialize(new VersionWrapper<ICollection<T>>(collection)));
                 sw.Flush();
             }
         }
@@ -48,7 +62,7 @@ namespace Serialization.Serializators
         {
             using (StreamWriter sw = new StreamWriter(FileName))
             {
-                sw.Write(JsonSerializer.Serialize(item));
+                sw.Write(JsonSerializer.Serialize(new VersionWrapper<T>(item)));
                 sw.Flush();
             } 
         }

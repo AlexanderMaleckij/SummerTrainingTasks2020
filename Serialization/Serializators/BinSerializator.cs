@@ -19,7 +19,13 @@ namespace Serialization.Serializators
             BinaryFormatter formatter = new BinaryFormatter();
             using (FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate))
             {
-                deserializedCollection = (ICollection<T>)formatter.Deserialize(fs);
+                var wrappedCollection = (VersionWrapper<ICollection<T>>)formatter.Deserialize(fs);
+
+                if(wrappedCollection.IsClassChanged)
+                {
+                    throw new SerializationVersionException("the class has changed since the serialization of this file");
+                }
+                deserializedCollection = wrappedCollection.Content;
             }
 
             return deserializedCollection;
@@ -31,7 +37,13 @@ namespace Serialization.Serializators
             BinaryFormatter formatter = new BinaryFormatter();
             using(FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate))
             {
-                deserializedItem = (T)formatter.Deserialize(fs);
+                var wrappedItem = (VersionWrapper<T>)formatter.Deserialize(fs);
+
+                if(wrappedItem.IsClassChanged)
+                {
+                    throw new SerializationVersionException("the class has changed since the serialization of this file");
+                }
+                deserializedItem = wrappedItem.Content;
             }
 
             return deserializedItem;
@@ -42,7 +54,7 @@ namespace Serialization.Serializators
             BinaryFormatter formatter = new BinaryFormatter();
             using (FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate))
             {
-                formatter.Serialize(fs, collection);
+                formatter.Serialize(fs, new VersionWrapper<ICollection<T>>(collection));
                 fs.Flush();
             }
         }
@@ -52,7 +64,7 @@ namespace Serialization.Serializators
             BinaryFormatter formatter = new BinaryFormatter();
             using (FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate))
             {
-                formatter.Serialize(fs, item);
+                formatter.Serialize(fs, new VersionWrapper<T>(item));
                 fs.Flush();
             }
         }

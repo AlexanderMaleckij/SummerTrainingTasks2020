@@ -16,10 +16,16 @@ namespace Serialization.Serializators
         public ICollection<T> DeserializeCollection()
         {
             ICollection<T> deserializedCollection = default;
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(VersionWrapper<List<T>>));
             using (FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate))
             {
-                deserializedCollection = (List<T>)xmlSerializer.Deserialize(fs);
+                var wrappedCollection = (VersionWrapper<List<T>>)xmlSerializer.Deserialize(fs);
+
+                if(wrappedCollection.IsClassChanged)
+                {
+                    throw new SerializationVersionException("the class has changed since the serialization of this file");
+                }
+                deserializedCollection = wrappedCollection.Content;
             }
 
             return deserializedCollection;
@@ -28,10 +34,16 @@ namespace Serialization.Serializators
         public T DeserializeItem()
         {
             T deserializedItem = default;
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(VersionWrapper<T>));
             using (FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate))
             {
-                deserializedItem = (T)xmlSerializer.Deserialize(fs);
+                var wrappedItem = (VersionWrapper<T>)xmlSerializer.Deserialize(fs);
+
+                if(wrappedItem.IsClassChanged)
+                {
+                    throw new SerializationVersionException("the class has changed since the serialization of this file");
+                }
+                deserializedItem = wrappedItem.Content;
             }
 
             return deserializedItem;
@@ -39,20 +51,20 @@ namespace Serialization.Serializators
 
         public void SerializeCollection(ICollection<T> collection)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(VersionWrapper<List<T>>));
             using (StreamWriter sw = new StreamWriter(FileName))
             {
-                xmlSerializer.Serialize(sw, (List<T>)collection);
+                xmlSerializer.Serialize(sw, new VersionWrapper<List<T>>((List<T>)collection));
                 sw.Flush();
             }
         }
 
         public void SerializeItem(T item)
         {
-            XmlSerializer xml = new XmlSerializer(typeof(T));
+            XmlSerializer xml = new XmlSerializer(typeof(VersionWrapper<T>));
             using (StreamWriter sw = new StreamWriter(FileName))
             {
-                xml.Serialize(sw, item);
+                xml.Serialize(sw, new VersionWrapper<T>(item));
                 sw.Flush();
             }
         }
