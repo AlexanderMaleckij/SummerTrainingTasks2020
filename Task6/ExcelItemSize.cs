@@ -1,7 +1,7 @@
 ﻿
 namespace Excel
 {
-    class ExcelItemSize
+    public class ExcelItemSize
     {
         private int width = 1;
         private int height = 1;

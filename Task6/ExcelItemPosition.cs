@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Excel
 {
-    class ExcelItemPosition
+    public class ExcelItemPosition
     {
         private int x = 1;
         private int y = 1;
