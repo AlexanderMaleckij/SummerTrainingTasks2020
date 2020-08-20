@@ -12,7 +12,7 @@ namespace Excel.Properties
             get => width;
             set
             {
-                if (width < 1)
+                if (value < 1)
                 {
                     throw new ExcelItemSizeException("Excel item width can't be less than 1");
                 }
@@ -26,7 +26,7 @@ namespace Excel.Properties
             get => height;
             set
             {
-                if (height < 1)
+                if (value < 1)
                 {
                     throw new ExcelItemSizeException("Excel item hright can't be less than 1");
                 }
