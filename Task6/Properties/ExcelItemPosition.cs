@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Excel.PropertiesExceptions;
+using System;
 using System.Linq;
 using System.Text;
 
-namespace Excel.ItemsProperties
+namespace Excel.Properties
 {
     public class ExcelItemPosition
     {
@@ -16,7 +17,7 @@ namespace Excel.ItemsProperties
             {
                 if (IsContainsNotEnglishLetters(value))
                 {
-                    throw new ExcelItemException("The numbering of cells along the x-axis in Excel in string form must contain only English letters");
+                    throw new ExcelItemPositionException("The numbering of cells along the x-axis in Excel in string form must contain only English letters");
                 }
 
                 x = Convert(value);
@@ -29,7 +30,7 @@ namespace Excel.ItemsProperties
             {
                 if (IsContainsNotEnglishLetters(value))
                 {
-                    throw new ExcelItemException("The numbering of cells along the y-axis in Excel in string form must contain only English letters");
+                    throw new ExcelItemPositionException("The numbering of cells along the y-axis in Excel in string form must contain only English letters");
                 }
 
                 y = Convert(value);
@@ -42,7 +43,7 @@ namespace Excel.ItemsProperties
             {
                 if (value < 1)
                 {
-                    throw new ExcelItemException("Numbering of cells along the x-axis in Excel starts from 1");
+                    throw new ExcelItemPositionException("Numbering of cells along the x-axis in Excel starts from 1");
                 }
 
                 x = value;
@@ -55,7 +56,7 @@ namespace Excel.ItemsProperties
             {
                 if (value < 1)
                 {
-                    throw new ExcelItemException("Numbering of cells along the y-axis in Excel starts from 1");
+                    throw new ExcelItemPositionException("Numbering of cells along the y-axis in Excel starts from 1");
                 }
 
                 y = value;

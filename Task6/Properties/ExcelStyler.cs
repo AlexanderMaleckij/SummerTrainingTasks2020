@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Excel.PropertiesExceptions;
 using Microsoft.Office.Interop.Excel;
 
-namespace Excel.ItemsProperties
+namespace Excel.Properties
 {
     public class ExcelStyler
     {
@@ -14,7 +14,7 @@ namespace Excel.ItemsProperties
             {
                 if (value < 1)
                 {
-                    throw new ArgumentException("Font size can't be less than 1");
+                    throw new ExcelStylerException("Font size can't be less than 1");
                 }
 
                 fontSize = value;
@@ -27,7 +27,7 @@ namespace Excel.ItemsProperties
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentException("Font name can't be null or empty");
+                    throw new ExcelStylerException("Font name can't be null or empty");
                 }
 
                 font = value;

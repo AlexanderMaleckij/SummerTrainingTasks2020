@@ -1,4 +1,5 @@
-﻿using Excel.ItemsProperties;
+﻿using Excel.ItemsExceptions;
+using Excel.Properties;
 using Microsoft.Office.Interop.Excel;
 
 namespace Excel.Items

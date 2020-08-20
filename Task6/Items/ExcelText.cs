@@ -1,9 +1,10 @@
-﻿using Excel.ItemsProperties;
+﻿using Excel.ItemsExceptions;
+using Excel.Properties;
 using Microsoft.Office.Interop.Excel;
 
 namespace Excel.Items
 {
-    public class ExcelTextItem : ExcelItem
+    public class ExcelText : ExcelItem
     {
         private string text;
         private ExcelItemSize size = new ExcelItemSize();
@@ -15,7 +16,7 @@ namespace Excel.Items
             {
                 if (value == null)
                 {
-                    throw new ExcelItemException("Excel item size can't be null");
+                    throw new ExcelTextException("Excel item size can't be null");
                 }
 
                 size = value;
@@ -28,7 +29,7 @@ namespace Excel.Items
             {
                 if (value == null)
                 {
-                    throw new ExcelItemException("Style can't be null");
+                    throw new ExcelTextException("Style can't be null");
                 }
 
                 styler = value;
@@ -41,13 +42,13 @@ namespace Excel.Items
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ExcelItemException("Text cant be null or empty");
+                    throw new ExcelTextException("Text cant be null or empty");
                 }
 
                 text = value;
             }
         }
-        public ExcelTextItem(string text)
+        public ExcelText(string text)
         {
             Text = text;
         }

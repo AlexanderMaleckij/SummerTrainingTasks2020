@@ -1,11 +1,12 @@
-﻿using Excel.ItemsProperties;
+﻿using Excel.ItemsExceptions;
+using Excel.Properties;
 using Microsoft.Office.Interop.Excel;
 using System;
 using System.Data;
 
 namespace Excel.Items
 {
-    public class ExcelTableItem : ExcelItem
+    public class ExcelTable : ExcelItem
     {
         public System.Data.DataTable Table
         {
@@ -14,20 +15,20 @@ namespace Excel.Items
             {
                 if (value == null)
                 {
-                    throw new ExcelItemException("Table can't be null");
+                    throw new ExcelTableException("Table can't be null");
                 }
 
                 Table = value;
             }
         }
 
-        public ExcelTableItem(System.Data.DataTable table)
+        public ExcelTable(System.Data.DataTable table)
         {
             this.Table = table;
             Position = new ExcelItemPosition();
         }
 
-        public ExcelTableItem(System.Data.DataTable table, ExcelItemPosition position)
+        public ExcelTable(System.Data.DataTable table, ExcelItemPosition position)
         {
             Table = table;
             Position = position;

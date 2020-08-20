@@ -1,5 +1,6 @@
-﻿
-namespace Excel.ItemsProperties
+﻿using Excel.PropertiesExceptions;
+
+namespace Excel.Properties
 {
     public class ExcelItemSize
     {
@@ -13,7 +14,7 @@ namespace Excel.ItemsProperties
             {
                 if (width < 1)
                 {
-                    throw new ExcelItemException("Excel item width can't be less than 1");
+                    throw new ExcelItemSizeException("Excel item width can't be less than 1");
                 }
 
                 width = value;
@@ -27,7 +28,7 @@ namespace Excel.ItemsProperties
             {
                 if (height < 1)
                 {
-                    throw new ExcelItemException("Excel item hright can't be less than 1");
+                    throw new ExcelItemSizeException("Excel item hright can't be less than 1");
                 }
 
                 height = value;
