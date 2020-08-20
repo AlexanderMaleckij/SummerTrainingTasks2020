@@ -3,6 +3,7 @@ using Excel.Properties;
 using Microsoft.Office.Interop.Excel;
 using System;
 using System.Data;
+using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace Excel.Items
 {

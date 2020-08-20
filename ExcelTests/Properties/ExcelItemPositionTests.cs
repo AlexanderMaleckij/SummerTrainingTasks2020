@@ -1,44 +1,49 @@
-﻿using Xunit;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Excel.Properties;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using Excel.PropertiesExceptions;
 
 namespace Excel.Properties.Tests
 {
+    [TestClass()]
     public class ExcelItemPositionTests
     {
-        [Fact()]
+        [TestMethod()]
         public void ExcelItemPositionParameterlessConstructorTest()
         {
             ExcelItemPosition position = new ExcelItemPosition();
-            Assert.Equal(1, position.CellCoordNumberX);
-            Assert.Equal(1, position.CellCoordNumberY);
-            Assert.Equal("A", position.CellCoordX);
-            Assert.Equal("A", position.CellCoordY);
+            Assert.AreEqual(1, position.CellCoordNumberX);
+            Assert.AreEqual(1, position.CellCoordNumberY);
+            Assert.AreEqual("A", position.CellCoordX);
+            Assert.AreEqual("A", position.CellCoordY);
         }
 
-        [Fact()]
+        [TestMethod()]
         public void ExcelItemPositionStringCoordsConstructorTest()
         {
             ExcelItemPosition position = new ExcelItemPosition("B", "C");
-            Assert.Equal(2, position.CellCoordNumberX);
-            Assert.Equal(3, position.CellCoordNumberY);
-            Assert.Equal("B", position.CellCoordX);
-            Assert.Equal("C", position.CellCoordY);
+            Assert.AreEqual(2, position.CellCoordNumberX);
+            Assert.AreEqual(3, position.CellCoordNumberY);
+            Assert.AreEqual("B", position.CellCoordX);
+            Assert.AreEqual("C", position.CellCoordY);
 
-            Assert.Throws<ExcelItemPositionException>(() => new ExcelItemPosition("21B", "C"));
-            Assert.Throws<ExcelItemPositionException>(() => new ExcelItemPosition("B", "21C"));
+            Assert.ThrowsException<ExcelItemPositionException>(() => new ExcelItemPosition("21B", "C"));
+            Assert.ThrowsException<ExcelItemPositionException>(() => new ExcelItemPosition("B", "21C"));
         }
 
-        [Fact()]
+        [TestMethod()]
         public void ExcelItemPositionIntCoordsConstructorTest()
         {
             ExcelItemPosition position = new ExcelItemPosition(2, 3);
-            Assert.Equal(2, position.CellCoordNumberX);
-            Assert.Equal(3, position.CellCoordNumberY);
-            Assert.Equal("B", position.CellCoordX);
-            Assert.Equal("C", position.CellCoordY);
+            Assert.AreEqual(2, position.CellCoordNumberX);
+            Assert.AreEqual(3, position.CellCoordNumberY);
+            Assert.AreEqual("B", position.CellCoordX);
+            Assert.AreEqual("C", position.CellCoordY);
 
-            Assert.Throws<ExcelItemPositionException>(() => new ExcelItemPosition(1, 0));
-            Assert.Throws<ExcelItemPositionException>(() => new ExcelItemPosition(-1, 10));
+            Assert.ThrowsException<ExcelItemPositionException>(() => new ExcelItemPosition(1, 0));
+            Assert.ThrowsException<ExcelItemPositionException>(() => new ExcelItemPosition(-1, 10));
         }
     }
 }
