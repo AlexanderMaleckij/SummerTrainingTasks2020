@@ -1,5 +1,5 @@
 ﻿
-namespace Excel
+namespace Excel.ItemsProperties
 {
     public class ExcelItemSize
     {

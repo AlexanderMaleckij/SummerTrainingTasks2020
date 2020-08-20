@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Office.Interop.Excel;
 
-namespace Excel
+namespace Excel.ItemsProperties
 {
     public class ExcelStyler
     {

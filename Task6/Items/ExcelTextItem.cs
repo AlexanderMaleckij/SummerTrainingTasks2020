@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using Excel.ItemsProperties;
+using Microsoft.Office.Interop.Excel;
 
 namespace Excel.Items
 {
