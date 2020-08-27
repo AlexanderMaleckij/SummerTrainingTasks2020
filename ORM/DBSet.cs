@@ -7,6 +7,10 @@ using System.Data.SqlClient;
 
 namespace ORM
 {
+    //Represents Crearor class (in factory method pattern diagram)
+    //https://refactoring.guru/images/patterns/diagrams/factory-method/structure.png
+
+
     public abstract class DBSet<T> : IUnitOfWork, IRepository<T>, IEnumerable<T> where T : ModelBase
     {
         SqlConnection SqlConnection { get; set; }

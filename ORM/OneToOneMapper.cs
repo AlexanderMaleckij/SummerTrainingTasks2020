@@ -6,6 +6,13 @@ using System.Reflection;
 
 namespace ORM
 {
+    /// <summary>
+    /// Mapper that converts an instance of a model class 
+    /// to a record from the database and vice versa.
+    /// - Table and class names must match
+    /// - Table and class properties names must mutch
+    /// </summary>
+    /// <typeparam name="T">Mapped type</typeparam>
     class OneToOneMapper<T> : IMapper<T> where T : class, new()
     {
         private PropertyInfo[] Properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);

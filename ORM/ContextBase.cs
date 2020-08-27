@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace ORM
 {
+    /// <summary>
+    /// Base class for all contexts
+    /// </summary>
     public abstract class ContextBase
     {
         protected DataSet DataSet { get; set; } = new DataSet();
@@ -19,6 +22,11 @@ namespace ORM
 
         public abstract void SaveChanges();
 
+        /// <summary>
+        /// Method that causes changes to be saved to the database for each DbSet set
+        /// </summary>
+        /// <typeparam name="T">type of concrete context</typeparam>
+        /// <param name="concreteContext">concrete context instance</param>
         public static void SaveChanges<T>(T concreteContext) where T : ContextBase
         {
             PropertyInfo[] pi = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);

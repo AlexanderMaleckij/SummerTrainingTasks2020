@@ -2,6 +2,9 @@
 
 namespace ORM
 {
+    /// <summary>
+    /// Base class for all models
+    /// </summary>
     public abstract class ModelBase : INotifyPropertyChanged
     {
         private int id;

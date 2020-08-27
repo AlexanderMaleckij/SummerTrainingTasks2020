@@ -7,6 +7,13 @@ using System.Linq;
 
 namespace ORM
 {
+    //Represents all concrete products (in factory method pattern diagram) 
+    //https://refactoring.guru/images/patterns/diagrams/factory-method/structure.png
+
+    /// <summary>
+    /// Сontains the basic logic for working with the DataTable
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Repository<T> : IRepository<T> where T : ModelBase, new()
     {
         private DataTable Table { get; set; }
@@ -19,6 +26,10 @@ namespace ORM
             Table = dataSet.Tables[typeof(T).Name];
         }
 
+        /// <summary>
+        /// Add new dataTable row
+        /// </summary>
+        /// <param name="item">item to add</param>
         public void Add(T item)
         {
             if (Mapper.Map(Table).Any(x => x.Equals(item)))
@@ -32,8 +43,15 @@ namespace ORM
             }
         }
 
+        /// <summary>
+        /// Clear all dataTable items
+        /// </summary>
         public void Clear() => Table.Clear();
 
+        /// <summary>
+        /// Remove one item from dataTable
+        /// </summary>
+        /// <param name="item">item to remove</param>
         public void Remove(T item)
         {
             T oldItem = ItemsCopy.Where(x => x.Equals(item)).FirstOrDefault();
@@ -57,6 +75,11 @@ namespace ORM
             return items.GetEnumerator();
         }
 
+        /// <summary>
+        /// model class property change handler
+        /// </summary>
+        /// <param name="sender">model class instance</param>
+        /// <param name="e">PropertyChangedEventArgs</param>
         private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             T item = sender as T;
