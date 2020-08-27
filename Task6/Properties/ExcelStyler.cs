@@ -47,5 +47,45 @@ namespace Excel.Properties
             range.Font.Color = FontColor;
             range.Cells.Font.Name = Font;
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj != null && obj is ExcelStyler)
+            {
+                ExcelStyler styler = obj as ExcelStyler;
+                if(styler.BackgroundColor == BackgroundColor &&
+                    styler.Font == Font &&
+                    styler.FontColor == FontColor &&
+                    styler.FontSize == FontSize &&
+                    styler.HorizontalAlignment == HorizontalAlignment &&
+                    styler.VerticalAlignment == VerticalAlignment)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return (BackgroundColor.GetHashCode() << 6) ^
+                (Font.GetHashCode() << 5) ^
+                (FontColor.GetHashCode() << 4) ^
+                (FontSize.GetHashCode() << 3) ^
+                (HorizontalAlignment.GetHashCode() << 2) ^
+                VerticalAlignment.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(ExcelStyler)} " +
+                $"{nameof(BackgroundColor)} = {BackgroundColor}; " +
+                $"{nameof(Font)} = {Font}; " +
+                $"{nameof(FontColor)} = {FontColor}; " +
+                $"{nameof(FontSize)} = {FontSize}; " +
+                $"{nameof(HorizontalAlignment)} = {HorizontalAlignment}; " +
+                $"{nameof(VerticalAlignment)} = {VerticalAlignment}";
+        }
     }
 }

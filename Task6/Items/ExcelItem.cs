@@ -10,7 +10,7 @@ namespace Excel.Items
     public abstract class ExcelItem
     {
         private ExcelItemPosition position = new ExcelItemPosition();
-        protected ExcelItemSize size;
+        protected ExcelItemSize size = new ExcelItemSize();
 
         public ExcelItemSize Size
         {

@@ -12,9 +12,11 @@ namespace Excel.Items
     /// </summary>
     public class ExcelTable : ExcelItem
     {
+        private System.Data.DataTable table;
+
         public System.Data.DataTable Table
         {
-            get => Table;
+            get => table;
             set
             {
                 if (value == null)
@@ -22,21 +24,23 @@ namespace Excel.Items
                     throw new ExcelTableException("Table can't be null");
                 }
 
-                Table = value;
-                size.Height = value.Rows.Count + 1;
-                size.Width = value.Columns.Count;
+                table = value;
             }
         }
         public new ExcelItemSize Size
         {
-            get => size;
-            private set => size = value;
+            get
+            {
+                return new ExcelItemSize(
+                    Table.Columns.Count, 
+                    Table.Rows.Count + 1);
+            }
         }
 
 
         public ExcelTable(System.Data.DataTable table)
         {
-            this.Table = table;
+            Table = table;
             Position = new ExcelItemPosition();
         }
 

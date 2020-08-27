@@ -131,5 +131,32 @@ namespace Excel.Properties
             CellCoordNumberX = cellCoordNumberX;
             CellCoordNumberY = cellCoordNumberY;
         }
+
+        public override bool Equals(object obj)
+        {
+            if(obj != null && obj is ExcelItemPosition)
+            {
+                ExcelItemPosition position = obj as ExcelItemPosition;
+                if(CellCoordNumberX == position.CellCoordNumberX &&
+                   CellCoordNumberY == position.CellCoordNumberY)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return (CellCoordNumberX.GetHashCode() << 2) ^ CellCoordNumberY.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(ExcelItemPosition)} " +
+                $"{nameof(CellCoordNumberX)} = {CellCoordNumberX}; " +
+                $"{nameof(CellCoordNumberY)} = {CellCoordNumberY}";
+        }
     }
 }

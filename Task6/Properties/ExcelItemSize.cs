@@ -42,5 +42,32 @@ namespace Excel.Properties
             Width = width;
             Height = height;
         }
+
+        public override bool Equals(object obj)
+        {
+            if(obj != null && obj is ExcelItemSize)
+            {
+                ExcelItemSize size = obj as ExcelItemSize;
+                if(size.Height == Height &&
+                   size.Width == Width)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return (Width.GetHashCode() << 2) ^ Height.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(ExcelItemSize)} " +
+                $"{nameof(Width)} = {Width}; " +
+                $"{nameof(Height)} = {Height}";
+        }
     }
 }

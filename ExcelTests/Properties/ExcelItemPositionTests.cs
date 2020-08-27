@@ -1,8 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Excel.Properties;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Excel.PropertiesExceptions;
 
 namespace Excel.Properties.Tests
@@ -44,6 +40,31 @@ namespace Excel.Properties.Tests
 
             Assert.ThrowsException<ExcelItemPositionException>(() => new ExcelItemPosition(1, 0));
             Assert.ThrowsException<ExcelItemPositionException>(() => new ExcelItemPosition(-1, 10));
+        }
+
+        [TestMethod()]
+        public void EqualsTest()
+        {
+            ExcelItemPosition position1 = new ExcelItemPosition(2, 3);
+            ExcelItemPosition position2 = new ExcelItemPosition("B", "C");
+            Assert.IsTrue(position1.Equals(position2));
+            Assert.IsFalse(position1.Equals(new ExcelItemPositionException()));
+        }
+
+        [TestMethod()]
+        public void GetHashCodeTest()
+        {
+            ExcelItemPosition position1 = new ExcelItemPosition(2, 3);
+            ExcelItemPosition position2 = new ExcelItemPosition("B", "C");
+            Assert.AreEqual(position1.GetHashCode(), position2.GetHashCode());
+            Assert.AreNotEqual(position1.GetHashCode(), new ExcelItemPosition().GetHashCode());
+        }
+
+        [TestMethod()]
+        public void ToStringTest()
+        {
+            ExcelItemPosition position1 = new ExcelItemPosition(2, 3);
+            Assert.AreEqual("ExcelItemPosition CellCoordNumberX = 2; CellCoordNumberY = 3", position1.ToString());
         }
     }
 }
