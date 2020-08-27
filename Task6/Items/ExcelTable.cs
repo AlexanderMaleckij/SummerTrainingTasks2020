@@ -20,8 +20,16 @@ namespace Excel.Items
                 }
 
                 Table = value;
+                size.Height = value.Rows.Count + 1;
+                size.Width = value.Columns.Count;
             }
         }
+        public new ExcelItemSize Size
+        {
+            get => size;
+            private set => size = value;
+        }
+
 
         public ExcelTable(System.Data.DataTable table)
         {
@@ -35,7 +43,7 @@ namespace Excel.Items
             Position = position;
         }
 
-        public override void AddItem(Worksheet worksheet)
+        internal override void AddItem(Worksheet worksheet)
         {
             MarkupTablePlace(worksheet);
             FillTableHeader(worksheet);

@@ -7,6 +7,21 @@ namespace Excel.Items
     public abstract class ExcelItem
     {
         private ExcelItemPosition position = new ExcelItemPosition();
+        protected ExcelItemSize size;
+
+        public ExcelItemSize Size
+        {
+            get => size;
+            set
+            {
+                if (value == null)
+                {
+                    throw new ExcelItemException("Excel item size can't be null");
+                }
+
+                Size = value;
+            }
+        }
 
         public ExcelItemPosition Position
         {
@@ -22,6 +37,6 @@ namespace Excel.Items
             }
         }
 
-        public abstract void AddItem(Worksheet worksheet);
+        internal abstract void AddItem(Worksheet worksheet);
     }
 }

@@ -7,21 +7,8 @@ namespace Excel.Items
     public class ExcelText : ExcelItem
     {
         private string text;
-        private ExcelItemSize size = new ExcelItemSize();
         private ExcelStyler styler = new ExcelStyler();
-        public ExcelItemSize Size
-        {
-            get => size;
-            set
-            {
-                if (value == null)
-                {
-                    throw new ExcelTextException("Excel item size can't be null");
-                }
 
-                size = value;
-            }
-        }
         public ExcelStyler Styler
         {
             get => styler;
@@ -53,7 +40,7 @@ namespace Excel.Items
             Text = text;
         }
 
-        public override void AddItem(Worksheet worksheet)
+        internal override void AddItem(Worksheet worksheet)
         {
             worksheet.Cells[Position.CellCoordNumberY, Position.CellCoordNumberX] = Text;
             styler.ApplyStyle((Range)worksheet.Cells[Position.CellCoordNumberY, Position.CellCoordNumberX]);
