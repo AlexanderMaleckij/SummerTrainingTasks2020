@@ -4,6 +4,9 @@ using Microsoft.Office.Interop.Excel;
 
 namespace Excel.Items
 {
+    /// <summary>
+    /// Base class for all Excel items
+    /// </summary>
     public abstract class ExcelItem
     {
         private ExcelItemPosition position = new ExcelItemPosition();

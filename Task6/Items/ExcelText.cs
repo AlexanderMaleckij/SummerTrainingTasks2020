@@ -4,6 +4,9 @@ using Microsoft.Office.Interop.Excel;
 
 namespace Excel.Items
 {
+    /// <summary>
+    /// Class that represents excel cell(s) text
+    /// </summary>
     public class ExcelText : ExcelItem
     {
         private string text;

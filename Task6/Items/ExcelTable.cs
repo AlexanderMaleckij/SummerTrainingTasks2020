@@ -7,6 +7,9 @@ using Range = Microsoft.Office.Interop.Excel.Range;
 
 namespace Excel.Items
 {
+    /// <summary>
+    /// Class that represents excel table without header
+    /// </summary>
     public class ExcelTable : ExcelItem
     {
         public System.Data.DataTable Table

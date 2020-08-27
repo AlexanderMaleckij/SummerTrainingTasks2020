@@ -5,6 +5,10 @@ using System.Runtime.InteropServices;
 
 namespace Excel
 {
+    /// <summary>
+    /// Represents report class, that takes
+    /// elements inherited from ExcelItem
+    /// </summary>
     public class ExcelReport : IDisposable
     {
         private Application app;
