@@ -27,7 +27,7 @@ namespace ORM
         /// </summary>
         /// <typeparam name="T">type of concrete context</typeparam>
         /// <param name="concreteContext">concrete context instance</param>
-        public static void SaveChanges<T>(T concreteContext) where T : ContextBase
+        protected static void SaveChanges<T>(T concreteContext) where T : ContextBase
         {
             PropertyInfo[] pi = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
 

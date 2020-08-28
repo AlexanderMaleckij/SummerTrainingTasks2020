@@ -44,7 +44,7 @@ namespace Session.Models
             {
                 char lowerValue = char.ToLower(value);
 
-                if (lowerValue != 'm' || lowerValue != 'f')
+                if (lowerValue != 'm' && lowerValue != 'f')
                 {
                     throw new ArgumentException("Gender value can contains only 'm' or 'f' value");
                 }

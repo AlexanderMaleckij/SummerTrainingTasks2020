@@ -15,7 +15,7 @@ namespace Session.Models
             get => semester;
             set
             {
-                if (value != 1 || value != 2)
+                if (value != 1 && value != 2)
                 {
                     throw new ArgumentException($"{Semester} value must be 1 or 2");
                 }

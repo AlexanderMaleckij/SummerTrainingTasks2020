@@ -26,9 +26,10 @@ namespace Session.Models
 
         public StudentGroup() { }
 
-        public StudentGroup(string name)
+        public StudentGroup(string name, int transitionYear)
         {
             GroupName = name;
+            TransitionYear = transitionYear;
         }
 
         public override bool Equals(object obj)
@@ -37,7 +38,8 @@ namespace Session.Models
             {
                 StudentGroup studentGroup = obj as StudentGroup;
 
-                if (GroupName == studentGroup.GroupName)
+                if (GroupName == studentGroup.GroupName && 
+                    TransitionYear == studentGroup.TransitionYear)
                 {
                     return true;
                 }
@@ -48,14 +50,15 @@ namespace Session.Models
 
         public override int GetHashCode()
         {
-            return groupName.GetHashCode();
+            return (groupName.GetHashCode() << 2) ^ TransitionYear.GetHashCode();
         }
 
         public override string ToString()
         {
             return $"{nameof(Credit)} " +
                 $"{nameof(Id)}={Id} " +
-                $"{nameof(GroupName)}={GroupName}";
+                $"{nameof(GroupName)}={GroupName} " +
+                $"{nameof(TransitionYear)}={TransitionYear}";
         }
     }
 }

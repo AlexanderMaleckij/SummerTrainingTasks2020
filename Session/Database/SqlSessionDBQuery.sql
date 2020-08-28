@@ -15,21 +15,21 @@ IF EXISTS (SELECT 1 FROM information_schema.tables where table_name = 'StudentGr
 
 CREATE TABLE StudentGroup
 	(Id INT IDENTITY(1,1) PRIMARY KEY,
-	GroupName TEXT NOT NULL,
+	GroupName NVARCHAR(MAX) NOT NULL,
 	TransitionYear INT NOT NULL);	--year of transition to the new course (or enrollment in a group)
 
 CREATE TABLE Student
 	(Id       INT IDENTITY(1,1) PRIMARY KEY,
 	StudentGroupId INT   NOT NULL,
-	FullName TEXT NOT NULL,
+	FullName NVARCHAR(MAX) NOT NULL,
 	Gender   NVARCHAR(1)  NOT NULL,
 	DateOfBirth DATETIME  NOT NULL,
 	FOREIGN KEY (StudentGroupId) REFERENCES StudentGroup(Id) ON DELETE CASCADE);	--When deleting a group, delete students of this group
 
 CREATE TABLE KnowledgeControl
 	(Id    INT IDENTITY(1,1) PRIMARY KEY,
-	Semester  TINYINT CHECK (Term > 0 AND Term < 3),
-	SubjectName TEXT NOT NULL,
+	Semester  TINYINT CHECK (Semester > 0 AND Semester < 3),
+	SubjectName NVARCHAR(MAX) NOT NULL,
 	PassDate    DATETIME     NOT NULL,
 	StudentGroupId  INT,
 	FOREIGN KEY (StudentGroupId) REFERENCES StudentGroup(Id) ON DELETE CASCADE); --Remove all knowledge controls when deleting a group
@@ -50,7 +50,7 @@ CREATE TABLE Exam
 	FOREIGN KEY (StudentId) REFERENCES Student(Id),
 	FOREIGN KEY (KnowledgeControlId) REFERENCES KnowledgeControl(Id)  ON DELETE CASCADE);
 
-INSERT INTO StudentGroup (GroupName) VALUES 
+INSERT INTO StudentGroup (GroupName, TransitionYear) VALUES 
   ('IP-11', 2019), -- 1
   ('IS-11', 2019); -- 2
 

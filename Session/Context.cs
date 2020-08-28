@@ -28,7 +28,7 @@ namespace Session
         {
             if (contextInstance == null && connectionString == string.Empty)
             {
-                throw new Exception($"At the first call, the {nameof(connectionString)} parameter must be specified");
+                throw new ArgumentException($"At the first call, the {nameof(connectionString)} parameter must be specified");
             }
 
             if (contextInstance == null)
@@ -40,6 +40,14 @@ namespace Session
             return contextInstance;
         }
         #endregion
+        
+        public static void DisposeInstance()
+        {
+            if(contextInstance != null)
+            {
+                contextInstance = null;
+            }
+        }
 
         public override void SaveChanges() => SaveChanges(this);
     }
