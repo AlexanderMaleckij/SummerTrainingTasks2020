@@ -19,7 +19,7 @@ namespace Session.Tests
         {
             get => new Regex("^\\S+Task6\\\\").Match(typeof(ContextTests).Assembly.Location).Value;
         }
-        private string ConnectionString
+        internal string ConnectionString
         {
             get
             {

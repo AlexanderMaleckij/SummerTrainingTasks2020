@@ -27,7 +27,7 @@ namespace Excel.Items
                 table = value;
             }
         }
-        public new ExcelItemSize Size
+        public override ExcelItemSize Size
         {
             get
             {
@@ -35,6 +35,7 @@ namespace Excel.Items
                     Table.Columns.Count, 
                     Table.Rows.Count + 1);
             }
+            set { }
         }
 
 
@@ -59,11 +60,11 @@ namespace Excel.Items
 
         private void MarkupTablePlace(Worksheet worksheet)
         {
-            Range leftUpCorner = (Range)worksheet.Cells[Position.CellCoordNumberX,
-                                                        Position.CellCoordNumberY];
+            Range leftUpCorner = (Range)worksheet.Cells[Position.CellCoordNumberY,
+                                                        Position.CellCoordNumberX];
 
-            Range rightDownCorner = (Range)worksheet.Cells[Position.CellCoordNumberX + Table.Columns.Count,
-                                                           Position.CellCoordNumberY + Table.Rows.Count + 1];
+            Range rightDownCorner = (Range)worksheet.Cells[Position.CellCoordNumberY + Table.Rows.Count,
+                                                           Position.CellCoordNumberX + Table.Columns.Count - 1];
 
             Range tableRange = worksheet.get_Range(leftUpCorner, rightDownCorner);
 
@@ -80,7 +81,7 @@ namespace Excel.Items
 
             foreach (DataColumn column in Table.Columns)
             {
-                worksheet.Cells[currentCellCoordX, Position.CellCoordNumberY] = column.ColumnName;
+                worksheet.Cells[Position.CellCoordNumberY, currentCellCoordX] = column.ColumnName;
                 currentCellCoordX++;
             }
         }
@@ -97,7 +98,7 @@ namespace Excel.Items
 
                 foreach (object cell in cells)
                 {
-                    worksheet.Cells[currentCellCoordX, currentCellCoordY] = cell;
+                    worksheet.Cells[currentCellCoordY, currentCellCoordX] = cell;
                     currentCellCoordX++;
                 }
 

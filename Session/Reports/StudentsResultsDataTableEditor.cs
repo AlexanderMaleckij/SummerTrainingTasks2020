@@ -29,7 +29,7 @@ namespace Session.Reports
             get
             {
                 int sumOfMarks = DataTable.Rows.OfType<DataRow>().ToList().
-                Select(stidentMarks => stidentMarks.ItemArray.Skip(2).Select(x => int.Parse((string)x)).Sum()).Sum();
+                Select(stidentMarks => stidentMarks.ItemArray.Skip(1).Select(x => int.Parse((string)x)).Sum()).Sum();
                 int amountOfStudents = DataTable.Rows.Count;
                 return sumOfMarks / amountOfStudents;
             }
@@ -39,7 +39,7 @@ namespace Session.Reports
             get
             {
                 return DataTable.Rows.OfType<DataRow>().ToList().
-                Select(stidentMarks => stidentMarks.ItemArray.Skip(2).Select(x => int.Parse((string)x)).Min()).Min();
+                Select(stidentMarks => stidentMarks.ItemArray.Skip(1).Select(x => int.Parse((string)x)).Min()).Min();
             }
         }
         public double MaxMark
@@ -47,19 +47,36 @@ namespace Session.Reports
             get
             {
                 return DataTable.Rows.OfType<DataRow>().ToList().
-               Select(stidentMarks => stidentMarks.ItemArray.Skip(2).Select(x => int.Parse((string)x)).Max()).Max();
+               Select(stidentMarks => stidentMarks.ItemArray.Skip(1).Select(x => int.Parse((string)x)).Max()).Max();
             }
         }
-        public List<string> ExpelledStudents
+        public List<string> ExpelledStudentsExams
         {
             get
             {
                 List<string> expelledStudents = new List<string>();
                 foreach(DataRow row in DataTable.Rows)
                 {
-                    if(row.ItemArray.Skip(2).Select(x => int.Parse((string)x)).Any(x => x < 4))
+                    if(row.ItemArray.Skip(1).Select(x => int.Parse((string)x)).Any(x => x < 4))
                     {
-                        expelledStudents.Add((string)row.ItemArray[1]);
+                        expelledStudents.Add((string)row.ItemArray[0]);
+                    }
+                }
+
+                return expelledStudents;
+            }
+        }
+
+        public List<string> ExpelledStudentsCredits
+        {
+            get
+            {
+                List<string> expelledStudents = new List<string>();
+                foreach (DataRow row in DataTable.Rows)
+                {
+                    if (row.ItemArray.Skip(1).Any(x => (string)x == "Not passed"))
+                    {
+                        expelledStudents.Add((string)row.ItemArray[0]);
                     }
                 }
 
@@ -96,12 +113,10 @@ namespace Session.Reports
         {
             DataTable = new DataTable();
             this.rowsName = rowsName;
-            DataTable.Columns.Add("№");
             DataTable.Columns.Add(rowsName);
-            DataTable.Columns["№"].AutoIncrement = true;
             colNames.ForEach(colName => DataTable.Columns.Add(colName));
-            rowNames.Sort();
             rowNames.ForEach(x => DataTable.Rows.Add(x));
+            rowNames.Sort();
         }
 
         public PivotDataTable(DataTable dataTable)

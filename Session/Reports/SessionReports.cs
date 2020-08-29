@@ -8,9 +8,12 @@ using System.Linq;
 using Microsoft.Office.Interop.Excel;
 using DataTable = System.Data.DataTable;
 using System.Data;
+using System.Diagnostics;
 
 namespace Session.Reports
 {
+    //sorts are available in Excel tables
+
     public class SessionReports
     {
         Context context = Context.GetInstance();
@@ -33,20 +36,16 @@ namespace Session.Reports
                 creditExam.Items.Add(new ExcelTable(GetCreditsTable(group, latestSemester)));
 
                 var header = new ExcelText($"Session results of the {group.GroupName} group");
+                StyleTitleText(header);
                 header.Size.Width = creditExam.Size.Width;
-                header.Size.Height = 2;
-                header.Styler.BackgroundColor = XlRgbColor.rgbDarkGray;
-                header.Styler.FontColor =       XlRgbColor.rgbWhiteSmoke;
-                header.Styler.HorizontalAlignment = XlHAlign.xlHAlignCenter;
-                header.Styler.VerticalAlignment =   XlVAlign.xlVAlignCenter;
-                header.Styler.FontSize = 20;
                 var creditExamWithTitle = new ExcelStackPanel(Orientation.Vertical);
                 creditExamWithTitle.Items.Add(header);
-
+                creditExamWithTitle.Items.Add(creditExam);
                 creditsExams.Items.Add(creditExamWithTitle);
             }
 
             var excelReport = new ExcelReport();
+            excelReport.IsVisible = true;//DEBUG
             excelReport.AddReportItem(creditsExams);
             return excelReport;
         }
@@ -81,16 +80,15 @@ namespace Session.Reports
         /// <returns>list of expelled students</returns>
         public List<Student> GetExpelledStudents(StudentGroup group)
         {
-            List<Student> expelledStudents = new List<Student>();
-            var groupTerms = context.KnowledgeControls.ToList().Where(x => x.StudentGroupId == group.Id).Select(x => x.Semester).ToList();
-            foreach (int groupTerm in groupTerms)
+            var groupSemesters = context.KnowledgeControls.ToList().Where(x => x.StudentGroupId == group.Id).Select(x => x.Semester).Distinct().ToList();
+            List<string> expelledStudentsNames = new List<string>();
+            foreach (int groupSemester in groupSemesters)
             {
-                var studFullNames = new PivotDataTable(GetExamsTable(group, groupTerm)).ExpelledStudents;
-                expelledStudents.AddRange(context.Students.Where(x => studFullNames.Any(y => y == x.FullName)));
+                expelledStudentsNames.AddRange(new PivotDataTable(GetExamsTable(group, groupSemester)).ExpelledStudentsExams);
+                expelledStudentsNames.AddRange(new PivotDataTable(GetCreditsTable(group, groupSemester)).ExpelledStudentsCredits);
             }
-
-            expelledStudents.Distinct();
-            return expelledStudents;
+            expelledStudentsNames = expelledStudentsNames.Distinct().ToList();
+            return context.Students.Where(x => expelledStudentsNames.Any(y => y == x.FullName)).ToList();
         }
 
         /// <summary>
@@ -101,26 +99,45 @@ namespace Session.Reports
         /// <returns>table with passing results</returns>
         private DataTable GetExamsTable(StudentGroup group, int semester)
         {
-            var students = context.Students.Where(x => x.StudentGroupId == group.Id);
-            var examsControls = context.KnowledgeControls.GroupJoin(
-                context.Exams,
+            var students = context.Students.
+                Where(x => x.StudentGroupId == group.Id);
+            var knowledgeControls = context.KnowledgeControls.
+                Where(x => x.Semester == semester && x.StudentGroupId == group.Id);
+            var examsRezults = Context.GetInstance().Exams.Where(x =>
+                knowledgeControls.Any(t => t.Id == x.KnowledgeControlId) &&
+                students.Any(z => z.Id == x.StudentId));
+            var examsControls = knowledgeControls.GroupJoin(
+                examsRezults,
                 co => co.Id,
                 ex => ex.KnowledgeControlId,
                 (co, ex) => new
                 {
                     co.SubjectName,
                     co.PassDate,
-                    StudentResult = new 
-                    { 
-                        students.Where(x => x.Id == context.Exams.Where(t => t.KnowledgeControlId == co.Id).First().StudentId).First().FullName,
-                        context.Exams.Where(x => x.KnowledgeControlId == co.Id).First().Mark
-                    }
-                });
+                    StudentsResults = examsRezults.Where(x => x.KnowledgeControlId == co.Id).ToList().
+                        Select(exam => new {
+                            students.Where(stud => stud.Id == exam.StudentId).First().FullName,
+                            exam.Mark
+                        })
+                }).Where(x => x.StudentsResults.Count() != 0);
+            #if DEBUG
+            Debug.Print($"Exams of {group} in Semester:{semester}");
+            foreach (var examControl in examsControls)
+            {
+                Debug.Print($"subject:{examControl.SubjectName}; pass date:{examControl.PassDate}");
+                foreach (var passRez in examControl.StudentsResults)
+                {
+                    Debug.Print($"\tFullName:{passRez.FullName}; Mark:{passRez.Mark}");
+                }
+            }
+            #endif
             var dtCreator = new PivotDataTable(
                 "Student name", 
                 students.Select(x => x.FullName).ToList(),
                 examsControls.Select(x => x.SubjectName).ToList());
-            examsControls.ToList().ForEach(x => dtCreator[x.StudentResult.FullName, x.SubjectName] = x.StudentResult.Mark.ToString());
+            examsControls.ToList().
+                ForEach(examControl => examControl.StudentsResults.ToList().
+                ForEach(studRez => dtCreator[studRez.FullName, examControl.SubjectName] = studRez.Mark.ToString()));
             return dtCreator.DataTable;
         }
 
@@ -132,26 +149,35 @@ namespace Session.Reports
         /// <returns>table with passing results</returns>
         private DataTable GetCreditsTable(StudentGroup group, int semester)
         {
-            var students = context.Students.Where(x => x.StudentGroupId == group.Id);
-            var creditsControls = context.KnowledgeControls.GroupJoin(
-                context.Credits,
+            var students = context.Students.
+                Where(x => x.StudentGroupId == group.Id);
+            var knowledgeControls = context.KnowledgeControls.
+                Where(x => x.Semester == semester && x.StudentGroupId == group.Id);
+            var creditsRezults = Context.GetInstance().Credits.Where(x =>
+                knowledgeControls.Any(t => t.Id == x.KnowledgeControlId) &&
+                students.Any(z => z.Id == x.StudentId));
+            var creditsControls = knowledgeControls.GroupJoin(
+                creditsRezults,
                 co => co.Id,
-                cr => cr.KnowledgeControlId,
-                (co, cr) => new
+                ex => ex.KnowledgeControlId,
+                (co, ex) => new
                 {
                     co.SubjectName,
                     co.PassDate,
-                    StudentResult = new
-                    {
-                        students.Where(x => x.Id == context.Credits.Where(t => t.KnowledgeControlId == co.Id).First().StudentId).First().FullName,
-                        context.Credits.Where(x => x.KnowledgeControlId == co.Id).First().IsPassed
-                    }
-                });
+                    StudentsResults = creditsRezults.Where(x => x.KnowledgeControlId == co.Id).ToList().
+                        Select(exam => new {
+                            students.Where(stud => stud.Id == exam.StudentId).First().FullName,
+                            exam.IsPassed
+                        })
+                }).Where(x => x.StudentsResults.Count() != 0);
+
             var dtCreator = new PivotDataTable(
                 "Student name",
                 students.Select(x => x.FullName).ToList(),
                 creditsControls.Select(x => x.SubjectName).ToList());
-            creditsControls.ToList().ForEach(x => dtCreator[x.StudentResult.FullName, x.SubjectName] = x.StudentResult.IsPassed ? "Passed" : string.Empty);
+            creditsControls.ToList().
+                ForEach(examControl => examControl.StudentsResults.ToList().
+                ForEach(studRez => dtCreator[studRez.FullName, examControl.SubjectName] = studRez.IsPassed ? "Passed" : "Not passed"));
             return dtCreator.DataTable;
         }
 

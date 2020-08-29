@@ -95,7 +95,7 @@ namespace Session.Models
 
         public override string ToString()
         {
-            return $"{nameof(Student)} " +
+            return $"{nameof(KnowledgeControl)} " +
                 $"{nameof(Id)}={Id} " +
                 $"{nameof(Semester)}={Semester} " +
                 $"{nameof(SubjectName)}={SubjectName} " +

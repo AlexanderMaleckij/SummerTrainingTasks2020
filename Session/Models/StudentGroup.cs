@@ -55,7 +55,7 @@ namespace Session.Models
 
         public override string ToString()
         {
-            return $"{nameof(Credit)} " +
+            return $"{nameof(StudentGroup)} " +
                 $"{nameof(Id)}={Id} " +
                 $"{nameof(GroupName)}={GroupName} " +
                 $"{nameof(TransitionYear)}={TransitionYear}";

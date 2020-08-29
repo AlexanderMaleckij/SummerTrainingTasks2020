@@ -12,7 +12,7 @@ namespace Excel.Items
         private ExcelItemPosition position = new ExcelItemPosition();
         protected ExcelItemSize size = new ExcelItemSize();
 
-        public ExcelItemSize Size
+        public virtual ExcelItemSize Size
         {
             get => size;
             set

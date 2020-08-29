@@ -38,7 +38,7 @@ namespace Excel.Containers
                 spaceBetween = value;
             }
         }
-        public new ExcelItemSize Size
+        public override ExcelItemSize Size
         {
             get
             {
@@ -46,16 +46,17 @@ namespace Excel.Containers
                 {
                     case Orientation.Horizintal:
                         return new ExcelItemSize(
-                            items.Select(x => x.Size.Width + spaceBetween).Sum() - SpaceBetween,
-                            items.Select(x => x.Size.Height).Max());
+                            Items.Select(x => x.Size.Width + spaceBetween).Sum() - SpaceBetween,
+                            Items.Select(x => x.Size.Height).Max());
                     case Orientation.Vertical:
                         return new ExcelItemSize(
-                        items.Select(x => x.Size.Width).Max(),
-                        items.Select(x => x.Size.Height + spaceBetween).Sum() - SpaceBetween);
+                        Items.Select(x => x.Size.Width).Max(),
+                        Items.Select(x => x.Size.Height + spaceBetween).Sum() - SpaceBetween);
                     default:
                         throw new ExcelStackPanelException($"{Orientation} Orientation is not supportable");
                 }
             } 
+            set { }
         }
         
         public Orientation Orientation { get; set; }
@@ -75,20 +76,28 @@ namespace Excel.Containers
             int x = Position.CellCoordNumberX;
             int y = Position.CellCoordNumberY;
 
-            foreach(ExcelItem item in items)
+            foreach(ExcelItem currentItem in items)
             {
-                item.Position.CellCoordNumberX = x;
-                item.Position.CellCoordNumberY = y;
+                currentItem.Position.CellCoordNumberX = x;
+                currentItem.Position.CellCoordNumberY = y;
 
                 switch (Orientation)
                 {
-                    case Orientation.Horizintal: x += item.Size.Width + spaceBetween; break;
-                    case Orientation.Vertical: y += item.Size.Height + spaceBetween; break;
+                    case Orientation.Horizintal:
+                        {
+                            x += currentItem.Size.Width + spaceBetween;
+                            break;
+                        }
+                    case Orientation.Vertical:
+                        {
+                            y += currentItem.Size.Height + spaceBetween;
+                            break;
+                        }
                     default:
                         throw new ExcelStackPanelException($"{Orientation} Orientation is not supportable");
                 }
 
-                item.AddItem(worksheet);
+                currentItem.AddItem(worksheet);
             }
         }
     }
