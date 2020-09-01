@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Session" Class="SessionDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.Credits" Member="Credits">
+    <Type Name="Credits">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="KnowledgeControlId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StudentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IsPassed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="KnowledgeControls_Credits" Member="KnowledgeControls" ThisKey="KnowledgeControlId" OtherKey="Id" Type="KnowledgeControls" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="Students_Credits" Member="Students" ThisKey="StudentId" OtherKey="Id" Type="Students" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Exams" Member="Exams">
+    <Type Name="Exams">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="KnowledgeControlId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="StudentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Mark" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="KnowledgeControls_Exams" Member="KnowledgeControls" ThisKey="KnowledgeControlId" OtherKey="Id" Type="KnowledgeControls" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="Students_Exams" Member="Students" ThisKey="StudentId" OtherKey="Id" Type="Students" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.KnowledgeControls" Member="KnowledgeControls">
+    <Type Name="KnowledgeControls">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TeacherId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StudentGroupId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SubjectId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Semester" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="PassDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="KnowledgeControls_Credits" Member="Credits" ThisKey="Id" OtherKey="KnowledgeControlId" Type="Credits" />
+      <Association Name="KnowledgeControls_Exams" Member="Exams" ThisKey="Id" OtherKey="KnowledgeControlId" Type="Exams" />
+      <Association Name="StudentGroups_KnowledgeControls" Member="StudentGroups" ThisKey="StudentGroupId" OtherKey="Id" Type="StudentGroups" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="Subjects_KnowledgeControls" Member="Subjects" ThisKey="SubjectId" OtherKey="Id" Type="Subjects" IsForeignKey="true" />
+      <Association Name="Teachers_KnowledgeControls" Member="Teachers" ThisKey="TeacherId" OtherKey="Id" Type="Teachers" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Specialties" Member="Specialties">
+    <Type Name="Specialties">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SpecialtyName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Specialties_StudentGroups" Member="StudentGroups" ThisKey="Id" OtherKey="SpecialtyId" Type="StudentGroups" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StudentGroups" Member="StudentGroups">
+    <Type Name="StudentGroups">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SpecialtyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GroupName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="SeptemberYear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="StudentGroups_KnowledgeControls" Member="KnowledgeControls" ThisKey="Id" OtherKey="StudentGroupId" Type="KnowledgeControls" />
+      <Association Name="StudentGroups_Students" Member="Students" ThisKey="Id" OtherKey="StudentGroupId" Type="Students" />
+      <Association Name="Specialties_StudentGroups" Member="Specialties" ThisKey="SpecialtyId" OtherKey="Id" Type="Specialties" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Subjects" Member="Subjects">
+    <Type Name="Subjects">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SubjectName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Subjects_KnowledgeControls" Member="KnowledgeControls" ThisKey="Id" OtherKey="SubjectId" Type="KnowledgeControls" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Students" Member="Students">
+    <Type Name="Students">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StudentGroupId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Gender" Type="System.String" DbType="NVarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="DateOfBirth" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Students_Credits" Member="Credits" ThisKey="Id" OtherKey="StudentId" Type="Credits" />
+      <Association Name="Students_Exams" Member="Exams" ThisKey="Id" OtherKey="StudentId" Type="Exams" />
+      <Association Name="StudentGroups_Students" Member="StudentGroups" ThisKey="StudentGroupId" OtherKey="Id" Type="StudentGroups" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Teachers" Member="Teachers">
+    <Type Name="Teachers">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Teachers_KnowledgeControls" Member="KnowledgeControls" ThisKey="Id" OtherKey="TeacherId" Type="KnowledgeControls" />
+    </Type>
+  </Table>
+</Database>
