@@ -184,6 +184,13 @@ namespace Session
 			OnCreated();
 		}
 		
+		public Credits(int knowledgeControlId, int studentId, bool isPassed)
+        {
+			KnowledgeControlId = knowledgeControlId;
+			StudentId = studentId;
+			IsPassed = isPassed;
+		}
+
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id
 		{
@@ -359,7 +366,28 @@ namespace Session
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-	}
+
+        public override bool Equals(object obj)
+        {
+			if (obj != null && obj is Credits)
+			{
+				Credits credit = obj as Credits;
+
+				if (KnowledgeControlId == credit.KnowledgeControlId &&
+					StudentId == credit.StudentId)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+        public override int GetHashCode()
+        {
+			return (KnowledgeControlId.GetHashCode() << 2) ^ StudentId.GetHashCode();
+		}
+    }
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Exams")]
 	public partial class Exams : INotifyPropertyChanging, INotifyPropertyChanged
@@ -398,6 +426,13 @@ namespace Session
 			this._KnowledgeControls = default(EntityRef<KnowledgeControls>);
 			this._Students = default(EntityRef<Students>);
 			OnCreated();
+		}
+
+		public Exams(int knowledgeControlId, int studentId, byte mark)
+        {
+			KnowledgeControlId = knowledgeControlId;
+			StudentId = studentId;
+			Mark = mark;
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
@@ -575,7 +610,28 @@ namespace Session
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-	}
+
+        public override bool Equals(object obj)
+        {
+			if (obj != null && obj is Exams)
+			{
+				Exams exam = obj as Exams;
+
+				if (KnowledgeControlId == exam.KnowledgeControlId &&
+					StudentId == exam.StudentId)
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+        public override int GetHashCode()
+        {
+			return ((int)KnowledgeControlId << 3) ^ ((int)StudentId << 2) ^ (int)Mark;
+		}
+    }
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.KnowledgeControls")]
 	public partial class KnowledgeControls : INotifyPropertyChanging, INotifyPropertyChanged
