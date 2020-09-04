@@ -82,6 +82,7 @@ namespace Excel.Items
             foreach (DataColumn column in Table.Columns)
             {
                 worksheet.Cells[Position.CellCoordNumberY, currentCellCoordX] = column.ColumnName;
+                FixColWidth(worksheet, currentCellCoordX, column.ColumnName.Length);
                 currentCellCoordX++;
             }
         }
@@ -99,10 +100,21 @@ namespace Excel.Items
                 foreach (object cell in cells)
                 {
                     worksheet.Cells[currentCellCoordY, currentCellCoordX] = cell;
+                    FixColWidth(worksheet, currentCellCoordX, ((string)cell).Length);
                     currentCellCoordX++;
                 }
 
                 currentCellCoordY++;
+            }
+        }
+
+        private void FixColWidth(Worksheet worksheet, int col, int contentLenght)
+        {
+            var colPos = new ExcelItemPosition(col, col);
+            Range er = worksheet.get_Range($"{colPos.CellCoordX}:{colPos.CellCoordX}", Type.Missing);
+            if (er.ColumnWidth < contentLenght)
+            {
+                er.EntireColumn.ColumnWidth = contentLenght;
             }
         }
     }

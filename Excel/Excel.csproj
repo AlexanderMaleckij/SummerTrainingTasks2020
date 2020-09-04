@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ContainersExceptions\ExcelStackPanelException.cs" />
     <Compile Include="Containers\ExcelStackPanel.cs" />
+    <Compile Include="ExcelReport.cs" />
     <Compile Include="ItemsExceptions\ExcelItemException.cs" />
     <Compile Include="ItemsExceptions\ExcelTableException.cs" />
     <Compile Include="ItemsExceptions\ExcelTextException.cs" />

@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GroupDocs.Comparison, Version=20.8.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\GroupDocs.Comparison.20.8.0\lib\net20\GroupDocs.Comparison.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
@@ -54,13 +57,27 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportsTests.cs" />
     <Compile Include="SessionDataContextTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Excel\Excel.csproj">
+      <Project>{14D33F46-76F5-4C51-9262-A7725F7C05F7}</Project>
+      <Name>Excel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Session\Session.csproj">
       <Project>{C8FE03B6-188A-4997-9418-0305FC63315C}</Project>
       <Name>Session</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DynamicSubjectsMarksChangeByYearsAllByAscendingExpected.xlsx" />
+    <None Include="DynamicSubjectsMarksChangeByYearsAllByDescendingExpected.xlsx" />
+    <None Include="packages.config" />
+    <None Include="ReportLastSessionAllGroupsAllByAscendingExpected.xlsx" />
+    <None Include="ReportLastSessionAllGroupsAllByDescendingExpected.xlsx" />
+    <None Include="ReportPivotTablesEachSessionEachGroupAllByAscendingExpected.xlsx" />
+    <None Include="ReportPivotTablesEachSessionEachGroupAllByDescendingExpected.xlsx" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -184,8 +184,8 @@ namespace Session
 			OnCreated();
 		}
 		
-		public Credits(int knowledgeControlId, int studentId, bool isPassed)
-        {
+		public Credits(int knowledgeControlId, int studentId, bool isPassed) : this()
+		{
 			KnowledgeControlId = knowledgeControlId;
 			StudentId = studentId;
 			IsPassed = isPassed;
@@ -1522,6 +1522,14 @@ namespace Session
 			this._StudentGroups = default(EntityRef<StudentGroups>);
 			OnCreated();
 		}
+
+		public Students(string fullName, int studentGroupId, char gender, DateTime dateOfBirth) : this()
+        {
+			FullName = fullName;
+			StudentGroupId = studentGroupId;
+			Gender = gender.ToString();
+			DateOfBirth = dateOfBirth;
+		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id
@@ -1730,7 +1738,29 @@ namespace Session
 			this.SendPropertyChanging();
 			entity.Students = null;
 		}
-	}
+
+        public override bool Equals(object obj)
+        {
+            if(obj != null && obj is Students)
+            {
+				var student = obj as Students;
+				return student.StudentGroupId == StudentGroupId &&
+					student.FullName == FullName &&
+					student.Gender == Gender &&
+					student.DateOfBirth == DateOfBirth;
+            }
+
+			return false;
+        }
+
+        public override int GetHashCode()
+        {
+			return (StudentGroupId.GetHashCode() << 4) ^
+				   (FullName.GetHashCode() << 3) ^
+				   (Gender.GetHashCode() << 2) ^
+				   DateOfBirth.GetHashCode();
+		}
+    }
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Teachers")]
 	public partial class Teachers : INotifyPropertyChanging, INotifyPropertyChanged
