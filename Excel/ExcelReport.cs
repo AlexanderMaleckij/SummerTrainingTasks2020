@@ -1,6 +1,7 @@
 ﻿using Excel.Items;
 using Microsoft.Office.Interop.Excel;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace Excel
@@ -12,8 +13,8 @@ namespace Excel
     public class ExcelReport : IDisposable
     {
         private Application app;
-        private Workbook workbook;
-        private Worksheet worksheet;
+        internal Workbook workbook;
+        internal Worksheet worksheet;
         public bool IsVisible
         {
             get => app.Visible;
@@ -36,6 +37,19 @@ namespace Excel
         {
             app = new Application();
             workbook = app.Workbooks.Add();
+            worksheet = (Worksheet)workbook.ActiveSheet;
+        }
+
+        public ExcelReport(string fileName)
+        {
+            if (!File.Exists(fileName))
+                throw new FileNotFoundException();
+            app = new Application();
+            workbook = app.Workbooks.Open(fileName,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                Type.Missing, Type.Missing);
             worksheet = (Worksheet)workbook.ActiveSheet;
         }
 

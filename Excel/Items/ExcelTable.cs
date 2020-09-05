@@ -53,12 +53,14 @@ namespace Excel.Items
 
         internal override void AddItem(Worksheet worksheet)
         {
-            MarkupTablePlace(worksheet);
+            Range tableRange = GetTableRange(worksheet);
+            MarkupTablePlace(worksheet, tableRange);
             FillTableHeader(worksheet);
             FillTableBody(worksheet);
+            SetAutoFitTableRange(tableRange);
         }
 
-        private void MarkupTablePlace(Worksheet worksheet)
+        private Range GetTableRange(Worksheet worksheet)
         {
             Range leftUpCorner = (Range)worksheet.Cells[Position.CellCoordNumberY,
                                                         Position.CellCoordNumberX];
@@ -68,6 +70,11 @@ namespace Excel.Items
 
             Range tableRange = worksheet.get_Range(leftUpCorner, rightDownCorner);
 
+            return tableRange;
+        }
+
+        private void MarkupTablePlace(Worksheet worksheet, Range tableRange)
+        {
             worksheet.ListObjects.Add(
                 XlListObjectSourceType.xlSrcRange,
                 tableRange,
@@ -82,7 +89,6 @@ namespace Excel.Items
             foreach (DataColumn column in Table.Columns)
             {
                 worksheet.Cells[Position.CellCoordNumberY, currentCellCoordX] = column.ColumnName;
-                FixColWidth(worksheet, currentCellCoordX, column.ColumnName.Length);
                 currentCellCoordX++;
             }
         }
@@ -100,7 +106,6 @@ namespace Excel.Items
                 foreach (object cell in cells)
                 {
                     worksheet.Cells[currentCellCoordY, currentCellCoordX] = cell;
-                    FixColWidth(worksheet, currentCellCoordX, ((string)cell).Length);
                     currentCellCoordX++;
                 }
 
@@ -108,14 +113,10 @@ namespace Excel.Items
             }
         }
 
-        private void FixColWidth(Worksheet worksheet, int col, int contentLenght)
+        private void SetAutoFitTableRange(Range tableRange)
         {
-            var colPos = new ExcelItemPosition(col, col);
-            Range er = worksheet.get_Range($"{colPos.CellCoordX}:{colPos.CellCoordX}", Type.Missing);
-            if (er.ColumnWidth < contentLenght)
-            {
-                er.EntireColumn.ColumnWidth = contentLenght;
-            }
+            tableRange.EntireColumn.AutoFit();
+            tableRange.EntireRow.AutoFit();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Excel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,9 +44,8 @@ namespace Session.Tests
             reportAllByDescending.Save(report2PathActual);
             reportAllByAscending.Dispose();
             reportAllByDescending.Dispose();
-            //TODO: Compare docs at     
-            //report1PathActual report1PathExpected,  
-            //report2PathActual report2PathExpected
+            ExcelAssert.ReportsTextSame(report1PathActual, report1PathExpected);
+            ExcelAssert.ReportsTextSame(report2PathActual, report2PathExpected);
         }
 
         [TestMethod()]
@@ -67,9 +67,8 @@ namespace Session.Tests
             reportAllByDescending.Save(report2PathActual);
             reportAllByAscending.Dispose();
             reportAllByDescending.Dispose();
-            //TODO: Compare docs at     
-            //report1PathActual report1PathExpected,  
-            //report2PathActual report2PathExpected
+            ExcelAssert.ReportsTextSame(report1PathActual, report1PathExpected);
+            ExcelAssert.ReportsTextSame(report2PathActual, report2PathExpected);
         }
 
         [TestMethod()]
@@ -92,9 +91,8 @@ namespace Session.Tests
             reportAllByDescending.Save(report2PathActual);
             reportAllByAscending.Dispose();
             reportAllByDescending.Dispose();
-            //TODO: Compare docs at     
-            //report1PathActual report1PathExpected,  
-            //report2PathActual report2PathExpected
+            ExcelAssert.ReportsTextSame(report1PathActual, report1PathExpected);
+            ExcelAssert.ReportsTextSame(report2PathActual, report2PathExpected);
         }
 
         [TestMethod()]
